@@ -3,7 +3,6 @@ repos:
     rev: 24.10.0
     hooks:
       - id: black
-        language_version: python3.14
         files: ^backend/|^ml/|^mcp/|^rag/|^scripts/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
