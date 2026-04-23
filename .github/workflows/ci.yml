@@ -7,21 +7,43 @@ on:
     branches: ["main"]
 
 jobs:
-  lint:
-    name: Lint (black + ruff + prettier + eslint)
+  lint-python:
+    name: Lint Python (black + ruff)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"  # pre-commit hooks target py313 in tool config
+          python-version: "3.13"
 
       - name: Install pre-commit
         run: pip install pre-commit
 
-      - name: Run pre-commit on all files
-        run: pre-commit run --all-files
+      - name: Run black + ruff
+        run: pre-commit run black ruff --all-files
+
+  lint-frontend:
+    name: Lint Frontend (prettier + eslint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Prettier check
+        working-directory: frontend
+        run: npx prettier --check "src/**/*.{ts,tsx,css}"
+
+      - name: ESLint
+        working-directory: frontend
+        run: npm run lint
 
   test-backend:
     name: Backend tests (pytest)
