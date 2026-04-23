@@ -1,8 +1,6 @@
 name: CI
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
     branches: ["main"]
 
@@ -16,6 +14,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+
+      - name: Cache pre-commit envs
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Install pre-commit
         run: pip install pre-commit
@@ -34,6 +38,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
         working-directory: frontend
@@ -55,7 +61,14 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"  # closest available; 3.14 not yet on GH Actions runners
+          python-version: "3.13"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles('backend/pyproject.toml') }}
+          restore-keys: pip-
 
       - name: Install dependencies
         working-directory: backend
@@ -74,6 +87,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+
+      - name: Cache PlatformIO
+        uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ hashFiles('firmware/platformio.ini') }}
 
       - name: Install PlatformIO
         run: pip install platformio
