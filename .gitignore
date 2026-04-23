@@ -45,5 +45,8 @@ prompts/promptfoo/results/*.json
 .vscode/
 !.vscode/settings.json.example
 
+# SQLite dev databases
+*.db
+
 # Logs
 *.log
