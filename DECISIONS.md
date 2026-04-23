@@ -20,6 +20,11 @@ Format:
 **Why:** Subject requirement. Also: privacy (no user audio leaves the machine), works offline for demo, no API costs.
 **Alternatives considered:** Claude/OpenAI API (original plan) — dropped due to subject requirement.
 
+## 2026-04-22 — Branch strategy
+**Decision:** `main` is always demo-ready. Short-lived feature branches per phase/task (`phase1-backend-skeleton`, `phase2-firmware`, etc.), merged via PR once phase passes its smoke tests.
+**Why:** Keeps `main` stable for the examiner. Feature branches give isolation without the overhead of a long-lived `develop` branch.
+**Alternatives considered:** `main` + `develop` (Gitflow) — rejected as overkill for a two-person project with a fixed deadline.
+
 ## 2026-04-22 — MCP as its own top-level directory
 **Decision:** `mcp/` lives at the repo root, not under `backend/`.
 **Why:** MCP is an architectural boundary; keeping it separate signals that and makes future process-splitting trivial.

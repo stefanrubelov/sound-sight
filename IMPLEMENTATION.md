@@ -15,115 +15,115 @@ Both partners must understand the full system for exam defense.
 ## Phase 0 — Project Bootstrap (Day 1)
 
 ### Repository & tooling
-- [ ] Create Git repo with top-level structure:
-  - [ ] `backend/` — FastAPI app
-  - [ ] `frontend/` — React + TS (Vite)
-  - [ ] `firmware/` — PlatformIO project for ESP32
-  - [ ] `ml/` — training scripts, notebooks, model artifacts
-  - [ ] `prompts/` — LangChain prompt templates + Promptfoo config
-  - [ ] `mcp/` — MCP server definition
-  - [ ] `rag/` — corpus files + indexing scripts
-  - [ ] `docs/` — this checklist + project plan PDFs
-  - [ ] `scripts/` — dev/run/demo helper scripts
-- [ ] Add `.gitignore` for Python, Node, PlatformIO, `.env`, ChromaDB data, model weights
-- [ ] Add root `README.md` with setup instructions (will fill in as we go)
-- [ ] Decide on branch strategy (suggest: `main` + short-lived feature branches)
-- [ ] Set up pre-commit hooks (black + ruff for Python, prettier + eslint for TS)
+- [x] Create Git repo with top-level structure:
+  - [x] `backend/` — FastAPI app
+  - [x] `frontend/` — React + TS (Vite)
+  - [x] `firmware/` — PlatformIO project for ESP32
+  - [x] `ml/` — training scripts, notebooks, model artifacts
+  - [x] `prompts/` — LangChain prompt templates + Promptfoo config
+  - [x] `mcp/` — MCP server definition
+  - [x] `rag/` — corpus files + indexing scripts
+  - [x] `docs/` — this checklist + project plan PDFs
+  - [x] `scripts/` — dev/run/demo helper scripts
+- [x] Add `.gitignore` for Python, Node, PlatformIO, `.env`, ChromaDB data, model weights
+- [x] Add root `README.md` with setup instructions (will fill in as we go)
+- [x] Decide on branch strategy (suggest: `main` + short-lived feature branches)
+- [x] Set up pre-commit hooks (black + ruff for Python, prettier + eslint for TS)
 
 ### Dev environment
-- [ ] Pin Python 3.14; add `backend/pyproject.toml` (or `requirements.txt`)
-- [ ] Node 20+ for frontend
-- [ ] PlatformIO installed for firmware
-- [ ] Install Ollama locally, pull base model: `ollama pull llama3.1:8b` (or `qwen2.5:7b-instruct`)
-- [ ] Verify Ollama is reachable: `curl http://localhost:11434/api/tags`
-- [ ] PostgreSQL running locally (Docker compose fine) OR decide to start on SQLite
-- [ ] Add `docker-compose.yml` for Postgres + ChromaDB (optional but tidy)
+- [x] Pin Python 3.14; add `backend/pyproject.toml` (or `requirements.txt`)
+- [x] Node 20+ for frontend
+- [x] PlatformIO installed for firmware
+- [x] Install Ollama locally, pull base model: `ollama pull llama3.1:8b` (or `qwen2.5:7b-instruct`)
+- [x] Verify Ollama is reachable: `curl http://localhost:11434/api/tags`
+- [x] PostgreSQL running locally (Docker compose fine) OR decide to start on SQLite
+- [x] Add `docker-compose.yml` for Postgres + ChromaDB (optional but tidy)
 
 ### Shared docs
-- [ ] Drop `SoundSight_Project_Plan_v2.pdf` and `SoundSight_Pitch_v2.pdf` into `docs/`
-- [ ] Keep this `IMPLEMENTATION.md` at repo root
+- [x] Drop `SoundSight_Project_Plan_v2.pdf` and `SoundSight_Pitch_v2.pdf` into `docs/`
+- [x] Keep this `IMPLEMENTATION.md` at repo root
 
 ---
 
 ## Phase 1 — Backend Skeleton (Week 1, Samuel)
 
 ### FastAPI scaffold
-- [ ] `backend/app/main.py` with FastAPI app instance
-- [ ] CORS middleware configured for the frontend origin
-- [ ] `/health` endpoint returning `{status: "ok"}`
-- [ ] Uvicorn dev script: `uvicorn app.main:app --reload`
-- [ ] `app/config.py` — settings via pydantic-settings, loaded from `.env`
-- [ ] `app/logging.py` — structured logging setup (json or rich)
+- [x] `backend/app/main.py` with FastAPI app instance
+- [x] CORS middleware configured for the frontend origin
+- [x] `/health` endpoint returning `{status: "ok"}`
+- [x] Uvicorn dev script: `uvicorn app.main:app --reload`
+- [x] `app/config.py` — settings via pydantic-settings, loaded from `.env`
+- [x] `app/logging.py` — structured logging setup (json or rich)
 
 ### Project structure
-- [ ] `app/api/` — route modules (events, rules, devices, reports, onboarding, audio)
-- [ ] `app/services/` — business logic (ml, llm, rag, memory)
-- [ ] `app/db/` — SQLAlchemy models + session
-- [ ] `app/schemas/` — Pydantic request/response schemas
-- [ ] `app/dependencies.py` — FastAPI dependencies (DB session, auth placeholder)
-- [ ] `tests/` — pytest structure mirroring `app/`
+- [x] `app/api/` — route modules (events, rules, devices, reports, onboarding, audio)
+- [x] `app/services/` — business logic (ml, llm, rag, memory)
+- [x] `app/db/` — SQLAlchemy models + session
+- [x] `app/schemas/` — Pydantic request/response schemas
+- [x] `app/dependencies.py` — FastAPI dependencies (DB session, auth placeholder)
+- [x] `tests/` — pytest structure mirroring `app/`
 
 ### Database
-- [ ] SQLAlchemy 2.x setup, async engine
-- [ ] Alembic initialized, first migration
-- [ ] Models defined:
-  - [ ] `Device` (id, name, room, registered_at, last_seen)
-  - [ ] `Event` (id, device_id, class_name, confidence, timestamp, duration, raw_features, llm_summary)
-  - [ ] `Rule` (id, trigger, time_start, time_end, priority, alert_type, source_text, created_at)
-  - [ ] `UserProfile` (id, home_description, enabled_classes, quiet_hours, notes)
-  - [ ] `Baseline` (id, class_name, stats_json, updated_at) — for memory layer
-- [ ] Seed script: insert a default user profile + sample device for dev
-- [ ] Choose Postgres or SQLite per environment via config
+- [x] SQLAlchemy 2.x setup, async engine
+- [x] Alembic initialized, first migration
+- [x] Models defined:
+  - [x] `Device` (id, name, room, registered_at, last_seen)
+  - [x] `Event` (id, device_id, class_name, confidence, timestamp, duration, raw_features, llm_summary)
+  - [x] `Rule` (id, trigger, time_start, time_end, priority, alert_type, source_text, created_at)
+  - [x] `UserProfile` (id, home_description, enabled_classes, quiet_hours, notes)
+  - [x] `Baseline` (id, class_name, stats_json, updated_at) — for memory layer
+- [x] Seed script: insert a default user profile + sample device for dev
+- [x] Choose Postgres or SQLite per environment via config
 
 ### WebSocket
-- [ ] `/ws/events` endpoint with connection manager
-- [ ] Broadcast helper: `await ws_manager.broadcast(event_payload)`
-- [ ] Test with a tiny HTML client or `websocat`
+- [x] `/ws/events` endpoint with connection manager
+- [x] Broadcast helper: `await ws_manager.broadcast(event_payload)`
+- [x] Test with a tiny HTML client or `websocat`
 
 ### Unit tests
-- [ ] pytest + `httpx.AsyncClient` set up
-- [ ] `TestClient` smoke test for `/health`
-- [ ] In-memory SQLite fixture for test DB
+- [x] pytest + `httpx.AsyncClient` set up
+- [x] `TestClient` smoke test for `/health`
+- [x] In-memory SQLite fixture for test DB
 
 ---
 
 ## Phase 2 — ESP32 Firmware (Week 1, Stefan)
 
 ### PlatformIO project
-- [ ] `firmware/platformio.ini` — board = `esp32dev` (or `esp32-s3-devkitc-1`), framework = `arduino`
-- [ ] Libraries: `FastLED` (WS2812B), `ArduinoJson`, `WiFiManager` (config portal), optional `U8g2` (OLED)
+- [x] `firmware/platformio.ini` — board = `esp32dev` (or `esp32-s3-devkitc-1`), framework = `arduino`
+- [x] Libraries: `FastLED` (WS2812B), `ArduinoJson`, `WiFiManager` (config portal), optional `U8g2` (OLED)
 - [ ] Build + upload blink sketch to verify toolchain
 
 ### I2S microphone (INMP441)
 - [ ] Wire INMP441 to ESP32 (SCK, WS, SD pins documented)
-- [ ] I2S driver configured: 16 kHz, 16-bit, mono, left channel
+- [x] I2S driver configured: 16 kHz, 16-bit, mono, left channel
 - [ ] Capture 1-second buffer and log RMS to serial — confirm it reacts to sound
-- [ ] Handle DC offset / bit-shifting from I2S (INMP441 is 24-bit in 32-bit frames)
+- [x] Handle DC offset / bit-shifting from I2S (INMP441 is 24-bit in 32-bit frames)
 
 ### WiFi + config portal
-- [ ] First-boot AP mode via WiFiManager
-- [ ] Fields: WiFi SSID + password, backend URL, device name, room name
-- [ ] Persist config to NVS/Preferences
-- [ ] Reset button / long-press to re-enter config mode
+- [x] First-boot AP mode via WiFiManager
+- [x] Fields: WiFi SSID + password, backend URL, device name, room name
+- [x] Persist config to NVS/Preferences
+- [x] Reset button / long-press to re-enter config mode
 
 ### HTTP POST pipeline
-- [ ] Send raw PCM bytes to `POST /api/audio/classify` (Content-Type: `application/octet-stream`)
-- [ ] Parse JSON response: `{event_type, severity, led_color, vibration_pattern}`
-- [ ] Error handling: retry with backoff, queue-or-drop policy on network failure
+- [x] Send raw PCM bytes to `POST /api/audio/classify` (Content-Type: `application/octet-stream`)
+- [x] Parse JSON response: `{event_type, severity, led_color, vibration_pattern}`
+- [x] Error handling: retry with backoff, queue-or-drop policy on network failure
 
 ### Actuator drivers
-- [ ] WS2812B LED driver — set color, hold N seconds, fade out
-- [ ] Color map per event type (red, blue, yellow, green, white)
-- [ ] Vibration motor driver — PWM patterns: short pulse / double pulse / continuous
+- [x] WS2812B LED driver — set color, hold N seconds, fade out
+- [x] Color map per event type (red, blue, yellow, green, white)
+- [x] Vibration motor driver — PWM patterns: short pulse / double pulse / continuous
 - [ ] Optional: SSD1306 OLED — show last event + timestamp
 
 ### Device registration
-- [ ] On first boot after WiFi is up, POST `/api/devices/register` with name + room → store returned `device_id`
-- [ ] Include `device_id` in every `/api/audio/classify` call
+- [x] On first boot after WiFi is up, POST `/api/devices/register` with name + room → store returned `device_id`
+- [x] Include `device_id` in every `/api/audio/classify` call
 
 ### Firmware "unit" testing
-- [ ] PlatformIO native-env tests for LED color map, vibration pattern selector (pure logic, no HW)
-- [ ] Manual test checklist in `firmware/TESTING.md`
+- [x] PlatformIO native-env tests for LED color map, vibration pattern selector (pure logic, no HW)
+- [x] Manual test checklist in `firmware/TESTING.md`
 
 ---
 
