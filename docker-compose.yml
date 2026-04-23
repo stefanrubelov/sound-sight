@@ -11,5 +11,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  chromadb:
+    image: chromadb/chroma:latest
+    ports:
+      - "8001:8000"
+    volumes:
+      - chromadb_data:/chroma/chroma
+
 volumes:
   postgres_data:
+  chromadb_data:

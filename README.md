@@ -9,7 +9,7 @@ SoundSight turns any room into a hearing-accessible environment. ESP32 + microph
 ## Stack
 
 - **IoT:** ESP32 + INMP441 I2S mic + WS2812B LEDs + vibration motor, firmware in C/C++ (PlatformIO)
-- **Backend:** Python 3.11 + FastAPI, WebSocket for real-time events
+- **Backend:** Python 3.14 + FastAPI, WebSocket for real-time events
 - **AI:** Ollama (local LLM) + LangChain orchestration + MCP tool layer + ChromaDB RAG + memory
 - **Frontend:** React + TypeScript (Vite)
 - **Testing:** pytest + Vitest + Promptfoo

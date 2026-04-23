@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 760" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="13">
+  <style>
+    .title { font-size: 22px; font-weight: 700; fill: #111; }
+    .subtitle { font-size: 13px; fill: #555; }
+    .mod-label { font-size: 14px; font-weight: 700; fill: #111; }
+    .pin { font-size: 11px; fill: #222; }
+    .note { font-size: 11px; fill: #666; }
+    .caption { font-size: 12px; fill: #333; }
+    .rail3v3 { stroke: #d43c3c; stroke-width: 2.5; fill: none; }
+    .rail5v  { stroke: #e08b00; stroke-width: 2.5; fill: none; }
+    .railgnd { stroke: #111; stroke-width: 2.5; fill: none; }
+    .sig     { stroke: #1f6fd0; stroke-width: 2; fill: none; }
+    .sig-y   { stroke: #caa21a; stroke-width: 2; fill: none; }
+    .sig-g   { stroke: #2a8f3a; stroke-width: 2; fill: none; }
+    .sig-r   { stroke: #c2382c; stroke-width: 2; fill: none; }
+    .sig-p   { stroke: #7a3aa8; stroke-width: 2; fill: none; }
+    .board   { fill: #2a6a9a; }
+    .module  { fill: #f6f3ea; stroke: #c7bfa8; stroke-width: 1.2; }
+    .pad     { fill: #ffffff; stroke: #999; stroke-width: 1; }
+    .wirepad { fill: #111; }
+    .mosfet  { fill: #e9e9ec; stroke: #666; stroke-width: 1.2; }
+    .diode   { fill: #ddd; stroke: #333; stroke-width: 1; }
+    .led-body{ stroke: #333; stroke-width: 1; }
+    .hint    { font-size: 10px; fill: #888; }
+    .warnbox { fill: #fff7ea; stroke: #e0a242; stroke-width: 1; }
+    .warn    { font-size: 11px; fill: #7a4a00; }
+  </style>
+
+  <!-- Title -->
+  <text class="title" x="24" y="34">SoundSight — wiring (FireBeetle 2 ESP32-E)</text>
+  <text class="subtitle" x="24" y="54">INMP441 I²S mic · 3× discrete LEDs · coin vibration motor via MOSFET · powered from USB-C (5 V)</text>
+
+  <!-- Legend -->
+  <g transform="translate(700,24)">
+    <rect x="0" y="0" width="380" height="48" rx="6" fill="#fafafa" stroke="#ddd"/>
+    <line class="rail3v3" x1="14" y1="14" x2="42" y2="14"/>
+    <text class="caption" x="48" y="18">3V3</text>
+    <line class="rail5v"  x1="90" y1="14" x2="118" y2="14"/>
+    <text class="caption" x="124" y="18">5 V</text>
+    <line class="railgnd" x1="160" y1="14" x2="188" y2="14"/>
+    <text class="caption" x="194" y="18">GND</text>
+    <line class="sig"   x1="240" y1="14" x2="268" y2="14"/>
+    <text class="caption" x="274" y="18">signal</text>
+    <line class="sig"   x1="14" y1="34" x2="42" y2="34" stroke-dasharray="4 3"/>
+    <text class="caption" x="48" y="38">I²S bus</text>
+    <text class="caption" x="140" y="38">·  colours match pin table in WIRING.md</text>
+  </g>
+
+  <!-- FireBeetle board -->
+  <g transform="translate(40,110)">
+    <rect class="board" x="0" y="0" width="260" height="440" rx="10"/>
+    <text class="mod-label" x="130" y="26" text-anchor="middle" fill="#fff">FireBeetle 2 ESP32-E</text>
+    <rect x="102" y="36" width="56" height="22" rx="3" fill="#111"/>
+    <text class="pin" x="130" y="52" text-anchor="middle" fill="#ddd">USB-C</text>
+
+    <!-- Left-side pin pads -->
+    <g font-size="11" fill="#fff">
+      <!-- Power pins -->
+      <rect class="pad" x="10" y="80"  width="60" height="20"/>
+      <text class="pin" x="40" y="94"  text-anchor="middle">3V3</text>
+      <rect class="pad" x="10" y="108" width="60" height="20"/>
+      <text class="pin" x="40" y="122" text-anchor="middle">GND</text>
+      <rect class="pad" x="10" y="136" width="60" height="20"/>
+      <text class="pin" x="40" y="150" text-anchor="middle">VCC (5 V)</text>
+
+      <!-- I2S pins -->
+      <rect class="pad" x="10" y="180" width="60" height="20"/>
+      <text class="pin" x="40" y="194" text-anchor="middle">D3 · GPIO26</text>
+      <rect class="pad" x="10" y="204" width="60" height="20"/>
+      <text class="pin" x="40" y="218" text-anchor="middle">D2 · GPIO25</text>
+      <rect class="pad" x="10" y="228" width="60" height="20"/>
+      <text class="pin" x="40" y="242" text-anchor="middle">A2 · GPIO34</text>
+
+      <!-- LED pins -->
+      <rect class="pad" x="10" y="272" width="60" height="20"/>
+      <text class="pin" x="40" y="286" text-anchor="middle">D5 · GPIO17</text>
+      <rect class="pad" x="10" y="296" width="60" height="20"/>
+      <text class="pin" x="40" y="310" text-anchor="middle">D4 · GPIO16</text>
+      <rect class="pad" x="10" y="320" width="60" height="20"/>
+      <text class="pin" x="40" y="334" text-anchor="middle">D6 · GPIO27</text>
+
+      <!-- Motor pin -->
+      <rect class="pad" x="10" y="364" width="60" height="20"/>
+      <text class="pin" x="40" y="378" text-anchor="middle">D10 · GPIO18</text>
+
+      <!-- BOOT -->
+      <rect class="pad" x="10" y="400" width="60" height="20"/>
+      <text class="pin" x="40" y="414" text-anchor="middle">BOOT · GPIO0</text>
+    </g>
+
+    <!-- Labels at right side of board explaining roles -->
+    <g class="hint" fill="#cfe2f3">
+      <text x="76" y="94">→ 3.3 V rail  (mic VDD, LED anodes via R)</text>
+      <text x="76" y="122">→ GND rail (common)</text>
+      <text x="76" y="150">→ 5 V rail (motor +)</text>
+      <text x="76" y="194">I²S BCLK (SCK)</text>
+      <text x="76" y="218">I²S WS (LRCK)</text>
+      <text x="76" y="242">I²S SD (data in)   ← was GPIO33</text>
+      <text x="76" y="286">LED Red</text>
+      <text x="76" y="310">LED Yellow</text>
+      <text x="76" y="334">LED Green</text>
+      <text x="76" y="378">Vibration motor PWM (MOSFET gate)</text>
+      <text x="76" y="414">On-board button → re-enter config (long press)</text>
+    </g>
+  </g>
+
+  <!-- Warning callout about GPIO33 -->
+  <g transform="translate(40,570)">
+    <rect class="warnbox" x="0" y="0" width="260" height="72" rx="6"/>
+    <text class="warn" x="10" y="18" font-weight="700">Firmware change required</text>
+    <text class="warn" x="10" y="36">config.h: I2S_SD_PIN 33 → 34</text>
+    <text class="warn" x="10" y="52">(GPIO33 is not exposed on this board.)</text>
+    <text class="warn" x="10" y="66">Also add LED_RED/YELLOW/GREEN pins.</text>
+  </g>
+
+  <!-- INMP441 microphone -->
+  <g transform="translate(420,110)">
+    <rect class="module" x="0" y="0" width="220" height="180" rx="8"/>
+    <text class="mod-label" x="110" y="22" text-anchor="middle">INMP441 I²S mic</text>
+    <circle cx="110" cy="56" r="16" fill="#888" stroke="#444"/>
+    <circle cx="110" cy="56" r="3" fill="#222"/>
+    <!-- pins -->
+    <g>
+      <rect class="pad" x="10"  y="150" width="30" height="20"/>
+      <text class="pin" x="25"  y="164" text-anchor="middle">VDD</text>
+      <rect class="pad" x="44"  y="150" width="30" height="20"/>
+      <text class="pin" x="59"  y="164" text-anchor="middle">GND</text>
+      <rect class="pad" x="78"  y="150" width="30" height="20"/>
+      <text class="pin" x="93"  y="164" text-anchor="middle">L/R</text>
+      <rect class="pad" x="112" y="150" width="30" height="20"/>
+      <text class="pin" x="127" y="164" text-anchor="middle">WS</text>
+      <rect class="pad" x="146" y="150" width="30" height="20"/>
+      <text class="pin" x="161" y="164" text-anchor="middle">SCK</text>
+      <rect class="pad" x="180" y="150" width="30" height="20"/>
+      <text class="pin" x="195" y="164" text-anchor="middle">SD</text>
+    </g>
+    <text class="hint" x="110" y="100" text-anchor="middle">3.3 V · left channel mono</text>
+    <text class="hint" x="110" y="118" text-anchor="middle">L/R tied LOW → left word</text>
+  </g>
+
+  <!-- Wires: Mic to board -->
+  <!-- VDD ← 3V3 -->
+  <path class="rail3v3" d="M 70,90 H 340 V 150 H 445"/>
+  <circle class="wirepad" cx="445" cy="160" r="3"/>
+  <text class="hint" x="340" y="82">3V3 → VDD</text>
+  <!-- GND ← GND -->
+  <path class="railgnd" d="M 70,118 H 360 V 200 H 479"/>
+  <circle class="wirepad" cx="479" cy="160" r="3"/>
+  <!-- Also L/R → GND (short jumper on mic side) -->
+  <path class="railgnd" d="M 493,190 V 205 H 513 V 160"/>
+  <circle class="wirepad" cx="513" cy="160" r="3"/>
+  <text class="hint" x="500" y="223">L/R = GND</text>
+  <!-- WS -->
+  <path class="sig-y" d="M 70,214 H 380 V 130 H 547 V 160"/>
+  <circle class="wirepad" cx="547" cy="160" r="3"/>
+  <text class="hint" x="395" y="124">WS · GPIO25</text>
+  <!-- SCK -->
+  <path class="sig" d="M 70,190 H 395 V 110 H 581 V 160"/>
+  <circle class="wirepad" cx="581" cy="160" r="3"/>
+  <text class="hint" x="415" y="104">SCK · GPIO26</text>
+  <!-- SD -->
+  <path class="sig-g" d="M 70,238 H 410 V 140 H 615 V 160"/>
+  <circle class="wirepad" cx="615" cy="160" r="3"/>
+  <text class="hint" x="430" y="134">SD · GPIO34 (in)</text>
+
+  <!-- Three discrete LEDs -->
+  <g transform="translate(420,320)">
+    <rect class="module" x="0" y="0" width="220" height="170" rx="8"/>
+    <text class="mod-label" x="110" y="22" text-anchor="middle">Discrete LEDs (3×)</text>
+    <text class="hint" x="110" y="38" text-anchor="middle">3.3 V drive · 220 Ω series</text>
+
+    <!-- Red row -->
+    <g transform="translate(20,58)">
+      <rect x="0" y="0" width="30" height="16" fill="#eee" stroke="#888"/>
+      <text class="pin" x="15" y="12" text-anchor="middle">220Ω</text>
+      <line x1="30" y1="8" x2="60" y2="8" stroke="#333" stroke-width="2"/>
+      <circle cx="72" cy="8" r="8" fill="#e53935" class="led-body"/>
+      <line x1="80" y1="8" x2="170" y2="8" stroke="#333" stroke-width="2"/>
+      <text class="pin" x="180" y="12">GND</text>
+    </g>
+    <!-- Yellow row -->
+    <g transform="translate(20,92)">
+      <rect x="0" y="0" width="30" height="16" fill="#eee" stroke="#888"/>
+      <text class="pin" x="15" y="12" text-anchor="middle">220Ω</text>
+      <line x1="30" y1="8" x2="60" y2="8" stroke="#333" stroke-width="2"/>
+      <circle cx="72" cy="8" r="8" fill="#fdd835" class="led-body"/>
+      <line x1="80" y1="8" x2="170" y2="8" stroke="#333" stroke-width="2"/>
+      <text class="pin" x="180" y="12">GND</text>
+    </g>
+    <!-- Green row -->
+    <g transform="translate(20,126)">
+      <rect x="0" y="0" width="30" height="16" fill="#eee" stroke="#888"/>
+      <text class="pin" x="15" y="12" text-anchor="middle">220Ω</text>
+      <line x1="30" y1="8" x2="60" y2="8" stroke="#333" stroke-width="2"/>
+      <circle cx="72" cy="8" r="8" fill="#43a047" class="led-body"/>
+      <line x1="80" y1="8" x2="170" y2="8" stroke="#333" stroke-width="2"/>
+      <text class="pin" x="180" y="12">GND</text>
+    </g>
+  </g>
+
+  <!-- Wires from board to LEDs -->
+  <path class="sig-r" d="M 70,282 H 390 V 378 H 440"/>
+  <text class="hint" x="290" y="298">Red · GPIO17</text>
+  <path class="sig-y" d="M 70,306 H 380 V 412 H 440"/>
+  <text class="hint" x="290" y="410">Yellow · GPIO16</text>
+  <path class="sig-g" d="M 70,330 H 370 V 446 H 440"/>
+  <text class="hint" x="290" y="462">Green · GPIO27</text>
+  <!-- LED cathodes → GND rail -->
+  <path class="railgnd" d="M 610,378 H 660 V 412"/>
+  <path class="railgnd" d="M 610,412 H 660"/>
+  <path class="railgnd" d="M 610,446 H 660 V 412"/>
+  <path class="railgnd" d="M 660,412 V 600 H 260 V 118 H 70"/>
+
+  <!-- Vibration motor + MOSFET -->
+  <g transform="translate(760,320)">
+    <rect class="module" x="0" y="0" width="300" height="220" rx="8"/>
+    <text class="mod-label" x="150" y="22" text-anchor="middle">Vibration motor (low-side switch)</text>
+
+    <!-- motor -->
+    <circle cx="80" cy="70" r="22" fill="#f0dca0" stroke="#8a7800" stroke-width="1.2"/>
+    <text class="pin" x="80" y="74" text-anchor="middle">M</text>
+    <text class="hint" x="80" y="100" text-anchor="middle">coin ERM 3 V</text>
+
+    <!-- +5V to motor top -->
+    <line class="rail5v" x1="80" y1="48" x2="80" y2="20"/>
+    <line class="rail5v" x1="80" y1="20" x2="260" y2="20"/>
+    <text class="hint" x="180" y="14" text-anchor="middle">+5 V (VCC from FireBeetle)</text>
+
+    <!-- flyback diode across motor (cathode to +5V) -->
+    <g transform="translate(130,55)">
+      <polygon points="0,0 18,9 0,18" class="diode"/>
+      <line x1="18" y1="0" x2="18" y2="18" stroke="#333" stroke-width="1.5"/>
+      <text class="hint" x="9" y="34">flyback</text>
+    </g>
+    <line x1="148" y1="64" x2="148" y2="20" stroke="#333" stroke-width="1.5"/>
+    <line x1="130" y1="64" x2="102" y2="92" stroke="#333" stroke-width="1.5"/>
+
+    <!-- motor bottom to drain -->
+    <line x1="80" y1="92" x2="80" y2="140" stroke="#333" stroke-width="2"/>
+
+    <!-- MOSFET body -->
+    <g transform="translate(56,140)">
+      <rect class="mosfet" x="0" y="0" width="58" height="44" rx="4"/>
+      <text class="pin" x="29" y="18" text-anchor="middle">N-ch</text>
+      <text class="pin" x="29" y="32" text-anchor="middle">MOSFET</text>
+      <!-- leads -->
+      <line x1="29" y1="0"  x2="29" y2="-8" stroke="#333"/> <!-- drain up -->
+      <line x1="8"  y1="44" x2="8"  y2="58" stroke="#333"/> <!-- gate down-left -->
+      <line x1="50" y1="44" x2="50" y2="58" stroke="#333"/> <!-- source down-right -->
+      <text class="hint" x="-12" y="8">D</text>
+      <text class="hint" x="-10" y="60">G</text>
+      <text class="hint" x="60" y="60">S</text>
+    </g>
+
+    <!-- gate pull-down 10k -->
+    <line x1="64" y1="198" x2="64" y2="210" stroke="#333"/>
+    <rect x="48" y="210" width="32" height="14" fill="#eee" stroke="#888"/>
+    <text class="pin" x="64" y="221" text-anchor="middle">10 kΩ</text>
+    <line x1="64" y1="224" x2="64" y2="240" stroke="#333"/>
+    <text class="hint" x="64" y="254" text-anchor="middle">to GND</text>
+
+    <!-- source to GND -->
+    <line x1="106" y1="198" x2="106" y2="240" stroke="#333" stroke-width="2"/>
+    <text class="hint" x="120" y="224">→ GND</text>
+
+    <!-- gate signal from GPIO18 -->
+    <line x1="64" y1="198" x2="20" y2="198" stroke="#7a3aa8" stroke-width="2"/>
+    <line x1="20" y1="198" x2="20" y2="170" stroke="#7a3aa8" stroke-width="2"/>
+    <text class="hint" x="-4" y="164">gate ← GPIO18 (PWM)</text>
+  </g>
+
+  <!-- Wire: board D10 → MOSFET gate -->
+  <path class="sig-p" d="M 70,374 H 340 V 490 H 755"/>
+  <!-- Wire: board VCC → motor + (already the rail5v inside the group goes up). Show the inbound trace to the group. -->
+  <path class="rail5v" d="M 70,146 H 340 V 330 H 755"/>
+  <!-- Wire: MOSFET source → GND rail -->
+  <path class="railgnd" d="M 866,560 V 608 H 660"/>
+
+  <!-- Build-order ribbon -->
+  <g transform="translate(40,670)">
+    <rect x="0" y="0" width="1020" height="70" rx="6" fill="#f4f8fb" stroke="#cfdae3"/>
+    <text class="mod-label" x="16" y="22">Build order (test as you go)</text>
+    <text class="caption" x="16" y="44">1. Flash blink    2. Wire mic only + verify RMS on serial    3. Add the 3 LEDs + verify each    4. Add MOSFET + motor + flyback diode last    5. Run full classify loop</text>
+    <text class="hint" x="16" y="60">Keep every GND on a single rail. Mic VDD = 3V3 only (never 5 V).</text>
+  </g>
+</svg>
