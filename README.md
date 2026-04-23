@@ -57,4 +57,4 @@ The same checks run in CI (GitHub Actions) on every push and pull request, so sk
 
 ## Team
 
-Stefan Rubelov • Samuel Stiksa
+[Stefan Rubelov](https://github.com/stefanrubelov/) • [Samuel Stiksa](https://github.com/samsti)
