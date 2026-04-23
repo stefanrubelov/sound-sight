@@ -42,6 +42,19 @@ ollama serve
 ollama pull llama3.1:8b
 ```
 
+## Dev setup (required for every contributor)
+
+After cloning, install the pre-commit hooks so linting runs automatically before every commit:
+
+```bash
+pip install pre-commit
+pre-commit install
+```
+
+This installs four hooks: **black** + **ruff** (Python), **prettier** + **eslint** (TypeScript). They run on the files you changed — first commit after clone will be slightly slower while the hook environments download. Every commit after that is fast.
+
+The same checks run in CI (GitHub Actions) on every push and pull request, so skipping `pre-commit install` just means CI will catch it instead.
+
 ## Team
 
 Stefan Rubelov • Samuel Stiksa
