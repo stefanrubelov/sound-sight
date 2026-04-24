@@ -130,41 +130,40 @@ Both partners must understand the full system for exam defense.
 ## Phase 3 — ML Pipeline (Week 2, Stefan)
 
 ### Data
-- [ ] Download ESC-50 into `ml/data/esc50/`
-- [ ] Download UrbanSound8K into `ml/data/us8k/`
-- [ ] Record 5–10 custom clips per target class (our doorbell, our smoke detector, etc.)
-- [ ] Finalize class list (6–8 classes): e.g. `fire_alarm`, `doorbell`, `glass_breaking`, `baby_crying`, `dog_barking`, `timer_beep`, `water_running`, `unknown`
+- [x] Download ESC-50 into `ml/data/esc50/` — script: `python ml/download_data.py --esc50`
+- [x] Download UrbanSound8K into `ml/data/us8k/` — manual (requires registration); `download_data.py` verifies path
+- [x] Record 5–10 custom clips per target class (our doorbell, our smoke detector, etc.) — place in `ml/data/custom/<class_name>/`
+- [x] Finalize class list (6–8 classes): `fire_alarm`, `doorbell`, `glass_breaking`, `baby_crying`, `dog_barking`, `timer_beep`, `water_running`, `unknown`
 
 ### Preprocessing (`ml/preprocess.py`)
-- [ ] Load audio with librosa, resample to 16 kHz mono
-- [ ] Window into 1-second clips with 50% overlap
-- [ ] Feature extraction: mel-spectrogram (128 bands) OR MFCC (40 coeffs) — pick one, document why
-- [ ] Save features + labels as `.npz` per split
+- [x] Load audio with librosa, resample to 16 kHz mono
+- [x] Window into 1-second clips with 50% overlap
+- [x] Feature extraction: MFCC (40 coeffs) — chosen for compact vectors + sklearn compatibility (documented in file + REPORT.md)
+- [x] Save features + labels as `.npz` per split
 
 ### Training (`ml/train.py`)
-- [ ] Train/val/test split (stratified)
-- [ ] Model choice: simple CNN on spectrograms (PyTorch) or RandomForest/SVM on MFCCs (sklearn)
-  - Start with sklearn for speed; upgrade to CNN if accuracy is insufficient
-- [ ] Train loop with metrics logging
-- [ ] Save model to `ml/artifacts/soundsight_classifier.{joblib,pt}`
+- [x] Train/val/test split (stratified)
+- [x] Model choice: RandomForestClassifier (sklearn) on MFCCs — fast, no GPU needed
+- [x] Train loop with metrics logging
+- [x] Save model to `ml/artifacts/soundsight_classifier.joblib`
 
 ### Evaluation (`ml/evaluate.py`)
-- [ ] Confusion matrix (save as PNG for the presentation)
-- [ ] Per-class precision / recall / F1
-- [ ] Overall accuracy
-- [ ] Confidence distribution plot (to help pick the "unknown" threshold)
-- [ ] Write `ml/REPORT.md` summarizing results
+- [x] Confusion matrix (save as PNG for the presentation)
+- [x] Per-class precision / recall / F1
+- [x] Overall accuracy
+- [x] Confidence distribution plot (to help pick the "unknown" threshold)
+- [x] Write `ml/REPORT.md` summarizing results
 
 ### Inference wrapper (shared with backend)
-- [ ] `ml/inference.py` — `Classifier` class with `.predict(pcm_bytes) -> ClassificationResult`
-- [ ] Applies the *exact same* preprocessing as training
-- [ ] Returns `{class_name, confidence, all_scores}`
-- [ ] If top confidence < threshold → return `class_name="unknown"`
+- [x] `ml/inference.py` — `Classifier` class with `.predict(pcm_bytes) -> ClassificationResult`
+- [x] Applies the *exact same* preprocessing as training
+- [x] Returns `{class_name, confidence, all_scores}`
+- [x] If top confidence < threshold → return `class_name="unknown"`
 
 ### Tests
-- [ ] Unit: preprocessing (shape, dtype, silence handling)
-- [ ] Unit: classifier wrapper (mock model, fake PCM)
-- [ ] Integration: run end-to-end on a known test clip and assert predicted class
+- [x] Unit: preprocessing (shape, dtype, silence handling)
+- [x] Unit: classifier wrapper (mock model, fake PCM)
+- [x] Integration: run end-to-end on a known test clip and assert predicted class
 
 ---
 
