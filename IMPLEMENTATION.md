@@ -169,13 +169,13 @@ Both partners must understand the full system for exam defense.
 
 ## Phase 4 — Classification Endpoint (Week 2, Samuel + Stefan)
 
-- [ ] `POST /api/audio/classify` — accept raw bytes, call `Classifier`, persist `Event`
-- [ ] Broadcast new event over `/ws/events`
-- [ ] Response payload includes `led_color` + `vibration_pattern` (mapped from class + severity)
-- [ ] Severity lookup table: config-driven (critical/warn/info per class)
-- [ ] Handle `unknown` class: low-severity response, don't trigger alerts
-- [ ] Write LLM summary *asynchronously* (don't block the ESP32 response)
-- [ ] Unit tests for the endpoint (TestClient + mocked classifier)
+- [x] `POST /api/audio/classify` — accept raw bytes, call `Classifier`, persist `Event`
+- [x] Broadcast new event over `/ws/events`
+- [x] Response payload includes `led_color` + `vibration_pattern` (mapped from class + severity)
+- [x] Severity lookup table: config-driven (critical/warn/info per class) — in `app/config.py`
+- [x] Handle `unknown` class: low-severity response, don't trigger alerts
+- [x] Write LLM summary *asynchronously* (don't block the ESP32 response)
+- [x] Unit tests for the endpoint (TestClient + mocked classifier)
 
 ---
 
