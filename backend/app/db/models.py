@@ -18,12 +18,8 @@ class Device(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(128), nullable=False)
     room: Mapped[str] = mapped_column(String(128), nullable=False)
-    registered_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=_now
-    )
-    last_seen: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), nullable=True
-    )
+    registered_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+    last_seen: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     events: Mapped[list["Event"]] = relationship("Event", back_populates="device")
 
@@ -61,9 +57,7 @@ class UserProfile(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     home_description: Mapped[str | None] = mapped_column(Text, nullable=True)
-    enabled_classes: Mapped[str | None] = mapped_column(
-        Text, nullable=True
-    )  # JSON array
+    enabled_classes: Mapped[str | None] = mapped_column(Text, nullable=True)  # JSON array
     quiet_hours: Mapped[str | None] = mapped_column(Text, nullable=True)  # JSON object
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
 
