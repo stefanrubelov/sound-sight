@@ -185,9 +185,7 @@ def build_custom_dataset(custom_root: str | Path) -> tuple[list[np.ndarray], lis
         if not class_dir.is_dir():
             continue
         label_idx = CLASS_TO_IDX[class_name]
-        for audio_path in sorted(class_dir.glob("*.wav")) + sorted(
-            class_dir.glob("*.mp3")
-        ):
+        for audio_path in sorted(class_dir.glob("*.wav")) + sorted(class_dir.glob("*.mp3")):
             try:
                 feats = load_and_preprocess(audio_path)
                 for feat in feats:

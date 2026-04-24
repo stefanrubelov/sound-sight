@@ -81,9 +81,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--esc50", action="store_true", help="Download ESC-50")
     parser.add_argument("--esc50-dir", default=str(DATA_DIR / "esc50"))
-    parser.add_argument(
-        "--us8k-path", default=str(DATA_DIR / "us8k"), help="Verify US8K path"
-    )
+    parser.add_argument("--us8k-path", default=str(DATA_DIR / "us8k"), help="Verify US8K path")
     args = parser.parse_args()
 
     if args.esc50:

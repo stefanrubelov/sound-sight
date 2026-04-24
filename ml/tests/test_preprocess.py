@@ -21,9 +21,7 @@ class TestExtractMfcc:
     def test_output_shape(self):
         audio = np.random.randn(SAMPLE_RATE).astype(np.float32)
         feat = extract_mfcc(audio)
-        assert feat.shape == (
-            2 * N_MFCC,
-        ), f"Expected ({2 * N_MFCC},), got {feat.shape}"
+        assert feat.shape == (2 * N_MFCC,), f"Expected ({2 * N_MFCC},), got {feat.shape}"
 
     def test_output_dtype(self):
         audio = np.random.randn(SAMPLE_RATE).astype(np.float32)

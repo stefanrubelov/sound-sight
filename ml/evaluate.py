@@ -54,9 +54,7 @@ def evaluate(
 
     acc = accuracy_score(y_test, y_pred)
     report_str = classification_report(y_test, y_pred, target_names=classes)
-    report_dict = classification_report(
-        y_test, y_pred, target_names=classes, output_dict=True
-    )
+    report_dict = classification_report(y_test, y_pred, target_names=classes, output_dict=True)
     log.info("Test accuracy: %.4f\n%s", acc, report_str)
 
     # --- Confusion matrix ---

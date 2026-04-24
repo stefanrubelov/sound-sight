@@ -27,9 +27,7 @@ from ml.preprocess import (
 
 log = logging.getLogger(__name__)
 
-DEFAULT_MODEL_PATH = (
-    Path(__file__).parent / "artifacts" / "soundsight_classifier.joblib"
-)
+DEFAULT_MODEL_PATH = Path(__file__).parent / "artifacts" / "soundsight_classifier.joblib"
 UNKNOWN_THRESHOLD = 0.50
 
 
@@ -52,9 +50,7 @@ class Classifier:
         self._model = joblib.load(str(model_path))
         log.info("Loaded classifier from %s (threshold=%.2f)", model_path, threshold)
 
-    def predict(
-        self, pcm_bytes: bytes, sample_rate: int = SAMPLE_RATE
-    ) -> ClassificationResult:
+    def predict(self, pcm_bytes: bytes, sample_rate: int = SAMPLE_RATE) -> ClassificationResult:
         """Classify raw 16-bit signed PCM audio bytes.
 
         Applies the same MFCC preprocessing used during training.
@@ -90,9 +86,7 @@ class Classifier:
         if top_conf < self._threshold:
             top_class = "unknown"
 
-        all_scores = {
-            TARGET_CLASSES[i]: float(proba[i]) for i in range(len(TARGET_CLASSES))
-        }
+        all_scores = {TARGET_CLASSES[i]: float(proba[i]) for i in range(len(TARGET_CLASSES))}
 
         return ClassificationResult(
             class_name=top_class,
