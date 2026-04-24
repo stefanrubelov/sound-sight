@@ -38,9 +38,7 @@ class TestEndToEndPipeline:
         """Pipeline from PCM bytes to ClassificationResult, no real model needed."""
         n_classes = len(TARGET_CLASSES)
         mock_model = MagicMock()
-        mock_model.predict_proba.return_value = np.tile(
-            np.ones(n_classes) / n_classes, (2, 1)
-        )
+        mock_model.predict_proba.return_value = np.tile(np.ones(n_classes) / n_classes, (2, 1))
         mock_load.return_value = mock_model
 
         clf = Classifier(model_path="fake.joblib", threshold=0.50)
@@ -77,9 +75,7 @@ class TestEndToEndPipeline:
 
 
 @pytest.mark.skipif(
-    not (
-        Path(__file__).parents[1] / "artifacts" / "soundsight_classifier.joblib"
-    ).exists(),
+    not (Path(__file__).parents[1] / "artifacts" / "soundsight_classifier.joblib").exists(),
     reason="Trained model artifact not found — run ml/train.py first",
 )
 class TestWithRealModel:
