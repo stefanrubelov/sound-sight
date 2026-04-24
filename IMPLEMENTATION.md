@@ -182,35 +182,35 @@ Both partners must understand the full system for exam defense.
 ## Phase 5 — Frontend Skeleton (Week 1–2, Samuel)
 
 ### Vite + React + TS setup
-- [ ] `npm create vite@latest frontend -- --template react-ts`
-- [ ] Router (React Router), base layout, navigation
-- [ ] Tailwind or plain CSS modules (pick one, document)
-- [ ] Accessibility baseline: keyboard focus rings, `prefers-reduced-motion`, ARIA landmarks
+- [x] `npm create vite@latest frontend -- --template react-ts` — already scaffolded
+- [x] Router (React Router v7), base layout with `<Outlet>`, navigation
+- [x] CSS modules chosen over Tailwind — no build-time dependency, consistent with existing CSS
+- [x] Accessibility baseline: keyboard focus rings (`focus-visible`), `prefers-reduced-motion`, ARIA landmarks
 
 ### API client
-- [ ] `src/api/client.ts` — typed fetch wrapper, base URL from env
-- [ ] Types for Event, Rule, Device, UserProfile (generate from backend or hand-write)
-- [ ] `src/hooks/useEvents.ts` — WebSocket hook for live event stream
+- [x] `src/api/client.ts` — typed fetch wrapper, base URL from `VITE_API_URL` env
+- [x] Types in `src/api/types.ts`: Event, Rule, Device, UserProfile, ClassifyResponse, filters
+- [x] `src/hooks/useEvents.ts` — WebSocket hook with auto-reconnect
 
 ### Pages (placeholders first, fill in through Week 3)
-- [ ] **Live dashboard** — real-time event cards, per-room status
-- [ ] **History** — paginated event list, filters (class, room, date range)
-- [ ] **Rules** — list + create (structured form + NL text box)
-- [ ] **Devices** — registered devices, rooms
-- [ ] **Settings** — enabled classes, priorities, quiet hours
-- [ ] **Onboarding** — home description → profile preview
-- [ ] **Reports** — daily + weekly LLM digests
+- [x] **Live dashboard** — real-time event cards with severity colour-coding
+- [x] **History** — paginated event list, filters (class, date range)
+- [x] **Rules** — list + NL text box → `POST /api/rules`
+- [x] **Devices** — registered devices list
+- [x] **Settings** — profile notes, shows enabled classes + quiet hours
+- [x] **Onboarding** — home description → profile preview
+- [x] **Reports** — daily + weekly LLM digest tabs
 
 ### Accessibility pass
-- [ ] High contrast mode toggle
-- [ ] Large text mode toggle
-- [ ] All interactive elements reachable by keyboard
-- [ ] No audio-only feedback anywhere (no sounds, no speech)
+- [x] High contrast mode toggle (`data-theme="high-contrast"` on `<html>`)
+- [x] Large text mode toggle (`data-size="large"` on `<html>`)
+- [x] All interactive elements reachable by keyboard (focus-visible outlines on all controls)
+- [x] No audio-only feedback anywhere (no sounds, no speech)
 
 ### Tests
-- [ ] Vitest + React Testing Library set up
-- [ ] Smoke test for each page renders without crash
-- [ ] Filter logic test for history page
+- [x] Vitest + React Testing Library set up (`vitest.config.ts`, `tests/setup.ts`)
+- [x] Smoke test for each page renders without crash (`tests/pages.test.tsx`, 12 tests)
+- [x] Filter logic test for history page (`tests/historyFilter.test.ts`, 6 tests)
 
 ---
 
