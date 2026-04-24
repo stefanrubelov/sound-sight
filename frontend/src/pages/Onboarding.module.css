@@ -1,0 +1,92 @@
+.intro {
+  color: var(--text);
+  max-width: 560px;
+  margin-bottom: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 560px;
+  margin-bottom: 24px;
+}
+
+.form label {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.textarea {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--text);
+  margin: 0;
+}
+
+.btn {
+  align-self: flex-start;
+  padding: 8px 20px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.error {
+  color: #ef4444;
+}
+
+.result {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 560px;
+}
+
+.result h2 {
+  margin: 0 0 16px;
+}
+
+.profileDl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.profileDl dt {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.profileDl dd {
+  margin: 0;
+  color: var(--text-h);
+}
