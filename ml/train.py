@@ -47,9 +47,7 @@ def train(
         meta = json.load(f)
     classes = meta["classes"]
 
-    log.info(
-        "Training samples: %d  |  Validation samples: %d", len(y_train), len(y_val)
-    )
+    log.info("Training samples: %d  |  Validation samples: %d", len(y_train), len(y_val))
     log.info("Feature dimension: %d  |  Classes: %s", X_train.shape[1], classes)
 
     clf = RandomForestClassifier(
@@ -67,9 +65,7 @@ def train(
 
     val_preds = clf.predict(X_val)
     val_acc = accuracy_score(y_val, val_preds)
-    report = classification_report(
-        y_val, val_preds, target_names=classes, output_dict=True
-    )
+    report = classification_report(y_val, val_preds, target_names=classes, output_dict=True)
 
     log.info("Validation accuracy: %.4f", val_acc)
     log.info("\n%s", classification_report(y_val, val_preds, target_names=classes))

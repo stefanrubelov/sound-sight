@@ -50,9 +50,7 @@ def inject(class_name: str, device_id: int, confidence: float, base_url: str) ->
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Inject a fake sound event")
-    parser.add_argument(
-        "--class", dest="class_name", default="doorbell", choices=CLASSES
-    )
+    parser.add_argument("--class", dest="class_name", default="doorbell", choices=CLASSES)
     parser.add_argument("--device-id", type=int, default=1)
     parser.add_argument("--confidence", type=float, default=0.92)
     parser.add_argument("--url", default=BACKEND_URL)
