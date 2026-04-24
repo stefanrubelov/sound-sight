@@ -1,0 +1,105 @@
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.online {
+  background: #22c55e;
+}
+.offline {
+  background: var(--border);
+}
+
+.error {
+  color: #ef4444;
+  margin-bottom: 16px;
+}
+
+.empty {
+  color: var(--text);
+  font-style: italic;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  background: var(--surface, var(--bg));
+}
+
+.card.critical {
+  border-left: 4px solid #ef4444;
+}
+.card.warn {
+  border-left: 4px solid #f59e0b;
+}
+.card.info {
+  border-left: 4px solid #3b82f6;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.className {
+  font-size: 1rem;
+  color: var(--text-h);
+  text-transform: capitalize;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.meta dt {
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.meta dd {
+  margin: 0;
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+}
