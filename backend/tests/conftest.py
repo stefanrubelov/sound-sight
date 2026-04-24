@@ -1,7 +1,13 @@
+import sys
+from pathlib import Path
+
 import pytest
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
+
+# Make the repo root importable so `ml.*` modules resolve from backend tests
+sys.path.insert(0, str(Path(__file__).parents[2]))
 
 from app.db.models import Base
 from app.dependencies import get_db
@@ -36,8 +42,6 @@ async def client(db_session: AsyncSession):
         yield db_session
 
     app.dependency_overrides[get_db] = override_get_db
-    async with AsyncClient(
-        transport=ASGITransport(app=app), base_url="http://test"
-    ) as c:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
         yield c
     app.dependency_overrides.clear()
