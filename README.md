@@ -26,20 +26,28 @@ See [`IMPLEMENTATION.md`](./IMPLEMENTATION.md) for the phase-by-phase checklist.
 ## Quick start
 
 ```bash
-# Backend
-cd backend && python3.14 -m venv .venv && source .venv/bin/activate
+# 1. Copy env config (edit as needed — defaults work for local dev)
+cp .env.example .env
+
+# 2. Backend
+cd backend
+python3.14 -m venv .venv && source .venv/bin/activate
 pip install -e .
-uvicorn app.main:app --reload
+alembic upgrade head          # run DB migrations
+uvicorn app.main:app --reload # http://localhost:8000
 
-# Frontend
-cd frontend && npm install && npm run dev
+# 3. Frontend
+cd frontend && npm install && npm run dev   # http://localhost:5173
 
-# Firmware
+# 4. Firmware
 cd firmware && pio run -t upload && pio device monitor
 
-# Ollama
+# 5. Ollama (must be running before the backend starts)
 ollama serve
 ollama pull llama3.1:8b
+
+# 6. Promptfoo prompt tests (optional, requires Ollama running)
+scripts/run_promptfoo.sh
 ```
 
 ## Dev setup (required for every contributor)
