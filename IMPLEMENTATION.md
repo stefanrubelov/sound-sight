@@ -217,53 +217,53 @@ Both partners must understand the full system for exam defense.
 ## Phase 6 — LLM Layer: Ollama + LangChain (Week 3, Samuel)
 
 ### Ollama integration
-- [ ] `app/services/llm/ollama_client.py` — wraps `langchain_ollama.ChatOllama`
-- [ ] Model + temperature configurable per chain
-- [ ] Retry/timeout policy
+- [x] `app/services/llm/ollama_client.py` — wraps `langchain_ollama.ChatOllama`
+- [x] Model + temperature configurable per chain
+- [x] Retry/timeout policy (asyncio.wait_for at call sites)
 
 ### Shared base system prompt
-- [ ] `prompts/base_system.md` — persona, tone, JSON-only-when-asked, no-hallucinations
-- [ ] Loader utility that merges base + role-specific prompt
+- [x] `prompts/base_system.md` — persona, tone, JSON-only-when-asked, no-hallucinations
+- [x] Loader utility that merges base + role-specific prompt (`app/services/llm/prompt_loader.py`)
 
 ### Chain 1: Rule Parser (LCEL)
-- [ ] `app/services/llm/chains/rule_parser.py`
-- [ ] `Rule` Pydantic schema
-- [ ] Prompt: system + format instructions + 3–5 few-shot examples
-- [ ] Temperature 0
-- [ ] `parse_rule(nl_text) -> Rule`
-- [ ] Wire into `POST /api/rules` when body contains `source_text`
-- [ ] Unit tests with mocked `ChatOllama`
+- [x] `app/services/llm/chains/rule_parser.py`
+- [x] `ParsedRule` Pydantic schema with field validators
+- [x] Prompt: system + format instructions + 5 few-shot examples
+- [x] Temperature 0
+- [x] `parse_rule(nl_text) -> ParsedRule`
+- [x] Wire into `POST /api/rules` when body contains `source_text`
+- [x] Unit tests with `FakeListChatModel`
 
 ### Chain 2: Event Interpretation (LCEL)
-- [ ] Input: Event + device status + user profile snippet (from MCP)
-- [ ] Output: short natural-language summary (1–2 sentences)
-- [ ] Called async after each event insert; writes to `Event.llm_summary`
-- [ ] Unit tests
+- [x] Input: Event + device info + user profile notes
+- [x] Output: short natural-language summary (1–2 sentences)
+- [x] Called async after each event insert via background task; writes to `Event.llm_summary`
+- [x] Unit tests
 
 ### Chain 3: Onboarding Profiler (LCEL)
-- [ ] `SoundProfile` Pydantic schema (enabled_classes, priorities, quiet_hours_default)
-- [ ] Few-shot examples for 3 home archetypes (single person, family with baby, elderly alone)
-- [ ] `POST /api/onboarding/profile` → returns profile + persists to `UserProfile`
-- [ ] Unit tests
+- [x] `SoundProfile` Pydantic schema (enabled_classes, priorities, quiet_hours_default)
+- [x] Few-shot examples for 3 home archetypes (single person, family with baby, elderly alone)
+- [x] `POST /api/onboarding/profile` → returns profile + persists to `UserProfile`
+- [x] Unit tests
 
 ### Agent 1: Report Generation
-- [ ] Tools: `query_events`, `get_user_baseline`, `get_active_rules` (via MCP)
-- [ ] System prompt emphasizes CoT: outline → narrative
-- [ ] `GET /api/reports/daily` and `/weekly`
-- [ ] Cache reports for the day/week (Redis later, dict for now)
-- [ ] Unit tests with mocked tools
+- [x] Tools: `_query_events`, `_query_baselines`, `_query_rules` (direct DB — MCP wiring in Phase 7)
+- [x] System prompt emphasizes outline → narrative
+- [x] `GET /api/reports/daily` and `/weekly`
+- [x] Cache reports for the day/week (in-memory dict)
+- [x] Unit tests
 
 ### Agent 2: Anomaly Narration
-- [ ] Triggered when a statistical anomaly is detected (simple rule: duration > 3σ from baseline)
-- [ ] Tools: `get_user_baseline`, `query_events` (similar past events)
-- [ ] Uses long-term memory of baselines
-- [ ] Unit tests
+- [x] Triggered when duration > 3σ from baseline
+- [x] Queries `Baseline` table and generates contextual narration
+- [x] Appended to `Event.llm_summary` when anomaly detected
+- [x] Unit tests
 
 ### LLM decision: standard vs custom Ollama model
 - [ ] Run Promptfoo (see Phase 9) against both `llama3.1:8b` and `qwen2.5:7b-instruct`
-- [ ] If custom needed: write `ollama/Modelfile` baking in the base system prompt
-- [ ] Build with `ollama create soundsight-base -f Modelfile`
-- [ ] Hand in the Modelfile as a deliverable (per requirements)
+- [x] Write `ollama/Modelfile` baking in the base system prompt
+- [ ] Build with `ollama create soundsight-base -f Modelfile` (run when Ollama available)
+- [x] Modelfile committed as a deliverable
 
 ---
 
