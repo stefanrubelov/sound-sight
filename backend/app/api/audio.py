@@ -81,6 +81,23 @@ async def _write_llm_summary(event_id: int, class_name: str) -> None:
             if event.llm_summary:
                 await db.commit()
                 log.debug("LLM summary written for event %d", event_id)
+
+            # Embed into RAG event history
+            try:
+                from app.services.rag.event_history import embed_event
+
+                embed_event(
+                    event_id=event.id,
+                    class_name=event.class_name,
+                    timestamp=event.timestamp.isoformat(),
+                    device_id=event.device_id,
+                    duration=event.duration,
+                    confidence=event.confidence,
+                    room=room,
+                    summary=event.llm_summary,
+                )
+            except Exception as rag_exc:
+                log.warning("RAG embed failed for event %d: %s", event_id, rag_exc)
     except Exception as exc:
         log.warning("Post-event LLM task failed for event %d: %s", event_id, exc)
 
