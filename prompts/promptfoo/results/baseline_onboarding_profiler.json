@@ -1,0 +1,1527 @@
+{
+  "evalId": "eval-1rO-2026-04-25T11:35:12",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-04-25T11:35:12.936Z",
+    "prompts": [
+      {
+        "id": "8e9cef0fbfc783da70c47aa198170bfc90c420d2be1d57ca74bd21eb1394cf66",
+        "raw": "[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"\n  }\n]\n",
+        "label": "[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"\n  }\n]\n",
+        "provider": "ollama:chat:llama3.1:8b",
+        "metrics": {
+          "score": 7,
+          "testPassCount": 7,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 54,
+          "assertFailCount": 0,
+          "totalLatencyMs": 200563,
+          "tokenUsage": {
+            "prompt": 4422,
+            "completion": 1165,
+            "cached": 0,
+            "total": 5587,
+            "numRequests": 7,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm is critical",
+                "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking is critical",
+                "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "doorbell enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('doorbell')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "baby_crying not enabled",
+                "value": "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "dog_barking not enabled",
+                "value": "!JSON.parse(output).enabled_classes.includes('dog_barking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "no quiet hours for solo adult",
+                "value": "JSON.parse(output).quiet_hours_default === null"
+              }
+            }
+          ]
+        },
+        "id": "41f14ac7-3a6c-429b-b175-2fdcd2981581",
+        "latencyMs": 36168,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\nI live alone in a flat, I work from home, no pets.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"}]",
+          "config": {}
+        },
+        "promptId": "8e9cef0fbfc783da70c47aa198170bfc90c420d2be1d57ca74bd21eb1394cf66",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"doorbell\", \"timer_beep\"],\n  \"priorities\": {\n    \"fire_alarm\": \"critical\",\n    \"glass_breaking\": \"critical\",\n    \"doorbell\": \"warn\",\n    \"timer_beep\": \"info\"\n  },\n  \"quiet_hours_default\": null\n}",
+          "tokenUsage": {
+            "prompt": 627,
+            "completion": 87,
+            "total": 714
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "single person, no pets — minimal profile",
+          "vars": {
+            "home_description": "I live alone in a flat, I work from home, no pets."
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm is critical",
+              "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking is critical",
+              "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "doorbell enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('doorbell')"
+            },
+            {
+              "type": "javascript",
+              "label": "baby_crying not enabled",
+              "value": "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+            },
+            {
+              "type": "javascript",
+              "label": "dog_barking not enabled",
+              "value": "!JSON.parse(output).enabled_classes.includes('dog_barking')"
+            },
+            {
+              "type": "javascript",
+              "label": "no quiet hours for solo adult",
+              "value": "JSON.parse(output).quiet_hours_default === null"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "vars": {
+          "home_description": "I live alone in a flat, I work from home, no pets."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm is critical",
+                "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking is critical",
+                "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "baby_crying enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('baby_crying')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "baby_crying is critical",
+                "value": "JSON.parse(output).priorities['baby_crying'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "dog_barking enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('dog_barking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "quiet hours set",
+                "value": "JSON.parse(output).quiet_hours_default !== null"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "quiet hours end at 07:00",
+                "value": "JSON.parse(output).quiet_hours_default?.end === '07:00'"
+              }
+            }
+          ]
+        },
+        "id": "221a180c-7e9b-417e-ace0-54ddcf6ba2c4",
+        "latencyMs": 22291,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\nWe have a 6-month-old baby and a golden retriever. Both parents are deaf.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"}]",
+          "config": {}
+        },
+        "promptId": "8e9cef0fbfc783da70c47aa198170bfc90c420d2be1d57ca74bd21eb1394cf66",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n    \"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"baby_crying\", \"doorbell\", \"dog_barking\", \"timer_beep\"],\n    \"priorities\": {\n        \"fire_alarm\": \"critical\",\n        \"glass_breaking\": \"critical\",\n        \"baby_crying\": \"critical\",\n        \"doorbell\": \"warn\",\n        \"dog_barking\": \"info\",\n        \"timer_beep\": \"info\"\n    },\n    \"quiet_hours_default\": {\"start\": \"22:00\", \"end\": \"07:00\"}\n}",
+          "tokenUsage": {
+            "prompt": 631,
+            "completion": 227,
+            "total": 858
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "family with baby and dog — baby_crying critical, quiet hours set",
+          "vars": {
+            "home_description": "We have a 6-month-old baby and a golden retriever. Both parents are deaf."
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm is critical",
+              "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking is critical",
+              "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "baby_crying enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('baby_crying')"
+            },
+            {
+              "type": "javascript",
+              "label": "baby_crying is critical",
+              "value": "JSON.parse(output).priorities['baby_crying'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "dog_barking enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('dog_barking')"
+            },
+            {
+              "type": "javascript",
+              "label": "quiet hours set",
+              "value": "JSON.parse(output).quiet_hours_default !== null"
+            },
+            {
+              "type": "javascript",
+              "label": "quiet hours end at 07:00",
+              "value": "JSON.parse(output).quiet_hours_default?.end === '07:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 1,
+        "vars": {
+          "home_description": "We have a 6-month-old baby and a golden retriever. Both parents are deaf."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm is critical",
+                "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking is critical",
+                "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "water_running enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('water_running')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "water_running is warn or critical",
+                "value": "['warn','critical'].includes(JSON.parse(output).priorities['water_running'])"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "quiet hours set for elderly",
+                "value": "JSON.parse(output).quiet_hours_default !== null"
+              }
+            }
+          ]
+        },
+        "id": "5ef94372-016d-4c91-9b3e-6515d7fa7c69",
+        "latencyMs": 31568,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\nI am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"}]",
+          "config": {}
+        },
+        "promptId": "8e9cef0fbfc783da70c47aa198170bfc90c420d2be1d57ca74bd21eb1394cf66",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n    \"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"doorbell\", \"water_running\"],\n    \"priorities\": {\n        \"fire_alarm\": \"critical\",\n        \"glass_breaking\": \"critical\",\n        \"doorbell\": \"warn\",\n        \"water_running\": \"warn\"\n    },\n    \"quiet_hours_default\": {\"start\": \"21:00\", \"end\": \"08:00\"}\n}",
+          "tokenUsage": {
+            "prompt": 636,
+            "completion": 173,
+            "total": 809
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "elderly person — water_running warn, early quiet hours",
+          "vars": {
+            "home_description": "I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector."
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm is critical",
+              "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking is critical",
+              "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "water_running enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('water_running')"
+            },
+            {
+              "type": "javascript",
+              "label": "water_running is warn or critical",
+              "value": "['warn','critical'].includes(JSON.parse(output).priorities['water_running'])"
+            },
+            {
+              "type": "javascript",
+              "label": "quiet hours set for elderly",
+              "value": "JSON.parse(output).quiet_hours_default !== null"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 2,
+        "vars": {
+          "home_description": "I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm is critical",
+                "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking is critical",
+                "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "doorbell enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('doorbell')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "baby_crying not included",
+                "value": "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+              }
+            }
+          ]
+        },
+        "id": "7b29b72a-abc2-4dcf-902f-29e8cdefdde5",
+        "latencyMs": 10358,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\nI share a house with 3 other students. We come and go at different times. No pets.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"}]",
+          "config": {}
+        },
+        "promptId": "8e9cef0fbfc783da70c47aa198170bfc90c420d2be1d57ca74bd21eb1394cf66",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"doorbell\", \"timer_beep\"],\n  \"priorities\": {\"fire_alarm\": \"critical\", \"glass_breaking\": \"critical\", \"doorbell\": \"warn\", \"timer_beep\": \"info\"},\n  \"quiet_hours_default\": null\n}",
+          "tokenUsage": {
+            "prompt": 633,
+            "completion": 140,
+            "total": 773
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "shared house with students — doorbell and fire alarm core",
+          "vars": {
+            "home_description": "I share a house with 3 other students. We come and go at different times. No pets."
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm is critical",
+              "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking is critical",
+              "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "doorbell enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('doorbell')"
+            },
+            {
+              "type": "javascript",
+              "label": "baby_crying not included",
+              "value": "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 3,
+        "vars": {
+          "home_description": "I share a house with 3 other students. We come and go at different times. No pets."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm is critical",
+                "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking is critical",
+                "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "dog_barking enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('dog_barking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "baby_crying not enabled",
+                "value": "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+              }
+            }
+          ]
+        },
+        "id": "a48628c4-b850-452d-b8e7-fd96a2e61cd2",
+        "latencyMs": 34000,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\nMy partner and I have a labrador. We both work from home during the day.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"}]",
+          "config": {}
+        },
+        "promptId": "8e9cef0fbfc783da70c47aa198170bfc90c420d2be1d57ca74bd21eb1394cf66",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"doorbell\", \"dog_barking\", \"timer_beep\"],\n  \"priorities\": {\n    \"fire_alarm\": \"critical\",\n    \"glass_breaking\": \"critical\",\n    \"doorbell\": \"warn\",\n    \"dog_barking\": \"info\",\n    \"timer_beep\": \"info\"\n  },\n  \"quiet_hours_default\": null\n}",
+          "tokenUsage": {
+            "prompt": 630,
+            "completion": 153,
+            "total": 783
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "family with dog only — dog_barking included, no baby_crying",
+          "vars": {
+            "home_description": "My partner and I have a labrador. We both work from home during the day."
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm is critical",
+              "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking is critical",
+              "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "dog_barking enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('dog_barking')"
+            },
+            {
+              "type": "javascript",
+              "label": "baby_crying not enabled",
+              "value": "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 4,
+        "vars": {
+          "home_description": "My partner and I have a labrador. We both work from home during the day."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm is critical",
+                "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking is critical",
+                "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "quiet hours set",
+                "value": "JSON.parse(output).quiet_hours_default !== null"
+              }
+            }
+          ]
+        },
+        "id": "ba8ac16f-c341-41d5-943b-84013a3fece5",
+        "latencyMs": 33107,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\nI work night shifts as a nurse. I sleep from 9am to 5pm. I live alone.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"}]",
+          "config": {}
+        },
+        "promptId": "8e9cef0fbfc783da70c47aa198170bfc90c420d2be1d57ca74bd21eb1394cf66",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n    \"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"doorbell\"],\n    \"priorities\": {\"fire_alarm\": \"critical\", \"glass_breaking\": \"critical\", \"doorbell\": \"warn\"},\n    \"quiet_hours_default\": {\"start\": \"09:00\", \"end\": \"17:00\"}\n}",
+          "tokenUsage": {
+            "prompt": 635,
+            "completion": 208,
+            "total": 843
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "night shift worker — quiet hours during the day",
+          "vars": {
+            "home_description": "I work night shifts as a nurse. I sleep from 9am to 5pm. I live alone."
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm is critical",
+              "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking is critical",
+              "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "quiet hours set",
+              "value": "JSON.parse(output).quiet_hours_default !== null"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 5,
+        "vars": {
+          "home_description": "I work night shifts as a nurse. I sleep from 9am to 5pm. I live alone."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking always enabled",
+                "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "fire_alarm is critical",
+                "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "glass_breaking is critical",
+                "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "all enabled_classes are valid",
+                "value": "const valid = ['fire_alarm','doorbell','glass_breaking','baby_crying','dog_barking','timer_beep','water_running'];\nconst out = JSON.parse(output);\nreturn out.enabled_classes.every(c => valid.includes(c));\n"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "all priorities are valid",
+                "value": "const out = JSON.parse(output);\nconst validPriorities = ['critical','warn','info'];\nreturn Object.values(out.priorities).every(p => validPriorities.includes(p));\n"
+              }
+            }
+          ]
+        },
+        "id": "930b9ebd-2d33-4bf5-b8d6-16cfabdeda5a",
+        "latencyMs": 33071,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\nI live with my elderly mother who has severe hearing loss. We have a small apartment.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"}]",
+          "config": {}
+        },
+        "promptId": "8e9cef0fbfc783da70c47aa198170bfc90c420d2be1d57ca74bd21eb1394cf66",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n    \"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"doorbell\"],\n    \"priorities\": {\"fire_alarm\": \"critical\", \"glass_breaking\": \"critical\", \"doorbell\": \"warn\"},\n    \"quiet_hours_default\": {\"start\": \"22:00\", \"end\": \"08:00\"}\n}",
+          "tokenUsage": {
+            "prompt": 630,
+            "completion": 177,
+            "total": 807
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "output enabled_classes only from valid set",
+          "vars": {
+            "home_description": "I live with my elderly mother who has severe hearing loss. We have a small apartment."
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking always enabled",
+              "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+            },
+            {
+              "type": "javascript",
+              "label": "fire_alarm is critical",
+              "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "glass_breaking is critical",
+              "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "all enabled_classes are valid",
+              "value": "const valid = ['fire_alarm','doorbell','glass_breaking','baby_crying','dog_barking','timer_beep','water_running'];\nconst out = JSON.parse(output);\nreturn out.enabled_classes.every(c => valid.includes(c));\n"
+            },
+            {
+              "type": "javascript",
+              "label": "all priorities are valid",
+              "value": "const out = JSON.parse(output);\nconst validPriorities = ['critical','warn','info'];\nreturn Object.values(out.priorities).every(p => validPriorities.includes(p));\n"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 6,
+        "vars": {
+          "home_description": "I live with my elderly mother who has severe hearing loss. We have a small apartment."
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 7,
+      "failures": 0,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 4422,
+        "completion": 1165,
+        "cached": 0,
+        "total": 5587,
+        "numRequests": 7,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 64663,
+      "evaluationDurationMs": 64663
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "SoundSight Onboarding Profiler — golden pair tests for home description → profile",
+    "prompts": [
+      "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nTask: Analyse the user's home description and generate a personalised sound alert profile.\\nOutput valid JSON matching this schema exactly:\\n{\\\"enabled_classes\\\": [\\\"<list of sound class names>\\\"], \\\"priorities\\\": {\\\"<class_name>\\\": \\\"<critical|warn|info>\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"<HH:MM>\\\", \\\"end\\\": \\\"<HH:MM>\\\"} or null}\\n\\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nGuidelines:\\n- fire_alarm and glass_breaking are always critical (safety)\\n- baby_crying is critical if a baby is mentioned\\n- doorbell defaults to warn\\n- dog_barking defaults to info\\n- timer_beep and water_running default to info\\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)\"},{\"role\":\"user\",\"content\":\"Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\\n\\nExamples:\\n\\nDescription: I live alone in a flat, I work from home, no pets.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": null}\\n\\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"baby_crying\\\", \\\"doorbell\\\", \\\"dog_barking\\\", \\\"timer_beep\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"baby_crying\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"dog_barking\\\": \\\"info\\\", \\\"timer_beep\\\": \\\"info\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"22:00\\\", \\\"end\\\": \\\"07:00\\\"}}\\n\\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\\nProfile: {\\\"enabled_classes\\\": [\\\"fire_alarm\\\", \\\"glass_breaking\\\", \\\"doorbell\\\", \\\"water_running\\\"], \\\"priorities\\\": {\\\"fire_alarm\\\": \\\"critical\\\", \\\"glass_breaking\\\": \\\"critical\\\", \\\"doorbell\\\": \\\"warn\\\", \\\"water_running\\\": \\\"warn\\\"}, \\\"quiet_hours_default\\\": {\\\"start\\\": \\\"21:00\\\", \\\"end\\\": \\\"08:00\\\"}}\\n\\nNow generate a profile for this home:\\n{{home_description}}\"}]"
+    ],
+    "providers": [
+      {
+        "id": "ollama:chat:llama3.1:8b",
+        "config": {
+          "temperature": 0.2,
+          "num_predict": 300
+        },
+        "transform": "(output.match(/\\{[\\s\\S]*\\}/) || [output])[0]"
+      }
+    ],
+    "tests": [
+      {
+        "description": "single person, no pets — minimal profile",
+        "vars": {
+          "home_description": "I live alone in a flat, I work from home, no pets."
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "doorbell enabled",
+            "value": "JSON.parse(output).enabled_classes.includes('doorbell')"
+          },
+          {
+            "type": "javascript",
+            "label": "baby_crying not enabled",
+            "value": "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+          },
+          {
+            "type": "javascript",
+            "label": "dog_barking not enabled",
+            "value": "!JSON.parse(output).enabled_classes.includes('dog_barking')"
+          },
+          {
+            "type": "javascript",
+            "label": "no quiet hours for solo adult",
+            "value": "JSON.parse(output).quiet_hours_default === null"
+          }
+        ]
+      },
+      {
+        "description": "family with baby and dog — baby_crying critical, quiet hours set",
+        "vars": {
+          "home_description": "We have a 6-month-old baby and a golden retriever. Both parents are deaf."
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "baby_crying enabled",
+            "value": "JSON.parse(output).enabled_classes.includes('baby_crying')"
+          },
+          {
+            "type": "javascript",
+            "label": "baby_crying is critical",
+            "value": "JSON.parse(output).priorities['baby_crying'] === 'critical'"
+          },
+          {
+            "type": "javascript",
+            "label": "dog_barking enabled",
+            "value": "JSON.parse(output).enabled_classes.includes('dog_barking')"
+          },
+          {
+            "type": "javascript",
+            "label": "quiet hours set",
+            "value": "JSON.parse(output).quiet_hours_default !== null"
+          },
+          {
+            "type": "javascript",
+            "label": "quiet hours end at 07:00",
+            "value": "JSON.parse(output).quiet_hours_default?.end === '07:00'"
+          }
+        ]
+      },
+      {
+        "description": "elderly person — water_running warn, early quiet hours",
+        "vars": {
+          "home_description": "I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector."
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "water_running enabled",
+            "value": "JSON.parse(output).enabled_classes.includes('water_running')"
+          },
+          {
+            "type": "javascript",
+            "label": "water_running is warn or critical",
+            "value": "['warn','critical'].includes(JSON.parse(output).priorities['water_running'])"
+          },
+          {
+            "type": "javascript",
+            "label": "quiet hours set for elderly",
+            "value": "JSON.parse(output).quiet_hours_default !== null"
+          }
+        ]
+      },
+      {
+        "description": "shared house with students — doorbell and fire alarm core",
+        "vars": {
+          "home_description": "I share a house with 3 other students. We come and go at different times. No pets."
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "doorbell enabled",
+            "value": "JSON.parse(output).enabled_classes.includes('doorbell')"
+          },
+          {
+            "type": "javascript",
+            "label": "baby_crying not included",
+            "value": "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+          }
+        ]
+      },
+      {
+        "description": "family with dog only — dog_barking included, no baby_crying",
+        "vars": {
+          "home_description": "My partner and I have a labrador. We both work from home during the day."
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "dog_barking enabled",
+            "value": "JSON.parse(output).enabled_classes.includes('dog_barking')"
+          },
+          {
+            "type": "javascript",
+            "label": "baby_crying not enabled",
+            "value": "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+          }
+        ]
+      },
+      {
+        "description": "night shift worker — quiet hours during the day",
+        "vars": {
+          "home_description": "I work night shifts as a nurse. I sleep from 9am to 5pm. I live alone."
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "quiet hours set",
+            "value": "JSON.parse(output).quiet_hours_default !== null"
+          }
+        ]
+      },
+      {
+        "description": "output enabled_classes only from valid set",
+        "vars": {
+          "home_description": "I live with my elderly mother who has severe hearing loss. We have a small apartment."
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "all enabled_classes are valid",
+            "value": "const valid = ['fire_alarm','doorbell','glass_breaking','baby_crying','dog_barking','timer_beep','water_running'];\nconst out = JSON.parse(output);\nreturn out.enabled_classes.every(c => valid.includes(c));\n"
+          },
+          {
+            "type": "javascript",
+            "label": "all priorities are valid",
+            "value": "const out = JSON.parse(output);\nconst validPriorities = ['critical','warn','info'];\nreturn Object.values(out.priorities).every(p => validPriorities.includes(p));\n"
+          }
+        ]
+      }
+    ],
+    "scenarios": [],
+    "env": {},
+    "defaultTest": {
+      "assert": [
+        {
+          "type": "is-json",
+          "label": "output is valid JSON"
+        },
+        {
+          "type": "javascript",
+          "label": "fire_alarm always enabled",
+          "value": "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+        },
+        {
+          "type": "javascript",
+          "label": "glass_breaking always enabled",
+          "value": "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+        },
+        {
+          "type": "javascript",
+          "label": "fire_alarm is critical",
+          "value": "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+        },
+        {
+          "type": "javascript",
+          "label": "glass_breaking is critical",
+          "value": "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+        }
+      ],
+      "vars": {},
+      "options": {},
+      "metadata": {}
+    },
+    "outputPath": [
+      "results/baseline_onboarding_profiler.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.121.8",
+    "nodeVersion": "v25.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "exportedAt": "2026-04-25T11:36:17.706Z",
+    "evaluationCreatedAt": "2026-04-25T11:35:12.936Z"
+  }
+}

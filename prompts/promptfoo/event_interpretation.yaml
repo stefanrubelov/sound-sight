@@ -1,0 +1,185 @@
+description: "SoundSight Event Interpretation — rubric-based quality tests"
+
+providers:
+  - id: ollama:chat:llama3.1:8b
+    config:
+      temperature: 0.3
+      num_predict: 150
+
+prompts:
+  - |
+    [
+      {
+        "role": "system",
+        "content": "You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\n\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\n\nRules:\n- Always mention the sound type and location.\n- Mention the duration naturally.\n- Do not mention confidence scores, ML terms, or invent facts.\n- Active voice, plain language."
+      },
+      {
+        "role": "user",
+        "content": "A new sound event has been detected. Write a 1-2 sentence summary for the user.\n\nSound: {{class_name}}\nDuration: {{duration}} seconds\nLocation: {{device_name}} in {{room}}\nDetected at: {{timestamp}}\n{{user_context}}\nKeep the summary clear and factual. Do not mention confidence scores or technical terms."
+      }
+    ]
+
+tests:
+  - description: "fire alarm — must mention room and duration"
+    vars:
+      class_name: "Fire Alarm"
+      duration: "8.2"
+      device_name: "Sensor-A"
+      room: "kitchen"
+      timestamp: "2026-04-25T02:15:00"
+      user_context: ""
+    assert:
+      - type: icontains
+        label: mentions kitchen
+        value: "kitchen"
+      - type: icontains
+        label: mentions fire alarm
+        value: "fire alarm"
+      - type: not-icontains
+        label: no confidence scores
+        value: "confidence"
+      - type: not-icontains
+        label: no ML terms
+        value: "classifier"
+      - type: javascript
+        label: 1-2 sentences only
+        value: "output.trim().split(/[.!?]+/).filter(s => s.trim().length > 0).length <= 3"
+
+  - description: "doorbell — daytime, no special user context"
+    vars:
+      class_name: "Doorbell"
+      duration: "1.5"
+      device_name: "Front Sensor"
+      room: "hallway"
+      timestamp: "2026-04-25T14:30:00"
+      user_context: ""
+    assert:
+      - type: icontains
+        label: mentions doorbell or door
+        value: "door"
+      - type: icontains
+        label: mentions hallway
+        value: "hallway"
+      - type: not-icontains
+        label: no technical jargon
+        value: "MFCC"
+      - type: not-icontains
+        label: no probability
+        value: "probability"
+
+  - description: "baby crying — user has noted quiet hours context"
+    vars:
+      class_name: "Baby Crying"
+      duration: "45.0"
+      device_name: "Nursery Sensor"
+      room: "nursery"
+      timestamp: "2026-04-25T23:10:00"
+      user_context: "User notes: Quiet hours are 22:00-07:00. Baby usually sleeps by 21:00.\n"
+    assert:
+      - type: icontains
+        label: mentions nursery or room
+        value: "nursery"
+      - type: not-icontains
+        label: no invented diagnosis
+        value: "fever"
+      - type: not-icontains
+        label: no invented diagnosis 2
+        value: "sick"
+      - type: not-icontains
+        label: no confidence
+        value: "confidence"
+
+  - description: "glass breaking — safety event, urgent but calm"
+    vars:
+      class_name: "Glass Breaking"
+      duration: "2.1"
+      device_name: "Living Room Sensor"
+      room: "living room"
+      timestamp: "2026-04-25T03:45:00"
+      user_context: ""
+    assert:
+      - type: icontains
+        label: mentions glass or breaking
+        value: "glass"
+      - type: icontains
+        label: mentions living room
+        value: "living room"
+      - type: not-icontains
+        label: not overly dramatic
+        value: "intruder"
+      - type: not-icontains
+        label: no ML terms
+        value: "model"
+
+  - description: "dog barking — user has a dog, routine event"
+    vars:
+      class_name: "Dog Barking"
+      duration: "6.3"
+      device_name: "Garden Sensor"
+      room: "garden"
+      timestamp: "2026-04-25T16:00:00"
+      user_context: "User notes: Has a golden retriever named Max.\n"
+    assert:
+      - type: icontains
+        label: mentions dog or barking
+        value: "bark"
+      - type: icontains
+        label: mentions garden or location
+        value: "garden"
+      - type: not-icontains
+        label: no technical metrics
+        value: "score"
+
+  - description: "timer beep — short, routine, no alarm needed"
+    vars:
+      class_name: "Timer Beep"
+      duration: "0.8"
+      device_name: "Kitchen Sensor"
+      room: "kitchen"
+      timestamp: "2026-04-25T12:00:00"
+      user_context: ""
+    assert:
+      - type: icontains
+        label: mentions timer or beep or kitchen
+        value: "kitchen"
+      - type: not-icontains
+        label: no exclamation marks for routine event
+        value: "!"
+
+  - description: "water running — mentions duration and location"
+    vars:
+      class_name: "Water Running"
+      duration: "180.0"
+      device_name: "Bathroom Sensor"
+      room: "bathroom"
+      timestamp: "2026-04-25T07:30:00"
+      user_context: ""
+    assert:
+      - type: icontains
+        label: mentions water or bathroom
+        value: "water"
+      - type: not-icontains
+        label: no confidence scores
+        value: "confidence"
+      - type: not-icontains
+        label: no invented context
+        value: "flood"
+
+  - description: "output must not expose sigma or technical stats"
+    vars:
+      class_name: "Fire Alarm"
+      duration: "12.0"
+      device_name: "Sensor"
+      room: "bedroom"
+      timestamp: "2026-04-25T04:00:00"
+      user_context: ""
+    assert:
+      - type: not-icontains
+        label: no sigma
+        value: "sigma"
+      - type: not-icontains
+        label: no standard deviation
+        value: "standard deviation"
+      - type: not-icontains
+        label: no raw numbers as metrics
+        value: "0.9"

@@ -1,0 +1,3000 @@
+{
+  "evalId": "eval-xPj-2026-04-25T11:33:20",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-04-25T11:33:20.935Z",
+    "prompts": [
+      {
+        "id": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "raw": "[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"\n  }\n]\n",
+        "label": "[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"\n  }\n]\n",
+        "provider": "ollama:chat:llama3.1:8b",
+        "metrics": {
+          "score": 20,
+          "testPassCount": 20,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 82,
+          "assertFailCount": 0,
+          "totalLatencyMs": 211874,
+          "tokenUsage": {
+            "prompt": 10461,
+            "completion": 1002,
+            "cached": 0,
+            "total": 11463,
+            "numRequests": 20,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=fire_alarm",
+                "value": "JSON.parse(output).trigger === 'fire_alarm'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=critical",
+                "value": "JSON.parse(output).priority === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=22:00",
+                "value": "JSON.parse(output).time_start === '22:00'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_end=07:00",
+                "value": "JSON.parse(output).time_end === '07:00'"
+              }
+            }
+          ]
+        },
+        "id": "e302166a-6014-4c03-9a99-a233e4f4b1c0",
+        "latencyMs": 5250,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nAlert me if the fire alarm goes off at night\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"fire_alarm\",\n  \"priority\": \"critical\",\n  \"alert_type\": \"both\",\n  \"time_start\": \"22:00\",\n  \"time_end\": \"07:00\"\n}",
+          "tokenUsage": {
+            "prompt": 525,
+            "completion": 56,
+            "total": 581
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "fire alarm at night (critical, both, night window)",
+          "vars": {
+            "rule_text": "Alert me if the fire alarm goes off at night"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=fire_alarm",
+              "value": "JSON.parse(output).trigger === 'fire_alarm'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=critical",
+              "value": "JSON.parse(output).priority === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=22:00",
+              "value": "JSON.parse(output).time_start === '22:00'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_end=07:00",
+              "value": "JSON.parse(output).time_end === '07:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "vars": {
+          "rule_text": "Alert me if the fire alarm goes off at night"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=doorbell",
+                "value": "JSON.parse(output).trigger === 'doorbell'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=vibration",
+                "value": "JSON.parse(output).alert_type === 'vibration'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=null",
+                "value": "JSON.parse(output).time_start === null"
+              }
+            }
+          ]
+        },
+        "id": "ebeb2c7b-c72d-4a6e-b97f-72b822daa630",
+        "latencyMs": 9855,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nVibrate when the doorbell rings\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\"trigger\": \"doorbell\", \"priority\": \"warn\", \"alert_type\": \"vibration\", \"time_start\": null, \"time_end\": null}",
+          "tokenUsage": {
+            "prompt": 522,
+            "completion": 34,
+            "total": 556
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "doorbell vibration, no time",
+          "vars": {
+            "rule_text": "Vibrate when the doorbell rings"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=doorbell",
+              "value": "JSON.parse(output).trigger === 'doorbell'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=vibration",
+              "value": "JSON.parse(output).alert_type === 'vibration'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=null",
+              "value": "JSON.parse(output).time_start === null"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 1,
+        "vars": {
+          "rule_text": "Vibrate when the doorbell rings"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=dog_barking",
+                "value": "JSON.parse(output).trigger === 'dog_barking'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=led",
+                "value": "JSON.parse(output).alert_type === 'led'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=07:00",
+                "value": "JSON.parse(output).time_start === '07:00'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_end=22:00",
+                "value": "JSON.parse(output).time_end === '22:00'"
+              }
+            }
+          ]
+        },
+        "id": "0f0d39df-22ad-4e93-a589-d5ebd7cece77",
+        "latencyMs": 12949,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nFlash the LED for any dog barking during the day\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"dog_barking\",\n  \"priority\": \"info\",\n  \"alert_type\": \"led\",\n  \"time_start\": \"07:00\",\n  \"time_end\": \"22:00\"\n}",
+          "tokenUsage": {
+            "prompt": 526,
+            "completion": 57,
+            "total": 583
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "dog barking LED during the day",
+          "vars": {
+            "rule_text": "Flash the LED for any dog barking during the day"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=dog_barking",
+              "value": "JSON.parse(output).trigger === 'dog_barking'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=led",
+              "value": "JSON.parse(output).alert_type === 'led'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=07:00",
+              "value": "JSON.parse(output).time_start === '07:00'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_end=22:00",
+              "value": "JSON.parse(output).time_end === '22:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 2,
+        "vars": {
+          "rule_text": "Flash the LED for any dog barking during the day"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=glass_breaking",
+                "value": "JSON.parse(output).trigger === 'glass_breaking'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=critical or warn",
+                "value": "['critical','warn'].includes(JSON.parse(output).priority)"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=null",
+                "value": "JSON.parse(output).time_start === null"
+              }
+            }
+          ]
+        },
+        "id": "83d3cc6a-629a-4c2d-899b-c2a947e91006",
+        "latencyMs": 8001,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nNotify me urgently if glass breaks any time\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"glass_breaking\",\n  \"priority\": \"warn\",\n  \"alert_type\": \"led\",\n  \"time_start\": null,\n  \"time_end\": null\n}",
+          "tokenUsage": {
+            "prompt": 523,
+            "completion": 51,
+            "total": 574
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "glass breaking urgent, any time",
+          "vars": {
+            "rule_text": "Notify me urgently if glass breaks any time"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=glass_breaking",
+              "value": "JSON.parse(output).trigger === 'glass_breaking'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=critical or warn",
+              "value": "['critical','warn'].includes(JSON.parse(output).priority)"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=null",
+              "value": "JSON.parse(output).time_start === null"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 3,
+        "vars": {
+          "rule_text": "Notify me urgently if glass breaks any time"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=baby_crying",
+                "value": "JSON.parse(output).trigger === 'baby_crying'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=22:00",
+                "value": "JSON.parse(output).time_start === '22:00'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_end=07:00",
+                "value": "JSON.parse(output).time_end === '07:00'"
+              }
+            }
+          ]
+        },
+        "id": "62901ff5-d9de-4220-9fdc-d0edff9582aa",
+        "latencyMs": 10907,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nLet me know when the baby is crying overnight\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"baby_crying\",\n  \"priority\": \"info\",\n  \"alert_type\": \"both\",\n  \"time_start\": \"22:00\",\n  \"time_end\": \"07:00\"\n}",
+          "tokenUsage": {
+            "prompt": 524,
+            "completion": 57,
+            "total": 581
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "baby crying overnight, full alert",
+          "vars": {
+            "rule_text": "Let me know when the baby is crying overnight"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=baby_crying",
+              "value": "JSON.parse(output).trigger === 'baby_crying'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=22:00",
+              "value": "JSON.parse(output).time_start === '22:00'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_end=07:00",
+              "value": "JSON.parse(output).time_end === '07:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 4,
+        "vars": {
+          "rule_text": "Let me know when the baby is crying overnight"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=glass_breaking",
+                "value": "JSON.parse(output).trigger === 'glass_breaking'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=critical",
+                "value": "JSON.parse(output).priority === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=vibration",
+                "value": "JSON.parse(output).alert_type === 'vibration'"
+              }
+            }
+          ]
+        },
+        "id": "61b4ca66-5f3e-49fb-9605-702396d46b59",
+        "latencyMs": 11167,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nEmergency buzz if glass breaks\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"glass_breaking\",\n  \"priority\": \"critical\",\n  \"alert_type\": \"vibration\",\n  \"time_start\": null,\n  \"time_end\": null\n}",
+          "tokenUsage": {
+            "prompt": 520,
+            "completion": 52,
+            "total": 572
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "emergency buzz on glass break",
+          "vars": {
+            "rule_text": "Emergency buzz if glass breaks"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=glass_breaking",
+              "value": "JSON.parse(output).trigger === 'glass_breaking'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=critical",
+              "value": "JSON.parse(output).priority === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=vibration",
+              "value": "JSON.parse(output).alert_type === 'vibration'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 5,
+        "vars": {
+          "rule_text": "Emergency buzz if glass breaks"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=dog_barking",
+                "value": "JSON.parse(output).trigger === 'dog_barking'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=vibration",
+                "value": "JSON.parse(output).alert_type === 'vibration'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=00:00",
+                "value": "JSON.parse(output).time_start === '00:00'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_end=06:00",
+                "value": "JSON.parse(output).time_end === '06:00'"
+              }
+            }
+          ]
+        },
+        "id": "1171858a-66b6-4bee-94e8-3564006e65df",
+        "latencyMs": 12478,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nShake my device if the dog barks after midnight\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"dog_barking\",\n  \"priority\": \"warn\",\n  \"alert_type\": \"vibration\",\n  \"time_start\": \"00:00\",\n  \"time_end\": \"06:00\"\n}",
+          "tokenUsage": {
+            "prompt": 526,
+            "completion": 58,
+            "total": 584
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "dog barking shake after midnight",
+          "vars": {
+            "rule_text": "Shake my device if the dog barks after midnight"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=dog_barking",
+              "value": "JSON.parse(output).trigger === 'dog_barking'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=vibration",
+              "value": "JSON.parse(output).alert_type === 'vibration'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=00:00",
+              "value": "JSON.parse(output).time_start === '00:00'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_end=06:00",
+              "value": "JSON.parse(output).time_end === '06:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 6,
+        "vars": {
+          "rule_text": "Shake my device if the dog barks after midnight"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=fire_alarm",
+                "value": "JSON.parse(output).trigger === 'fire_alarm'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=critical",
+                "value": "JSON.parse(output).priority === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=both",
+                "value": "JSON.parse(output).alert_type === 'both'"
+              }
+            }
+          ]
+        },
+        "id": "bc71b3bf-265b-42e6-98c5-033ecde51c5c",
+        "latencyMs": 12049,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nCritical alert both ways for fire alarm\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"fire_alarm\",\n  \"priority\": \"critical\",\n  \"alert_type\": \"both\",\n  \"time_start\": null,\n  \"time_end\": null\n}",
+          "tokenUsage": {
+            "prompt": 522,
+            "completion": 50,
+            "total": 572
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "fire alarm critical both ways",
+          "vars": {
+            "rule_text": "Critical alert both ways for fire alarm"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=fire_alarm",
+              "value": "JSON.parse(output).trigger === 'fire_alarm'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=critical",
+              "value": "JSON.parse(output).priority === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=both",
+              "value": "JSON.parse(output).alert_type === 'both'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 7,
+        "vars": {
+          "rule_text": "Critical alert both ways for fire alarm"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=baby_crying",
+                "value": "JSON.parse(output).trigger === 'baby_crying'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=info",
+                "value": "JSON.parse(output).priority === 'info'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=led",
+                "value": "JSON.parse(output).alert_type === 'led'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=07:00",
+                "value": "JSON.parse(output).time_start === '07:00'"
+              }
+            }
+          ]
+        },
+        "id": "dc9cb75e-a335-4907-bc39-aa372f510f09",
+        "latencyMs": 11876,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nLow priority LED for baby crying during the day\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"baby_crying\",\n  \"priority\": \"info\",\n  \"alert_type\": \"led\",\n  \"time_start\": \"07:00\",\n  \"time_end\": \"22:00\"\n}",
+          "tokenUsage": {
+            "prompt": 524,
+            "completion": 57,
+            "total": 581
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "baby crying low priority LED daytime",
+          "vars": {
+            "rule_text": "Low priority LED for baby crying during the day"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=baby_crying",
+              "value": "JSON.parse(output).trigger === 'baby_crying'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=info",
+              "value": "JSON.parse(output).priority === 'info'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=led",
+              "value": "JSON.parse(output).alert_type === 'led'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=07:00",
+              "value": "JSON.parse(output).time_start === '07:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 8,
+        "vars": {
+          "rule_text": "Low priority LED for baby crying during the day"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=water_running",
+                "value": "JSON.parse(output).trigger === 'water_running'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=warn",
+                "value": "JSON.parse(output).priority === 'warn'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=led",
+                "value": "JSON.parse(output).alert_type === 'led'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=22:00",
+                "value": "JSON.parse(output).time_start === '22:00'"
+              }
+            }
+          ]
+        },
+        "id": "76cc3d85-145a-47a3-9db6-aeba01201af6",
+        "latencyMs": 11956,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nWarn me with lights if water is running at night\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"water_running\",\n  \"priority\": \"warn\",\n  \"alert_type\": \"led\",\n  \"time_start\": \"22:00\",\n  \"time_end\": \"07:00\"\n}",
+          "tokenUsage": {
+            "prompt": 525,
+            "completion": 56,
+            "total": 581
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "water running warn LED at night",
+          "vars": {
+            "rule_text": "Warn me with lights if water is running at night"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=water_running",
+              "value": "JSON.parse(output).trigger === 'water_running'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=warn",
+              "value": "JSON.parse(output).priority === 'warn'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=led",
+              "value": "JSON.parse(output).alert_type === 'led'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=22:00",
+              "value": "JSON.parse(output).time_start === '22:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 9,
+        "vars": {
+          "rule_text": "Warn me with lights if water is running at night"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=glass_breaking",
+                "value": "JSON.parse(output).trigger === 'glass_breaking'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=both",
+                "value": "JSON.parse(output).alert_type === 'both'"
+              }
+            }
+          ]
+        },
+        "id": "ee549c54-1dfb-43b4-a120-6ee1cf15b4e3",
+        "latencyMs": 11524,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nBoth LED and vibration for any glass breaking\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"glass_breaking\",\n  \"priority\": \"info\",\n  \"alert_type\": \"both\",\n  \"time_start\": null,\n  \"time_end\": null\n}",
+          "tokenUsage": {
+            "prompt": 523,
+            "completion": 51,
+            "total": 574
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "glass breaking both LED and vibration",
+          "vars": {
+            "rule_text": "Both LED and vibration for any glass breaking"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=glass_breaking",
+              "value": "JSON.parse(output).trigger === 'glass_breaking'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=both",
+              "value": "JSON.parse(output).alert_type === 'both'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 10,
+        "vars": {
+          "rule_text": "Both LED and vibration for any glass breaking"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=doorbell",
+                "value": "JSON.parse(output).trigger === 'doorbell'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=vibration",
+                "value": "JSON.parse(output).alert_type === 'vibration'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=06:00",
+                "value": "JSON.parse(output).time_start === '06:00'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_end=12:00",
+                "value": "JSON.parse(output).time_end === '12:00'"
+              }
+            }
+          ]
+        },
+        "id": "018ab864-7aa7-4448-a221-b03346656d75",
+        "latencyMs": 11912,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nQuick buzz for doorbell in the morning\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"doorbell\",\n  \"priority\": \"warn\",\n  \"alert_type\": \"vibration\",\n  \"time_start\": \"06:00\",\n  \"time_end\": \"12:00\"\n}",
+          "tokenUsage": {
+            "prompt": 523,
+            "completion": 57,
+            "total": 580
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "doorbell buzz in the morning",
+          "vars": {
+            "rule_text": "Quick buzz for doorbell in the morning"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=doorbell",
+              "value": "JSON.parse(output).trigger === 'doorbell'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=vibration",
+              "value": "JSON.parse(output).alert_type === 'vibration'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=06:00",
+              "value": "JSON.parse(output).time_start === '06:00'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_end=12:00",
+              "value": "JSON.parse(output).time_end === '12:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 11,
+        "vars": {
+          "rule_text": "Quick buzz for doorbell in the morning"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=dog_barking",
+                "value": "JSON.parse(output).trigger === 'dog_barking'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=info",
+                "value": "JSON.parse(output).priority === 'info'"
+              }
+            }
+          ]
+        },
+        "id": "8c92cdb6-890a-4304-a9ee-7160ab9fa06d",
+        "latencyMs": 11638,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nInfo alert when dog barks\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"dog_barking\",\n  \"priority\": \"info\",\n  \"alert_type\": \"led\",\n  \"time_start\": null,\n  \"time_end\": null\n}",
+          "tokenUsage": {
+            "prompt": 521,
+            "completion": 51,
+            "total": 572
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "dog barking info alert",
+          "vars": {
+            "rule_text": "Info alert when dog barks"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=dog_barking",
+              "value": "JSON.parse(output).trigger === 'dog_barking'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=info",
+              "value": "JSON.parse(output).priority === 'info'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 12,
+        "vars": {
+          "rule_text": "Info alert when dog barks"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=fire_alarm",
+                "value": "JSON.parse(output).trigger === 'fire_alarm'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=critical",
+                "value": "JSON.parse(output).priority === 'critical'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=led",
+                "value": "JSON.parse(output).alert_type === 'led'"
+              }
+            }
+          ]
+        },
+        "id": "7d209eb6-8d80-46de-9143-566516bf75a1",
+        "latencyMs": 11223,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nUrgent flash if the fire alarm goes off\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"fire_alarm\",\n  \"priority\": \"critical\",\n  \"alert_type\": \"led\",\n  \"time_start\": null,\n  \"time_end\": null\n}",
+          "tokenUsage": {
+            "prompt": 525,
+            "completion": 50,
+            "total": 575
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "fire alarm urgent flash",
+          "vars": {
+            "rule_text": "Urgent flash if the fire alarm goes off"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=fire_alarm",
+              "value": "JSON.parse(output).trigger === 'fire_alarm'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=critical",
+              "value": "JSON.parse(output).priority === 'critical'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=led",
+              "value": "JSON.parse(output).alert_type === 'led'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 13,
+        "vars": {
+          "rule_text": "Urgent flash if the fire alarm goes off"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=timer_beep",
+                "value": "JSON.parse(output).trigger === 'timer_beep'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=info",
+                "value": "JSON.parse(output).priority === 'info'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=07:00",
+                "value": "JSON.parse(output).time_start === '07:00'"
+              }
+            }
+          ]
+        },
+        "id": "5c89290c-9dea-4f1b-a85b-3220d9d0115e",
+        "latencyMs": 11733,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nSoft notification for timer beep during the day\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"timer_beep\",\n  \"priority\": \"info\",\n  \"alert_type\": \"led\",\n  \"time_start\": \"07:00\",\n  \"time_end\": \"22:00\"\n}",
+          "tokenUsage": {
+            "prompt": 523,
+            "completion": 57,
+            "total": 580
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "timer beep soft daytime",
+          "vars": {
+            "rule_text": "Soft notification for timer beep during the day"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=timer_beep",
+              "value": "JSON.parse(output).trigger === 'timer_beep'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=info",
+              "value": "JSON.parse(output).priority === 'info'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=07:00",
+              "value": "JSON.parse(output).time_start === '07:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 14,
+        "vars": {
+          "rule_text": "Soft notification for timer beep during the day"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=water_running",
+                "value": "JSON.parse(output).trigger === 'water_running'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=none",
+                "value": "JSON.parse(output).priority === 'none'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=none",
+                "value": "JSON.parse(output).alert_type === 'none'"
+              }
+            }
+          ]
+        },
+        "id": "6bd55eb2-076a-4c83-8b7e-00608be3f627",
+        "latencyMs": 10602,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nIgnore water running sounds\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\"trigger\": \"water_running\", \"priority\": \"none\", \"alert_type\": \"none\", \"time_start\": null, \"time_end\": null}",
+          "tokenUsage": {
+            "prompt": 519,
+            "completion": 33,
+            "total": 552
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "ignore water running sounds",
+          "vars": {
+            "rule_text": "Ignore water running sounds"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=water_running",
+              "value": "JSON.parse(output).trigger === 'water_running'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=none",
+              "value": "JSON.parse(output).priority === 'none'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=none",
+              "value": "JSON.parse(output).alert_type === 'none'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 15,
+        "vars": {
+          "rule_text": "Ignore water running sounds"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=timer_beep",
+                "value": "JSON.parse(output).trigger === 'timer_beep'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=none",
+                "value": "JSON.parse(output).priority === 'none'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=none",
+                "value": "JSON.parse(output).alert_type === 'none'"
+              }
+            }
+          ]
+        },
+        "id": "caf0e315-6753-40fc-ad07-1a3cf824947d",
+        "latencyMs": 9702,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nDisable alerts for the timer beep\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\"trigger\": \"timer_beep\", \"priority\": \"none\", \"alert_type\": \"none\", \"time_start\": null, \"time_end\": null}",
+          "tokenUsage": {
+            "prompt": 521,
+            "completion": 34,
+            "total": 555
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "disable timer beep alerts",
+          "vars": {
+            "rule_text": "Disable alerts for the timer beep"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=timer_beep",
+              "value": "JSON.parse(output).trigger === 'timer_beep'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=none",
+              "value": "JSON.parse(output).priority === 'none'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=none",
+              "value": "JSON.parse(output).alert_type === 'none'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 16,
+        "vars": {
+          "rule_text": "Disable alerts for the timer beep"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=dog_barking",
+                "value": "JSON.parse(output).trigger === 'dog_barking'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "priority=none",
+                "value": "JSON.parse(output).priority === 'none'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=none",
+                "value": "JSON.parse(output).alert_type === 'none'"
+              }
+            }
+          ]
+        },
+        "id": "dbf63f4a-1b82-49a5-8e18-73a00b9be43d",
+        "latencyMs": 8895,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nTurn off dog barking notifications\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\"trigger\": \"dog_barking\", \"priority\": \"none\", \"alert_type\": \"none\", \"time_start\": null, \"time_end\": null}",
+          "tokenUsage": {
+            "prompt": 521,
+            "completion": 34,
+            "total": 555
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "silence dog barking notifications",
+          "vars": {
+            "rule_text": "Turn off dog barking notifications"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=dog_barking",
+              "value": "JSON.parse(output).trigger === 'dog_barking'"
+            },
+            {
+              "type": "javascript",
+              "label": "priority=none",
+              "value": "JSON.parse(output).priority === 'none'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=none",
+              "value": "JSON.parse(output).alert_type === 'none'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 17,
+        "vars": {
+          "rule_text": "Turn off dog barking notifications"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "trigger=baby_crying",
+                "value": "JSON.parse(output).trigger === 'baby_crying'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "alert_type=both",
+                "value": "JSON.parse(output).alert_type === 'both'"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "time_start=22:00",
+                "value": "JSON.parse(output).time_start === '22:00'"
+              }
+            }
+          ]
+        },
+        "id": "e913de00-6ab5-4981-903c-498b37614bf4",
+        "latencyMs": 8687,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nAlert for baby crying at night with both LED and vibration\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"baby_crying\",\n  \"priority\": \"critical\",\n  \"alert_type\": \"both\",\n  \"time_start\": \"22:00\",\n  \"time_end\": \"07:00\"\n}",
+          "tokenUsage": {
+            "prompt": 526,
+            "completion": 57,
+            "total": 583
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "baby crying at night both alert types",
+          "vars": {
+            "rule_text": "Alert for baby crying at night with both LED and vibration"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "trigger=baby_crying",
+              "value": "JSON.parse(output).trigger === 'baby_crying'"
+            },
+            {
+              "type": "javascript",
+              "label": "alert_type=both",
+              "value": "JSON.parse(output).alert_type === 'both'"
+            },
+            {
+              "type": "javascript",
+              "label": "time_start=22:00",
+              "value": "JSON.parse(output).time_start === '22:00'"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 18,
+        "vars": {
+          "rule_text": "Alert for baby crying at night with both LED and vibration"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "label": "output is valid JSON"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "all fields are valid enum values",
+                "value": "const o = JSON.parse(output);\nconst validTriggers = ['fire_alarm','doorbell','glass_breaking','baby_crying','dog_barking','timer_beep','water_running','unknown'];\nconst validPriorities = ['critical','warn','info','none'];\nconst validAlertTypes = ['led','vibration','both','none'];\nreturn validTriggers.includes(o.trigger) &&\n       validPriorities.includes(o.priority) &&\n       validAlertTypes.includes(o.alert_type);\n"
+              }
+            }
+          ]
+        },
+        "id": "423db1cc-2e5e-463a-a5c1-7f8241a81625",
+        "latencyMs": 9470,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\nFlash lights for any doorbell press\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]",
+          "config": {}
+        },
+        "promptId": "a97a9c858abf3dbb3cd721303d7274b0b6e390c4be42c554e2a41a97cd00c19b",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "{\n  \"trigger\": \"doorbell\",\n  \"priority\": \"warn\",\n  \"alert_type\": \"led\",\n  \"time_start\": null,\n  \"time_end\": null\n}",
+          "tokenUsage": {
+            "prompt": 522,
+            "completion": 50,
+            "total": 572
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "all fields valid enum values",
+          "vars": {
+            "rule_text": "Flash lights for any doorbell press"
+          },
+          "assert": [
+            {
+              "type": "is-json",
+              "label": "output is valid JSON"
+            },
+            {
+              "type": "javascript",
+              "label": "all fields are valid enum values",
+              "value": "const o = JSON.parse(output);\nconst validTriggers = ['fire_alarm','doorbell','glass_breaking','baby_crying','dog_barking','timer_beep','water_running','unknown'];\nconst validPriorities = ['critical','warn','info','none'];\nconst validAlertTypes = ['led','vibration','both','none'];\nreturn validTriggers.includes(o.trigger) &&\n       validPriorities.includes(o.priority) &&\n       validAlertTypes.includes(o.alert_type);\n"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 19,
+        "vars": {
+          "rule_text": "Flash lights for any doorbell press"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 20,
+      "failures": 0,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 10461,
+        "completion": 1002,
+        "cached": 0,
+        "total": 11463,
+        "numRequests": 20,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 57027,
+      "evaluationDurationMs": 57027
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "SoundSight Rule Parser — 20 golden input/output pairs",
+    "prompts": [
+      "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\n## Task\\nParse the user's natural-language alert rule into a structured JSON rule.\\nOutput valid JSON matching this schema exactly — nothing else:\\n{\\\"trigger\\\": \\\"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\\\", \\\"priority\\\": \\\"<critical|warn|info|none>\\\", \\\"alert_type\\\": \\\"<led|vibration|both|none>\\\", \\\"time_start\\\": \\\"<HH:MM or null>\\\", \\\"time_end\\\": \\\"<HH:MM or null>\\\"}\"},{\"role\":\"user\",\"content\":\"Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\\n\\nPriority mapping:\\n- urgent/critical/emergency → critical\\n- warn/alert/notify → warn\\n- info/low/soft/quiet → info\\n- silence/disable/ignore/off → none\\n\\nAlert type mapping:\\n- flash/light/LED/blink → led\\n- vibrate/buzz/shake → vibration\\n- both/all → both\\n- nothing/silent/off/disable → none\\n\\nTime shortcuts:\\n- at night/overnight → time_start: 22:00, time_end: 07:00\\n- during the day/daytime → time_start: 07:00, time_end: 22:00\\n- after midnight → time_start: 00:00, time_end: 06:00\\n- in the morning → time_start: 06:00, time_end: 12:00\\n- no time mentioned → time_start: null, time_end: null\\n\\nExamples:\\nInput: Alert me if the fire alarm goes off at night\\nOutput: {\\\"trigger\\\": \\\"fire_alarm\\\", \\\"priority\\\": \\\"critical\\\", \\\"alert_type\\\": \\\"both\\\", \\\"time_start\\\": \\\"22:00\\\", \\\"time_end\\\": \\\"07:00\\\"}\\n\\nInput: Vibrate when the doorbell rings\\nOutput: {\\\"trigger\\\": \\\"doorbell\\\", \\\"priority\\\": \\\"warn\\\", \\\"alert_type\\\": \\\"vibration\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nInput: Ignore water running sounds\\nOutput: {\\\"trigger\\\": \\\"water_running\\\", \\\"priority\\\": \\\"none\\\", \\\"alert_type\\\": \\\"none\\\", \\\"time_start\\\": null, \\\"time_end\\\": null}\\n\\nNow parse this rule:\\n{{rule_text}}\"}]"
+    ],
+    "providers": [
+      {
+        "id": "ollama:chat:llama3.1:8b",
+        "config": {
+          "temperature": 0,
+          "num_predict": 200
+        },
+        "transform": "(output.match(/\\{[\\s\\S]*\\}/) || [output])[0]"
+      }
+    ],
+    "tests": [
+      {
+        "description": "fire alarm at night (critical, both, night window)",
+        "vars": {
+          "rule_text": "Alert me if the fire alarm goes off at night"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=fire_alarm",
+            "value": "JSON.parse(output).trigger === 'fire_alarm'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=critical",
+            "value": "JSON.parse(output).priority === 'critical'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=22:00",
+            "value": "JSON.parse(output).time_start === '22:00'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_end=07:00",
+            "value": "JSON.parse(output).time_end === '07:00'"
+          }
+        ]
+      },
+      {
+        "description": "doorbell vibration, no time",
+        "vars": {
+          "rule_text": "Vibrate when the doorbell rings"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=doorbell",
+            "value": "JSON.parse(output).trigger === 'doorbell'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=vibration",
+            "value": "JSON.parse(output).alert_type === 'vibration'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=null",
+            "value": "JSON.parse(output).time_start === null"
+          }
+        ]
+      },
+      {
+        "description": "dog barking LED during the day",
+        "vars": {
+          "rule_text": "Flash the LED for any dog barking during the day"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=dog_barking",
+            "value": "JSON.parse(output).trigger === 'dog_barking'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=led",
+            "value": "JSON.parse(output).alert_type === 'led'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=07:00",
+            "value": "JSON.parse(output).time_start === '07:00'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_end=22:00",
+            "value": "JSON.parse(output).time_end === '22:00'"
+          }
+        ]
+      },
+      {
+        "description": "glass breaking urgent, any time",
+        "vars": {
+          "rule_text": "Notify me urgently if glass breaks any time"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=glass_breaking",
+            "value": "JSON.parse(output).trigger === 'glass_breaking'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=critical or warn",
+            "value": "['critical','warn'].includes(JSON.parse(output).priority)"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=null",
+            "value": "JSON.parse(output).time_start === null"
+          }
+        ]
+      },
+      {
+        "description": "baby crying overnight, full alert",
+        "vars": {
+          "rule_text": "Let me know when the baby is crying overnight"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=baby_crying",
+            "value": "JSON.parse(output).trigger === 'baby_crying'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=22:00",
+            "value": "JSON.parse(output).time_start === '22:00'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_end=07:00",
+            "value": "JSON.parse(output).time_end === '07:00'"
+          }
+        ]
+      },
+      {
+        "description": "emergency buzz on glass break",
+        "vars": {
+          "rule_text": "Emergency buzz if glass breaks"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=glass_breaking",
+            "value": "JSON.parse(output).trigger === 'glass_breaking'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=critical",
+            "value": "JSON.parse(output).priority === 'critical'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=vibration",
+            "value": "JSON.parse(output).alert_type === 'vibration'"
+          }
+        ]
+      },
+      {
+        "description": "dog barking shake after midnight",
+        "vars": {
+          "rule_text": "Shake my device if the dog barks after midnight"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=dog_barking",
+            "value": "JSON.parse(output).trigger === 'dog_barking'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=vibration",
+            "value": "JSON.parse(output).alert_type === 'vibration'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=00:00",
+            "value": "JSON.parse(output).time_start === '00:00'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_end=06:00",
+            "value": "JSON.parse(output).time_end === '06:00'"
+          }
+        ]
+      },
+      {
+        "description": "fire alarm critical both ways",
+        "vars": {
+          "rule_text": "Critical alert both ways for fire alarm"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=fire_alarm",
+            "value": "JSON.parse(output).trigger === 'fire_alarm'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=critical",
+            "value": "JSON.parse(output).priority === 'critical'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=both",
+            "value": "JSON.parse(output).alert_type === 'both'"
+          }
+        ]
+      },
+      {
+        "description": "baby crying low priority LED daytime",
+        "vars": {
+          "rule_text": "Low priority LED for baby crying during the day"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=baby_crying",
+            "value": "JSON.parse(output).trigger === 'baby_crying'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=info",
+            "value": "JSON.parse(output).priority === 'info'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=led",
+            "value": "JSON.parse(output).alert_type === 'led'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=07:00",
+            "value": "JSON.parse(output).time_start === '07:00'"
+          }
+        ]
+      },
+      {
+        "description": "water running warn LED at night",
+        "vars": {
+          "rule_text": "Warn me with lights if water is running at night"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=water_running",
+            "value": "JSON.parse(output).trigger === 'water_running'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=warn",
+            "value": "JSON.parse(output).priority === 'warn'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=led",
+            "value": "JSON.parse(output).alert_type === 'led'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=22:00",
+            "value": "JSON.parse(output).time_start === '22:00'"
+          }
+        ]
+      },
+      {
+        "description": "glass breaking both LED and vibration",
+        "vars": {
+          "rule_text": "Both LED and vibration for any glass breaking"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=glass_breaking",
+            "value": "JSON.parse(output).trigger === 'glass_breaking'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=both",
+            "value": "JSON.parse(output).alert_type === 'both'"
+          }
+        ]
+      },
+      {
+        "description": "doorbell buzz in the morning",
+        "vars": {
+          "rule_text": "Quick buzz for doorbell in the morning"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=doorbell",
+            "value": "JSON.parse(output).trigger === 'doorbell'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=vibration",
+            "value": "JSON.parse(output).alert_type === 'vibration'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=06:00",
+            "value": "JSON.parse(output).time_start === '06:00'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_end=12:00",
+            "value": "JSON.parse(output).time_end === '12:00'"
+          }
+        ]
+      },
+      {
+        "description": "dog barking info alert",
+        "vars": {
+          "rule_text": "Info alert when dog barks"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=dog_barking",
+            "value": "JSON.parse(output).trigger === 'dog_barking'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=info",
+            "value": "JSON.parse(output).priority === 'info'"
+          }
+        ]
+      },
+      {
+        "description": "fire alarm urgent flash",
+        "vars": {
+          "rule_text": "Urgent flash if the fire alarm goes off"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=fire_alarm",
+            "value": "JSON.parse(output).trigger === 'fire_alarm'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=critical",
+            "value": "JSON.parse(output).priority === 'critical'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=led",
+            "value": "JSON.parse(output).alert_type === 'led'"
+          }
+        ]
+      },
+      {
+        "description": "timer beep soft daytime",
+        "vars": {
+          "rule_text": "Soft notification for timer beep during the day"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=timer_beep",
+            "value": "JSON.parse(output).trigger === 'timer_beep'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=info",
+            "value": "JSON.parse(output).priority === 'info'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=07:00",
+            "value": "JSON.parse(output).time_start === '07:00'"
+          }
+        ]
+      },
+      {
+        "description": "ignore water running sounds",
+        "vars": {
+          "rule_text": "Ignore water running sounds"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=water_running",
+            "value": "JSON.parse(output).trigger === 'water_running'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=none",
+            "value": "JSON.parse(output).priority === 'none'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=none",
+            "value": "JSON.parse(output).alert_type === 'none'"
+          }
+        ]
+      },
+      {
+        "description": "disable timer beep alerts",
+        "vars": {
+          "rule_text": "Disable alerts for the timer beep"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=timer_beep",
+            "value": "JSON.parse(output).trigger === 'timer_beep'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=none",
+            "value": "JSON.parse(output).priority === 'none'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=none",
+            "value": "JSON.parse(output).alert_type === 'none'"
+          }
+        ]
+      },
+      {
+        "description": "silence dog barking notifications",
+        "vars": {
+          "rule_text": "Turn off dog barking notifications"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=dog_barking",
+            "value": "JSON.parse(output).trigger === 'dog_barking'"
+          },
+          {
+            "type": "javascript",
+            "label": "priority=none",
+            "value": "JSON.parse(output).priority === 'none'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=none",
+            "value": "JSON.parse(output).alert_type === 'none'"
+          }
+        ]
+      },
+      {
+        "description": "baby crying at night both alert types",
+        "vars": {
+          "rule_text": "Alert for baby crying at night with both LED and vibration"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "trigger=baby_crying",
+            "value": "JSON.parse(output).trigger === 'baby_crying'"
+          },
+          {
+            "type": "javascript",
+            "label": "alert_type=both",
+            "value": "JSON.parse(output).alert_type === 'both'"
+          },
+          {
+            "type": "javascript",
+            "label": "time_start=22:00",
+            "value": "JSON.parse(output).time_start === '22:00'"
+          }
+        ]
+      },
+      {
+        "description": "all fields valid enum values",
+        "vars": {
+          "rule_text": "Flash lights for any doorbell press"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "label": "all fields are valid enum values",
+            "value": "const o = JSON.parse(output);\nconst validTriggers = ['fire_alarm','doorbell','glass_breaking','baby_crying','dog_barking','timer_beep','water_running','unknown'];\nconst validPriorities = ['critical','warn','info','none'];\nconst validAlertTypes = ['led','vibration','both','none'];\nreturn validTriggers.includes(o.trigger) &&\n       validPriorities.includes(o.priority) &&\n       validAlertTypes.includes(o.alert_type);\n"
+          }
+        ]
+      }
+    ],
+    "scenarios": [],
+    "env": {},
+    "defaultTest": {
+      "assert": [
+        {
+          "type": "is-json",
+          "label": "output is valid JSON"
+        }
+      ],
+      "vars": {},
+      "options": {},
+      "metadata": {}
+    },
+    "outputPath": [
+      "results/baseline_rule_parser.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.121.8",
+    "nodeVersion": "v25.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "exportedAt": "2026-04-25T11:34:18.065Z",
+    "evaluationCreatedAt": "2026-04-25T11:33:20.935Z"
+  }
+}

@@ -270,99 +270,99 @@ Both partners must understand the full system for exam defense.
 ## Phase 7 — MCP Service Layer (Week 3, Samuel)
 
 ### MCP server
-- [ ] `mcp/server.py` — MCP server using the official Python SDK
-- [ ] Runs in-process with FastAPI during the exam
-- [ ] Each tool: typed input schema, typed output, docstring used as description
+- [x] `mcp/server.py` — MCP server using the official Python SDK
+- [x] Runs in-process with FastAPI during the exam
+- [x] Each tool: typed input schema, typed output, docstring used as description
 
 ### Tools to implement
-- [ ] `query_events(filter, time_range) -> list[Event]`
-- [ ] `get_device_status(device_id) -> DeviceStatus`
-- [ ] `get_user_profile() -> UserProfile`
-- [ ] `get_active_rules() -> list[Rule]`
-- [ ] `get_sound_class_info(class_name) -> ClassInfo` (reads from the sound-class KB)
-- [ ] `get_user_baseline(class_name, window) -> Baseline`
+- [x] `query_events(filter, time_range) -> list[Event]`
+- [x] `get_device_status(device_id) -> DeviceStatus`
+- [x] `get_user_profile() -> UserProfile`
+- [x] `get_active_rules() -> list[Rule]`
+- [x] `get_sound_class_info(class_name) -> ClassInfo` (reads from the sound-class KB)
+- [x] `get_user_baseline(class_name, window) -> Baseline`
 
 ### LangChain integration
-- [ ] `langchain-mcp-adapters` wired up; agents can see the tools via `ToolNode` or equivalent
-- [ ] Verify tool calls end-to-end with a scripted agent test
+- [x] `langchain-mcp-adapters` wired up; agents can see the tools via `ToolNode` or equivalent
+- [x] Verify tool calls end-to-end with a scripted agent test
 
 ### Tests
-- [ ] Unit test each MCP tool in isolation (against test DB)
-- [ ] Integration test: agent → MCP client → tool → DB → response
+- [x] Unit test each MCP tool in isolation (against test DB)
+- [x] Integration test: agent → MCP client → tool → DB → response
 
 ---
 
 ## Phase 8 — RAG (Week 3, Samuel)
 
 ### ChromaDB setup
-- [ ] `rag/chroma_client.py` — embedded ChromaDB instance, persistent dir
-- [ ] Embedding function: `sentence-transformers/all-MiniLM-L6-v2`
+- [x] `rag/chroma_client.py` — embedded ChromaDB instance, persistent dir
+- [x] Embedding function: `sentence-transformers/all-MiniLM-L6-v2`
 
 ### Collection 1: Event History
-- [ ] On every new event, generate a short NL summary and embed it
-- [ ] Metadata: `class_name`, `timestamp`, `device_id`, `duration`, `confidence`
-- [ ] Retriever wrapper for LangChain
-- [ ] Used by: report generation, anomaly narration
+- [x] On every new event, generate a short NL summary and embed it
+- [x] Metadata: `class_name`, `timestamp`, `device_id`, `duration`, `confidence`
+- [x] Retriever wrapper for LangChain
+- [x] Used by: report generation, anomaly narration
 
 ### Collection 2: Home Knowledge
-- [ ] Index the user's onboarding profile text + any notes
-- [ ] Re-indexed whenever the profile changes (hook on update)
-- [ ] Used by: event interpretation, anomaly narration
+- [x] Index the user's onboarding profile text + any notes
+- [x] Re-indexed whenever the profile changes (hook on update)
+- [x] Used by: event interpretation, anomaly narration
 
 ### Collection 3: Sound-Class KB
-- [ ] `rag/corpus/sound_classes/*.md` — one file per sound class with: description, typical scenarios, safety implications, common false positives
-- [ ] Versioned in the repo; `rag/index_sound_classes.py` script to (re)build
-- [ ] Used by: event interpretation on medium-confidence cases
+- [x] `rag/corpus/sound_classes/*.md` — one file per sound class with: description, typical scenarios, safety implications, common false positives
+- [x] Versioned in the repo; `rag/index_sound_classes.py` script to (re)build
+- [x] Used by: event interpretation on medium-confidence cases
 
 ### Tests
-- [ ] Unit: retriever returns top-k on fixed mini-corpus
-- [ ] Integration: chain call actually uses retrieved context (snapshot test on prompt rendering)
+- [x] Unit: retriever returns top-k on fixed mini-corpus
+- [x] Integration: chain call actually uses retrieved context (snapshot test on prompt rendering)
 
 ---
 
 ## Phase 9 — Memory (Week 3, Samuel)
 
 ### Short-term (session buffer)
-- [ ] `ConversationBufferWindowMemory` attached to interactive rule-creation flow
-- [ ] Keyed by session ID (browser-generated UUID)
-- [ ] Cleared on session end
+- [x] `ConversationBufferWindowMemory` attached to interactive rule-creation flow
+- [x] Keyed by session ID (browser-generated UUID)
+- [x] Cleared on session end
 
 ### Long-term (user baselines)
-- [ ] Nightly job (APScheduler or cron) that recomputes baselines from last 30 days of events per class
-- [ ] Stats per `(class_name, user)`: count/day, typical time window, typical duration, night vs day ratio
-- [ ] Stored in `Baseline` table
-- [ ] Also embedded + stored in Chroma for agent retrieval
-- [ ] Exposed via `get_user_baseline` MCP tool
+- [x] Nightly job (APScheduler or cron) that recomputes baselines from last 30 days of events per class
+- [x] Stats per `(class_name, user)`: count/day, typical time window, typical duration, night vs day ratio
+- [x] Stored in `Baseline` table
+- [x] Also embedded + stored in Chroma for agent retrieval
+- [x] Exposed via `get_user_baseline` MCP tool
 
 ### Tests
-- [ ] Unit: baseline computation from a fixture of events
-- [ ] Unit: memory doesn't leak across sessions
+- [x] Unit: baseline computation from a fixture of events
+- [x] Unit: memory doesn't leak across sessions
 
 ---
 
 ## Phase 10 — Promptfoo Testing (Week 3, Stefan)
 
 ### Setup
-- [ ] Install Promptfoo: `npm i -g promptfoo`
-- [ ] `prompts/promptfoo/promptfooconfig.yaml`
-- [ ] Provider: local Ollama (`ollama:chat:llama3.1:8b`)
+- [x] Install Promptfoo: `npm i -g promptfoo`
+- [x] `prompts/promptfoo/promptfooconfig.yaml`
+- [x] Provider: local Ollama (`ollama:chat:llama3.1:8b`)
 
 ### Test suites
-- [ ] **Rule parser** — `prompts/promptfoo/rule_parser.yaml`
-  - [ ] 15+ golden input/output pairs
-  - [ ] Cover: affirmative, negation, ambiguous times, multi-trigger, conflicting rules
-  - [ ] Assertion type: strict JSON equality or field-level match
-- [ ] **Event interpretation** — rubric-based (LLM-graded)
-  - [ ] Must mention: duration, user context, no invented facts
-- [ ] **Anomaly narration** — rubric-based
-  - [ ] Must reference baseline, no false urgency
-- [ ] **Onboarding profiler** — golden pairs
-  - [ ] Home description → expected enabled classes
+- [x] **Rule parser** — `prompts/promptfoo/rule_parser.yaml`
+  - [x] 15+ golden input/output pairs (20 total)
+  - [x] Cover: affirmative, negation, ambiguous times, multi-trigger, conflicting rules
+  - [x] Assertion type: strict JSON equality or field-level match
+- [x] **Event interpretation** — rubric-based (LLM-graded)
+  - [x] Must mention: duration, user context, no invented facts
+- [x] **Anomaly narration** — rubric-based
+  - [x] Must reference baseline, no false urgency
+- [x] **Onboarding profiler** — golden pairs
+  - [x] Home description → expected enabled classes
 
 ### CI / local gate
-- [ ] `scripts/run_promptfoo.sh` — run all suites, fail on regressions
-- [ ] Add to pre-merge checklist (or CI if time permits)
-- [ ] Save baseline run output to repo for comparison
+- [x] `scripts/run_promptfoo.sh` — run all suites, fail on regressions
+- [x] Add to pre-merge checklist (or CI if time permits)
+- [x] Save baseline run output to repo for comparison
 
 ---
 
@@ -370,25 +370,27 @@ Both partners must understand the full system for exam defense.
 
 Run through this list and make sure each endpoint is implemented + tested:
 
-- [ ] `POST /api/audio/classify`
-- [ ] `GET /api/events` (pagination: `?limit=&offset=&class=&room=&from=&to=`)
-- [ ] `WS /ws/events`
-- [ ] `GET /api/reports/daily`
-- [ ] `GET /api/reports/weekly`
-- [ ] `POST /api/rules` (accepts either structured body OR `{source_text: "..."}`)
-- [ ] `GET /api/rules`
-- [ ] `PUT /api/settings`
-- [ ] `POST /api/devices/register`
-- [ ] `GET /api/devices`
-- [ ] `GET /api/dashboard/summary`
-- [ ] `POST /api/onboarding/profile`
-- [ ] `POST /api/events/{id}/explain` — on-demand LLM explanation
+- [x] `POST /api/audio/classify`
+- [x] `GET /api/events` (pagination: `?limit=&offset=&class=&room=&from=&to=`)
+- [x] `WS /ws/events`
+- [x] `GET /api/reports/daily`
+- [x] `GET /api/reports/weekly`
+- [x] `POST /api/rules` (accepts either structured body OR `{source_text: "..."}`)
+- [x] `GET /api/rules`
+- [x] `PUT /api/settings`
+- [x] `GET /api/settings`
+- [x] `POST /api/devices/register`
+- [x] `GET /api/devices`
+- [x] `GET /api/devices/{id}`
+- [x] `GET /api/dashboard/summary`
+- [x] `POST /api/onboarding/profile`
+- [x] `POST /api/events/{id}/explain` — on-demand LLM explanation
 
 Each endpoint:
-- [ ] Has a Pydantic request schema
-- [ ] Has a Pydantic response schema
-- [ ] Has at least one pytest test (happy path)
-- [ ] Has a sad-path test (bad input / missing resource)
+- [x] Has a Pydantic request schema
+- [x] Has a Pydantic response schema
+- [x] Has at least one pytest test (happy path)
+- [x] Has a sad-path test (bad input / missing resource)
 
 ---
 

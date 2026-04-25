@@ -1,0 +1,1147 @@
+{
+  "evalId": "eval-M0S-2026-04-25T11:34:45",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-04-25T11:34:45.272Z",
+    "prompts": [
+      {
+        "id": "9d1fd6707c93549d3bba4bdde55842d9c651057b4429a8022b1ffafd116afed3",
+        "raw": "[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\\nDeviation: {{sigma}} standard deviations above normal\\nRoom: {{room}}\\nTime: {{timestamp}}\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"\n  }\n]\n",
+        "label": "[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\\nDeviation: {{sigma}} standard deviations above normal\\nRoom: {{room}}\\nTime: {{timestamp}}\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"\n  }\n]\n",
+        "provider": "ollama:chat:llama3.1:8b",
+        "metrics": {
+          "score": 6,
+          "testPassCount": 6,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 25,
+          "assertFailCount": 0,
+          "totalLatencyMs": 79411,
+          "tokenUsage": {
+            "prompt": 1354,
+            "completion": 437,
+            "cached": 0,
+            "total": 1791,
+            "numRequests": 6,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "references typical or normal duration",
+                "value": "typical",
+                "threshold": 0.5
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no raw sigma value exposed to user",
+                "value": "14.8"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no sigma terminology",
+                "value": "sigma"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no standard deviation jargon",
+                "value": "standard deviation"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "2-3 sentences",
+                "value": "const sentences = output.trim().split(/[.!?]+/).filter(s => s.trim().length > 0);\nreturn sentences.length >= 2 && sentences.length <= 4;\n"
+              }
+            }
+          ]
+        },
+        "id": "fde236e1-a82a-4352-8b5c-a80e0d137cbe",
+        "latencyMs": 10187,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: Fire Alarm\\nDuration: 45.0 seconds (typical: 8.0s ± 2.5s)\\nDeviation: 14.8 standard deviations above normal\\nRoom: kitchen\\nTime: 2026-04-25T02:15:00\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\\nDeviation: {{sigma}} standard deviations above normal\\nRoom: {{room}}\\nTime: {{timestamp}}\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "config": {}
+        },
+        "promptId": "9d1fd6707c93549d3bba4bdde55842d9c651057b4429a8022b1ffafd116afed3",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "A fire alarm has been triggered in the kitchen, but it's lasting longer than usual. Typically, a fire alarm would sound for around 8 seconds before silencing itself, so this prolonged activation could indicate that there's an issue with the alarm system or possibly something else in the environment. I recommend checking the kitchen to see if everything is okay and ensuring that there are no signs of smoke or fire.",
+          "tokenUsage": {
+            "prompt": 225,
+            "completion": 82,
+            "total": 307
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "fire alarm unusually long — must reference baseline, no panic",
+          "vars": {
+            "class_name": "Fire Alarm",
+            "duration": "45.0",
+            "mean_duration": "8.0",
+            "std_duration": "2.5",
+            "sigma": "14.8",
+            "room": "kitchen",
+            "timestamp": "2026-04-25T02:15:00"
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "references typical or normal duration",
+              "value": "typical",
+              "threshold": 0.5
+            },
+            {
+              "type": "not-icontains",
+              "label": "no raw sigma value exposed to user",
+              "value": "14.8"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no sigma terminology",
+              "value": "sigma"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no standard deviation jargon",
+              "value": "standard deviation"
+            },
+            {
+              "type": "javascript",
+              "label": "2-3 sentences",
+              "value": "const sentences = output.trim().split(/[.!?]+/).filter(s => s.trim().length > 0);\nreturn sentences.length >= 2 && sentences.length <= 4;\n"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "vars": {
+          "class_name": "Fire Alarm",
+          "duration": "45.0",
+          "mean_duration": "8.0",
+          "std_duration": "2.5",
+          "sigma": "14.8",
+          "room": "kitchen",
+          "timestamp": "2026-04-25T02:15:00"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions water or bathroom",
+                "value": "water"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no sigma value",
+                "value": "17.3"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no statistical jargon",
+                "value": "standard deviation"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no panic language",
+                "value": "emergency"
+              }
+            }
+          ]
+        },
+        "id": "eae37e6d-a6b9-46bf-9ea2-93a3df151b07",
+        "latencyMs": 13885,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: Water Running\\nDuration: 900.0 seconds (typical: 120.0s ± 45.0s)\\nDeviation: 17.3 standard deviations above normal\\nRoom: bathroom\\nTime: 2026-04-25T10:30:00\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\\nDeviation: {{sigma}} standard deviations above normal\\nRoom: {{room}}\\nTime: {{timestamp}}\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "config": {}
+        },
+        "promptId": "9d1fd6707c93549d3bba4bdde55842d9c651057b4429a8022b1ffafd116afed3",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "\"Alert received for an extended water running sound in the bathroom, lasting over 15 minutes. This is significantly longer than typical usage, which usually lasts around 2-5 minutes. It's possible that the faucet or shower has been left on accidentally, and you may want to check if everything is turned off.\"",
+          "tokenUsage": {
+            "prompt": 225,
+            "completion": 64,
+            "total": 289
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "water running unusually long — suggest checking tap",
+          "vars": {
+            "class_name": "Water Running",
+            "duration": "900.0",
+            "mean_duration": "120.0",
+            "std_duration": "45.0",
+            "sigma": "17.3",
+            "room": "bathroom",
+            "timestamp": "2026-04-25T10:30:00"
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions water or bathroom",
+              "value": "water"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no sigma value",
+              "value": "17.3"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no statistical jargon",
+              "value": "standard deviation"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no panic language",
+              "value": "emergency"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 1,
+        "vars": {
+          "class_name": "Water Running",
+          "duration": "900.0",
+          "mean_duration": "120.0",
+          "std_duration": "45.0",
+          "sigma": "17.3",
+          "room": "bathroom",
+          "timestamp": "2026-04-25T10:30:00"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions baby or crying",
+                "value": "baby"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no raw sigma",
+                "value": "17.0"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no invented medical diagnosis",
+                "value": "fever"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no invented medical diagnosis 2",
+                "value": "illness"
+              }
+            }
+          ]
+        },
+        "id": "336a5ace-7141-4bb1-a360-1279c9010dd7",
+        "latencyMs": 17823,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: Baby Crying\\nDuration: 600.0 seconds (typical: 90.0s ± 30.0s)\\nDeviation: 17.0 standard deviations above normal\\nRoom: nursery\\nTime: 2026-04-25T23:30:00\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\\nDeviation: {{sigma}} standard deviations above normal\\nRoom: {{room}}\\nTime: {{timestamp}}\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "config": {}
+        },
+        "promptId": "9d1fd6707c93549d3bba4bdde55842d9c651057b4429a8022b1ffafd116afed3",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "The baby crying sound in the nursery has been detected for an unusually long time, lasting over six minutes, which is more than six times longer than typical instances of a baby crying. This prolonged duration may indicate that the baby needs attention or comfort. You might want to check on the baby's well-being and ensure they are safe and comfortable.",
+          "tokenUsage": {
+            "prompt": 226,
+            "completion": 69,
+            "total": 295
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "baby crying unusually long — calm, practical suggestion",
+          "vars": {
+            "class_name": "Baby Crying",
+            "duration": "600.0",
+            "mean_duration": "90.0",
+            "std_duration": "30.0",
+            "sigma": "17.0",
+            "room": "nursery",
+            "timestamp": "2026-04-25T23:30:00"
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions baby or crying",
+              "value": "baby"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no raw sigma",
+              "value": "17.0"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no invented medical diagnosis",
+              "value": "fever"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no invented medical diagnosis 2",
+              "value": "illness"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 2,
+        "vars": {
+          "class_name": "Baby Crying",
+          "duration": "600.0",
+          "mean_duration": "90.0",
+          "std_duration": "30.0",
+          "sigma": "17.0",
+          "room": "nursery",
+          "timestamp": "2026-04-25T23:30:00"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions glass or event",
+                "value": "glass"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no raw sigma",
+                "value": "12.5"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no invented scenario",
+                "value": "intruder"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no ML metrics",
+                "value": "confidence"
+              }
+            }
+          ]
+        },
+        "id": "647fb99e-2fdb-41b0-8602-b00a826f9edf",
+        "latencyMs": 5542,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: Glass Breaking\\nDuration: 12.0 seconds (typical: 2.0s ± 0.8s)\\nDeviation: 12.5 standard deviations above normal\\nRoom: living room\\nTime: 2026-04-25T03:00:00\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\\nDeviation: {{sigma}} standard deviations above normal\\nRoom: {{room}}\\nTime: {{timestamp}}\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "config": {}
+        },
+        "promptId": "9d1fd6707c93549d3bba4bdde55842d9c651057b4429a8022b1ffafd116afed3",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "A glass breaking sound has been detected in the living room, lasting longer than usual at 12 seconds. This is significantly louder and more prolonged than typical breaks, which usually last around 2-3 seconds. It's possible that a larger or heavier object may have broken, such as a vase or a window pane. \n\nYou might want to check the living room area to see if there are any signs of damage or debris.",
+          "tokenUsage": {
+            "prompt": 226,
+            "completion": 87,
+            "total": 313
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "glass breaking long event — calm but action-oriented",
+          "vars": {
+            "class_name": "Glass Breaking",
+            "duration": "12.0",
+            "mean_duration": "2.0",
+            "std_duration": "0.8",
+            "sigma": "12.5",
+            "room": "living room",
+            "timestamp": "2026-04-25T03:00:00"
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions glass or event",
+              "value": "glass"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no raw sigma",
+              "value": "12.5"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no invented scenario",
+              "value": "intruder"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no ML metrics",
+              "value": "confidence"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 3,
+        "vars": {
+          "class_name": "Glass Breaking",
+          "duration": "12.0",
+          "mean_duration": "2.0",
+          "std_duration": "0.8",
+          "sigma": "12.5",
+          "room": "living room",
+          "timestamp": "2026-04-25T03:00:00"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions dog or barking",
+                "value": "bark"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no raw sigma",
+                "value": "28.1"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no technical stats",
+                "value": "standard deviation"
+              }
+            }
+          ]
+        },
+        "id": "671b896f-89ac-4888-82b4-583d58bb1697",
+        "latencyMs": 16350,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: Dog Barking\\nDuration: 240.0 seconds (typical: 15.0s ± 8.0s)\\nDeviation: 28.1 standard deviations above normal\\nRoom: garden\\nTime: 2026-04-25T14:00:00\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\\nDeviation: {{sigma}} standard deviations above normal\\nRoom: {{room}}\\nTime: {{timestamp}}\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "config": {}
+        },
+        "promptId": "9d1fd6707c93549d3bba4bdde55842d9c651057b4429a8022b1ffafd116afed3",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "There's an unusual amount of barking coming from the garden, lasting for over four minutes. This is significantly longer than the typical duration we've seen in the past. It's possible that a dog may be left unattended or experiencing distress.\n\nConsider checking on any dogs you have in the garden to ensure they're safe and comfortable.",
+          "tokenUsage": {
+            "prompt": 226,
+            "completion": 68,
+            "total": 294
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "dog barking extended — references what is normal",
+          "vars": {
+            "class_name": "Dog Barking",
+            "duration": "240.0",
+            "mean_duration": "15.0",
+            "std_duration": "8.0",
+            "sigma": "28.1",
+            "room": "garden",
+            "timestamp": "2026-04-25T14:00:00"
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions dog or barking",
+              "value": "bark"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no raw sigma",
+              "value": "28.1"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no technical stats",
+              "value": "standard deviation"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 4,
+        "vars": {
+          "class_name": "Dog Barking",
+          "duration": "240.0",
+          "mean_duration": "15.0",
+          "std_duration": "8.0",
+          "sigma": "28.1",
+          "room": "garden",
+          "timestamp": "2026-04-25T14:00:00"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no raw sigma value",
+                "value": "96.7"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no sigma word",
+                "value": "sigma"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no std dev jargon",
+                "value": "standard deviation"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no ML jargon",
+                "value": "model"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no confidence scores",
+                "value": "confidence"
+              }
+            }
+          ]
+        },
+        "id": "14031714-5536-451d-984a-dce035c7bc5d",
+        "latencyMs": 15624,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: Timer Beep\\nDuration: 30.0 seconds (typical: 1.0s ± 0.3s)\\nDeviation: 96.7 standard deviations above normal\\nRoom: kitchen\\nTime: 2026-04-25T12:00:00\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\\nDeviation: {{sigma}} standard deviations above normal\\nRoom: {{room}}\\nTime: {{timestamp}}\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]",
+          "config": {}
+        },
+        "promptId": "9d1fd6707c93549d3bba4bdde55842d9c651057b4429a8022b1ffafd116afed3",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "\"Hello, I've detected a prolonged timer beep in the kitchen that's lasted about 30 seconds. This is significantly longer than usual, which could indicate that someone may have forgotten to turn off the timer or it's stuck on repeat. You might want to check the kitchen and see if there's an issue with the appliance.\"",
+          "tokenUsage": {
+            "prompt": 226,
+            "completion": 67,
+            "total": 293
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "output must never expose raw sigma or deviation numbers",
+          "vars": {
+            "class_name": "Timer Beep",
+            "duration": "30.0",
+            "mean_duration": "1.0",
+            "std_duration": "0.3",
+            "sigma": "96.7",
+            "room": "kitchen",
+            "timestamp": "2026-04-25T12:00:00"
+          },
+          "assert": [
+            {
+              "type": "not-icontains",
+              "label": "no raw sigma value",
+              "value": "96.7"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no sigma word",
+              "value": "sigma"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no std dev jargon",
+              "value": "standard deviation"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no ML jargon",
+              "value": "model"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no confidence scores",
+              "value": "confidence"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 5,
+        "vars": {
+          "class_name": "Timer Beep",
+          "duration": "30.0",
+          "mean_duration": "1.0",
+          "std_duration": "0.3",
+          "sigma": "96.7",
+          "room": "kitchen",
+          "timestamp": "2026-04-25T12:00:00"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 6,
+      "failures": 0,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 1354,
+        "completion": 437,
+        "cached": 0,
+        "total": 1791,
+        "numRequests": 6,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 25833,
+      "evaluationDurationMs": 25833
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "SoundSight Anomaly Narration — rubric-based quality tests",
+    "prompts": [
+      "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\\n\\nRules:\\n- Always reference what is normal/typical for this sound.\\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\\n- Do not create false urgency.\\n- Suggest one practical action if appropriate.\\n- Keep it to 2-3 sentences.\"},{\"role\":\"user\",\"content\":\"A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\\nDeviation: {{sigma}} standard deviations above normal\\nRoom: {{room}}\\nTime: {{timestamp}}\\n\\nExplain what this anomaly might mean without unnecessary alarm.\\nSuggest one practical action if appropriate.\"}]"
+    ],
+    "providers": [
+      {
+        "id": "ollama:chat:llama3.1:8b",
+        "config": {
+          "temperature": 0.4,
+          "num_predict": 200
+        }
+      }
+    ],
+    "tests": [
+      {
+        "description": "fire alarm unusually long — must reference baseline, no panic",
+        "vars": {
+          "class_name": "Fire Alarm",
+          "duration": "45.0",
+          "mean_duration": "8.0",
+          "std_duration": "2.5",
+          "sigma": "14.8",
+          "room": "kitchen",
+          "timestamp": "2026-04-25T02:15:00"
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "references typical or normal duration",
+            "value": "typical",
+            "threshold": 0.5
+          },
+          {
+            "type": "not-icontains",
+            "label": "no raw sigma value exposed to user",
+            "value": "14.8"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no sigma terminology",
+            "value": "sigma"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no standard deviation jargon",
+            "value": "standard deviation"
+          },
+          {
+            "type": "javascript",
+            "label": "2-3 sentences",
+            "value": "const sentences = output.trim().split(/[.!?]+/).filter(s => s.trim().length > 0);\nreturn sentences.length >= 2 && sentences.length <= 4;\n"
+          }
+        ]
+      },
+      {
+        "description": "water running unusually long — suggest checking tap",
+        "vars": {
+          "class_name": "Water Running",
+          "duration": "900.0",
+          "mean_duration": "120.0",
+          "std_duration": "45.0",
+          "sigma": "17.3",
+          "room": "bathroom",
+          "timestamp": "2026-04-25T10:30:00"
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions water or bathroom",
+            "value": "water"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no sigma value",
+            "value": "17.3"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no statistical jargon",
+            "value": "standard deviation"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no panic language",
+            "value": "emergency"
+          }
+        ]
+      },
+      {
+        "description": "baby crying unusually long — calm, practical suggestion",
+        "vars": {
+          "class_name": "Baby Crying",
+          "duration": "600.0",
+          "mean_duration": "90.0",
+          "std_duration": "30.0",
+          "sigma": "17.0",
+          "room": "nursery",
+          "timestamp": "2026-04-25T23:30:00"
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions baby or crying",
+            "value": "baby"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no raw sigma",
+            "value": "17.0"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no invented medical diagnosis",
+            "value": "fever"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no invented medical diagnosis 2",
+            "value": "illness"
+          }
+        ]
+      },
+      {
+        "description": "glass breaking long event — calm but action-oriented",
+        "vars": {
+          "class_name": "Glass Breaking",
+          "duration": "12.0",
+          "mean_duration": "2.0",
+          "std_duration": "0.8",
+          "sigma": "12.5",
+          "room": "living room",
+          "timestamp": "2026-04-25T03:00:00"
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions glass or event",
+            "value": "glass"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no raw sigma",
+            "value": "12.5"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no invented scenario",
+            "value": "intruder"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no ML metrics",
+            "value": "confidence"
+          }
+        ]
+      },
+      {
+        "description": "dog barking extended — references what is normal",
+        "vars": {
+          "class_name": "Dog Barking",
+          "duration": "240.0",
+          "mean_duration": "15.0",
+          "std_duration": "8.0",
+          "sigma": "28.1",
+          "room": "garden",
+          "timestamp": "2026-04-25T14:00:00"
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions dog or barking",
+            "value": "bark"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no raw sigma",
+            "value": "28.1"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no technical stats",
+            "value": "standard deviation"
+          }
+        ]
+      },
+      {
+        "description": "output must never expose raw sigma or deviation numbers",
+        "vars": {
+          "class_name": "Timer Beep",
+          "duration": "30.0",
+          "mean_duration": "1.0",
+          "std_duration": "0.3",
+          "sigma": "96.7",
+          "room": "kitchen",
+          "timestamp": "2026-04-25T12:00:00"
+        },
+        "assert": [
+          {
+            "type": "not-icontains",
+            "label": "no raw sigma value",
+            "value": "96.7"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no sigma word",
+            "value": "sigma"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no std dev jargon",
+            "value": "standard deviation"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no ML jargon",
+            "value": "model"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no confidence scores",
+            "value": "confidence"
+          }
+        ]
+      }
+    ],
+    "scenarios": [],
+    "env": {},
+    "outputPath": [
+      "results/baseline_anomaly_narration.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.121.8",
+    "nodeVersion": "v25.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "exportedAt": "2026-04-25T11:35:11.188Z",
+    "evaluationCreatedAt": "2026-04-25T11:34:45.272Z"
+  }
+}

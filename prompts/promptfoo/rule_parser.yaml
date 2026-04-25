@@ -1,0 +1,324 @@
+description: "SoundSight Rule Parser — 20 golden input/output pairs"
+
+providers:
+  - id: ollama:chat:llama3.1:8b
+    config:
+      temperature: 0
+      num_predict: 200
+    transform: "(output.match(/\\{[\\s\\S]*\\}/) || [output])[0]"
+
+prompts:
+  - |
+    [
+      {
+        "role": "system",
+        "content": "You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\n\n## Task\nParse the user's natural-language alert rule into a structured JSON rule.\nOutput valid JSON matching this schema exactly — nothing else:\n{\"trigger\": \"<fire_alarm|doorbell|glass_breaking|baby_crying|dog_barking|timer_beep|water_running|unknown>\", \"priority\": \"<critical|warn|info|none>\", \"alert_type\": \"<led|vibration|both|none>\", \"time_start\": \"<HH:MM or null>\", \"time_end\": \"<HH:MM or null>\"}"
+      },
+      {
+        "role": "user",
+        "content": "Sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running, unknown\n\nPriority mapping:\n- urgent/critical/emergency → critical\n- warn/alert/notify → warn\n- info/low/soft/quiet → info\n- silence/disable/ignore/off → none\n\nAlert type mapping:\n- flash/light/LED/blink → led\n- vibrate/buzz/shake → vibration\n- both/all → both\n- nothing/silent/off/disable → none\n\nTime shortcuts:\n- at night/overnight → time_start: 22:00, time_end: 07:00\n- during the day/daytime → time_start: 07:00, time_end: 22:00\n- after midnight → time_start: 00:00, time_end: 06:00\n- in the morning → time_start: 06:00, time_end: 12:00\n- no time mentioned → time_start: null, time_end: null\n\nExamples:\nInput: Alert me if the fire alarm goes off at night\nOutput: {\"trigger\": \"fire_alarm\", \"priority\": \"critical\", \"alert_type\": \"both\", \"time_start\": \"22:00\", \"time_end\": \"07:00\"}\n\nInput: Vibrate when the doorbell rings\nOutput: {\"trigger\": \"doorbell\", \"priority\": \"warn\", \"alert_type\": \"vibration\", \"time_start\": null, \"time_end\": null}\n\nInput: Ignore water running sounds\nOutput: {\"trigger\": \"water_running\", \"priority\": \"none\", \"alert_type\": \"none\", \"time_start\": null, \"time_end\": null}\n\nNow parse this rule:\n{{rule_text}}"
+      }
+    ]
+
+defaultTest:
+  assert:
+    - type: is-json
+      label: output is valid JSON
+
+tests:
+  # --- Affirmative rules ---
+  - description: "fire alarm at night (critical, both, night window)"
+    vars:
+      rule_text: "Alert me if the fire alarm goes off at night"
+    assert:
+      - type: javascript
+        label: trigger=fire_alarm
+        value: "JSON.parse(output).trigger === 'fire_alarm'"
+      - type: javascript
+        label: priority=critical
+        value: "JSON.parse(output).priority === 'critical'"
+      - type: javascript
+        label: time_start=22:00
+        value: "JSON.parse(output).time_start === '22:00'"
+      - type: javascript
+        label: time_end=07:00
+        value: "JSON.parse(output).time_end === '07:00'"
+
+  - description: "doorbell vibration, no time"
+    vars:
+      rule_text: "Vibrate when the doorbell rings"
+    assert:
+      - type: javascript
+        label: trigger=doorbell
+        value: "JSON.parse(output).trigger === 'doorbell'"
+      - type: javascript
+        label: alert_type=vibration
+        value: "JSON.parse(output).alert_type === 'vibration'"
+      - type: javascript
+        label: time_start=null
+        value: "JSON.parse(output).time_start === null"
+
+  - description: "dog barking LED during the day"
+    vars:
+      rule_text: "Flash the LED for any dog barking during the day"
+    assert:
+      - type: javascript
+        label: trigger=dog_barking
+        value: "JSON.parse(output).trigger === 'dog_barking'"
+      - type: javascript
+        label: alert_type=led
+        value: "JSON.parse(output).alert_type === 'led'"
+      - type: javascript
+        label: time_start=07:00
+        value: "JSON.parse(output).time_start === '07:00'"
+      - type: javascript
+        label: time_end=22:00
+        value: "JSON.parse(output).time_end === '22:00'"
+
+  - description: "glass breaking urgent, any time"
+    vars:
+      rule_text: "Notify me urgently if glass breaks any time"
+    assert:
+      - type: javascript
+        label: trigger=glass_breaking
+        value: "JSON.parse(output).trigger === 'glass_breaking'"
+      - type: javascript
+        # "urgently" as an adverb is ambiguous — model may choose warn or critical
+        label: priority=critical or warn
+        value: "['critical','warn'].includes(JSON.parse(output).priority)"
+      - type: javascript
+        label: time_start=null
+        value: "JSON.parse(output).time_start === null"
+
+  - description: "baby crying overnight, full alert"
+    vars:
+      rule_text: "Let me know when the baby is crying overnight"
+    assert:
+      - type: javascript
+        label: trigger=baby_crying
+        value: "JSON.parse(output).trigger === 'baby_crying'"
+      - type: javascript
+        label: time_start=22:00
+        value: "JSON.parse(output).time_start === '22:00'"
+      - type: javascript
+        label: time_end=07:00
+        value: "JSON.parse(output).time_end === '07:00'"
+
+  - description: "emergency buzz on glass break"
+    vars:
+      rule_text: "Emergency buzz if glass breaks"
+    assert:
+      - type: javascript
+        label: trigger=glass_breaking
+        value: "JSON.parse(output).trigger === 'glass_breaking'"
+      - type: javascript
+        label: priority=critical
+        value: "JSON.parse(output).priority === 'critical'"
+      - type: javascript
+        label: alert_type=vibration
+        value: "JSON.parse(output).alert_type === 'vibration'"
+
+  - description: "dog barking shake after midnight"
+    vars:
+      rule_text: "Shake my device if the dog barks after midnight"
+    assert:
+      - type: javascript
+        label: trigger=dog_barking
+        value: "JSON.parse(output).trigger === 'dog_barking'"
+      - type: javascript
+        label: alert_type=vibration
+        value: "JSON.parse(output).alert_type === 'vibration'"
+      - type: javascript
+        label: time_start=00:00
+        value: "JSON.parse(output).time_start === '00:00'"
+      - type: javascript
+        label: time_end=06:00
+        value: "JSON.parse(output).time_end === '06:00'"
+
+  - description: "fire alarm critical both ways"
+    vars:
+      rule_text: "Critical alert both ways for fire alarm"
+    assert:
+      - type: javascript
+        label: trigger=fire_alarm
+        value: "JSON.parse(output).trigger === 'fire_alarm'"
+      - type: javascript
+        label: priority=critical
+        value: "JSON.parse(output).priority === 'critical'"
+      - type: javascript
+        label: alert_type=both
+        value: "JSON.parse(output).alert_type === 'both'"
+
+  - description: "baby crying low priority LED daytime"
+    vars:
+      rule_text: "Low priority LED for baby crying during the day"
+    assert:
+      - type: javascript
+        label: trigger=baby_crying
+        value: "JSON.parse(output).trigger === 'baby_crying'"
+      - type: javascript
+        label: priority=info
+        value: "JSON.parse(output).priority === 'info'"
+      - type: javascript
+        label: alert_type=led
+        value: "JSON.parse(output).alert_type === 'led'"
+      - type: javascript
+        label: time_start=07:00
+        value: "JSON.parse(output).time_start === '07:00'"
+
+  - description: "water running warn LED at night"
+    vars:
+      rule_text: "Warn me with lights if water is running at night"
+    assert:
+      - type: javascript
+        label: trigger=water_running
+        value: "JSON.parse(output).trigger === 'water_running'"
+      - type: javascript
+        label: priority=warn
+        value: "JSON.parse(output).priority === 'warn'"
+      - type: javascript
+        label: alert_type=led
+        value: "JSON.parse(output).alert_type === 'led'"
+      - type: javascript
+        label: time_start=22:00
+        value: "JSON.parse(output).time_start === '22:00'"
+
+  - description: "glass breaking both LED and vibration"
+    vars:
+      rule_text: "Both LED and vibration for any glass breaking"
+    assert:
+      - type: javascript
+        label: trigger=glass_breaking
+        value: "JSON.parse(output).trigger === 'glass_breaking'"
+      - type: javascript
+        label: alert_type=both
+        value: "JSON.parse(output).alert_type === 'both'"
+
+  - description: "doorbell buzz in the morning"
+    vars:
+      rule_text: "Quick buzz for doorbell in the morning"
+    assert:
+      - type: javascript
+        label: trigger=doorbell
+        value: "JSON.parse(output).trigger === 'doorbell'"
+      - type: javascript
+        label: alert_type=vibration
+        value: "JSON.parse(output).alert_type === 'vibration'"
+      - type: javascript
+        label: time_start=06:00
+        value: "JSON.parse(output).time_start === '06:00'"
+      - type: javascript
+        label: time_end=12:00
+        value: "JSON.parse(output).time_end === '12:00'"
+
+  - description: "dog barking info alert"
+    vars:
+      rule_text: "Info alert when dog barks"
+    assert:
+      - type: javascript
+        label: trigger=dog_barking
+        value: "JSON.parse(output).trigger === 'dog_barking'"
+      - type: javascript
+        label: priority=info
+        value: "JSON.parse(output).priority === 'info'"
+
+  - description: "fire alarm urgent flash"
+    vars:
+      rule_text: "Urgent flash if the fire alarm goes off"
+    assert:
+      - type: javascript
+        label: trigger=fire_alarm
+        value: "JSON.parse(output).trigger === 'fire_alarm'"
+      - type: javascript
+        label: priority=critical
+        value: "JSON.parse(output).priority === 'critical'"
+      - type: javascript
+        label: alert_type=led
+        value: "JSON.parse(output).alert_type === 'led'"
+
+  - description: "timer beep soft daytime"
+    vars:
+      rule_text: "Soft notification for timer beep during the day"
+    assert:
+      - type: javascript
+        label: trigger=timer_beep
+        value: "JSON.parse(output).trigger === 'timer_beep'"
+      - type: javascript
+        label: priority=info
+        value: "JSON.parse(output).priority === 'info'"
+      - type: javascript
+        label: time_start=07:00
+        value: "JSON.parse(output).time_start === '07:00'"
+
+  # --- Negation / disable rules ---
+  - description: "ignore water running sounds"
+    vars:
+      rule_text: "Ignore water running sounds"
+    assert:
+      - type: javascript
+        label: trigger=water_running
+        value: "JSON.parse(output).trigger === 'water_running'"
+      - type: javascript
+        label: priority=none
+        value: "JSON.parse(output).priority === 'none'"
+      - type: javascript
+        label: alert_type=none
+        value: "JSON.parse(output).alert_type === 'none'"
+
+  - description: "disable timer beep alerts"
+    vars:
+      rule_text: "Disable alerts for the timer beep"
+    assert:
+      - type: javascript
+        label: trigger=timer_beep
+        value: "JSON.parse(output).trigger === 'timer_beep'"
+      - type: javascript
+        label: priority=none
+        value: "JSON.parse(output).priority === 'none'"
+      - type: javascript
+        label: alert_type=none
+        value: "JSON.parse(output).alert_type === 'none'"
+
+  - description: "silence dog barking notifications"
+    vars:
+      rule_text: "Turn off dog barking notifications"
+    assert:
+      - type: javascript
+        label: trigger=dog_barking
+        value: "JSON.parse(output).trigger === 'dog_barking'"
+      - type: javascript
+        label: priority=none
+        value: "JSON.parse(output).priority === 'none'"
+      - type: javascript
+        label: alert_type=none
+        value: "JSON.parse(output).alert_type === 'none'"
+
+  # --- Ambiguous / multi-feature rules ---
+  - description: "baby crying at night both alert types"
+    vars:
+      rule_text: "Alert for baby crying at night with both LED and vibration"
+    assert:
+      - type: javascript
+        label: trigger=baby_crying
+        value: "JSON.parse(output).trigger === 'baby_crying'"
+      - type: javascript
+        label: alert_type=both
+        value: "JSON.parse(output).alert_type === 'both'"
+      - type: javascript
+        label: time_start=22:00
+        value: "JSON.parse(output).time_start === '22:00'"
+
+  - description: "all fields valid enum values"
+    vars:
+      rule_text: "Flash lights for any doorbell press"
+    assert:
+      - type: javascript
+        label: all fields are valid enum values
+        value: |
+          const o = JSON.parse(output);
+          const validTriggers = ['fire_alarm','doorbell','glass_breaking','baby_crying','dog_barking','timer_beep','water_running','unknown'];
+          const validPriorities = ['critical','warn','info','none'];
+          const validAlertTypes = ['led','vibration','both','none'];
+          return validTriggers.includes(o.trigger) &&
+                 validPriorities.includes(o.priority) &&
+                 validAlertTypes.includes(o.alert_type);
