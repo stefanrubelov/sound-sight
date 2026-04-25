@@ -1,0 +1,137 @@
+description: "SoundSight Onboarding Profiler — golden pair tests for home description → profile"
+
+providers:
+  - id: ollama:chat:llama3.1:8b
+    config:
+      temperature: 0.2
+      num_predict: 300
+    transform: "(output.match(/\\{[\\s\\S]*\\}/) || [output])[0]"
+
+prompts:
+  - |
+    [
+      {
+        "role": "system",
+        "content": "You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\n\nTask: Analyse the user's home description and generate a personalised sound alert profile.\nOutput valid JSON matching this schema exactly:\n{\"enabled_classes\": [\"<list of sound class names>\"], \"priorities\": {\"<class_name>\": \"<critical|warn|info>\"}, \"quiet_hours_default\": {\"start\": \"<HH:MM>\", \"end\": \"<HH:MM>\"} or null}\n\nAvailable sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\n\nGuidelines:\n- fire_alarm and glass_breaking are always critical (safety)\n- baby_crying is critical if a baby is mentioned\n- doorbell defaults to warn\n- dog_barking defaults to info\n- timer_beep and water_running default to info\n- Set quiet_hours_default if the user mentions sleeping hours, young children, or night schedule\n- Default quiet window: start 22:00, end 07:00 (elderly: 21:00-08:00)"
+      },
+      {
+        "role": "user",
+        "content": "Available sound classes: fire_alarm, doorbell, glass_breaking, baby_crying, dog_barking, timer_beep, water_running\n\nExamples:\n\nDescription: I live alone in a flat, I work from home, no pets.\nProfile: {\"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"doorbell\", \"timer_beep\"], \"priorities\": {\"fire_alarm\": \"critical\", \"glass_breaking\": \"critical\", \"doorbell\": \"warn\", \"timer_beep\": \"info\"}, \"quiet_hours_default\": null}\n\nDescription: We have a 6-month-old baby and a golden retriever. Both parents are deaf.\nProfile: {\"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"baby_crying\", \"doorbell\", \"dog_barking\", \"timer_beep\"], \"priorities\": {\"fire_alarm\": \"critical\", \"glass_breaking\": \"critical\", \"baby_crying\": \"critical\", \"doorbell\": \"warn\", \"dog_barking\": \"info\", \"timer_beep\": \"info\"}, \"quiet_hours_default\": {\"start\": \"22:00\", \"end\": \"07:00\"}}\n\nDescription: I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector.\nProfile: {\"enabled_classes\": [\"fire_alarm\", \"glass_breaking\", \"doorbell\", \"water_running\"], \"priorities\": {\"fire_alarm\": \"critical\", \"glass_breaking\": \"critical\", \"doorbell\": \"warn\", \"water_running\": \"warn\"}, \"quiet_hours_default\": {\"start\": \"21:00\", \"end\": \"08:00\"}}\n\nNow generate a profile for this home:\n{{home_description}}"
+      }
+    ]
+
+defaultTest:
+  assert:
+    - type: is-json
+      label: output is valid JSON
+    - type: javascript
+      label: fire_alarm always enabled
+      value: "JSON.parse(output).enabled_classes.includes('fire_alarm')"
+    - type: javascript
+      label: glass_breaking always enabled
+      value: "JSON.parse(output).enabled_classes.includes('glass_breaking')"
+    - type: javascript
+      label: fire_alarm is critical
+      value: "JSON.parse(output).priorities['fire_alarm'] === 'critical'"
+    - type: javascript
+      label: glass_breaking is critical
+      value: "JSON.parse(output).priorities['glass_breaking'] === 'critical'"
+
+tests:
+  - description: "single person, no pets — minimal profile"
+    vars:
+      home_description: "I live alone in a flat, I work from home, no pets."
+    assert:
+      - type: javascript
+        label: doorbell enabled
+        value: "JSON.parse(output).enabled_classes.includes('doorbell')"
+      - type: javascript
+        label: baby_crying not enabled
+        value: "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+      - type: javascript
+        label: dog_barking not enabled
+        value: "!JSON.parse(output).enabled_classes.includes('dog_barking')"
+      - type: javascript
+        label: no quiet hours for solo adult
+        value: "JSON.parse(output).quiet_hours_default === null"
+
+  - description: "family with baby and dog — baby_crying critical, quiet hours set"
+    vars:
+      home_description: "We have a 6-month-old baby and a golden retriever. Both parents are deaf."
+    assert:
+      - type: javascript
+        label: baby_crying enabled
+        value: "JSON.parse(output).enabled_classes.includes('baby_crying')"
+      - type: javascript
+        label: baby_crying is critical
+        value: "JSON.parse(output).priorities['baby_crying'] === 'critical'"
+      - type: javascript
+        label: dog_barking enabled
+        value: "JSON.parse(output).enabled_classes.includes('dog_barking')"
+      - type: javascript
+        label: quiet hours set
+        value: "JSON.parse(output).quiet_hours_default !== null"
+      - type: javascript
+        label: quiet hours end at 07:00
+        value: "JSON.parse(output).quiet_hours_default?.end === '07:00'"
+
+  - description: "elderly person — water_running warn, early quiet hours"
+    vars:
+      home_description: "I am 78 years old with a hearing aid. I live in a house with a garden and a smoke detector."
+    assert:
+      - type: javascript
+        label: water_running enabled
+        value: "JSON.parse(output).enabled_classes.includes('water_running')"
+      - type: javascript
+        label: water_running is warn or critical
+        value: "['warn','critical'].includes(JSON.parse(output).priorities['water_running'])"
+      - type: javascript
+        label: quiet hours set for elderly
+        value: "JSON.parse(output).quiet_hours_default !== null"
+
+  - description: "shared house with students — doorbell and fire alarm core"
+    vars:
+      home_description: "I share a house with 3 other students. We come and go at different times. No pets."
+    assert:
+      - type: javascript
+        label: doorbell enabled
+        value: "JSON.parse(output).enabled_classes.includes('doorbell')"
+      - type: javascript
+        label: baby_crying not included
+        value: "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+
+  - description: "family with dog only — dog_barking included, no baby_crying"
+    vars:
+      home_description: "My partner and I have a labrador. We both work from home during the day."
+    assert:
+      - type: javascript
+        label: dog_barking enabled
+        value: "JSON.parse(output).enabled_classes.includes('dog_barking')"
+      - type: javascript
+        label: baby_crying not enabled
+        value: "!JSON.parse(output).enabled_classes.includes('baby_crying')"
+
+  - description: "night shift worker — quiet hours during the day"
+    vars:
+      home_description: "I work night shifts as a nurse. I sleep from 9am to 5pm. I live alone."
+    assert:
+      - type: javascript
+        label: quiet hours set
+        value: "JSON.parse(output).quiet_hours_default !== null"
+
+  - description: "output enabled_classes only from valid set"
+    vars:
+      home_description: "I live with my elderly mother who has severe hearing loss. We have a small apartment."
+    assert:
+      - type: javascript
+        label: all enabled_classes are valid
+        value: |
+          const valid = ['fire_alarm','doorbell','glass_breaking','baby_crying','dog_barking','timer_beep','water_running'];
+          const out = JSON.parse(output);
+          return out.enabled_classes.every(c => valid.includes(c));
+      - type: javascript
+        label: all priorities are valid
+        value: |
+          const out = JSON.parse(output);
+          const validPriorities = ['critical','warn','info'];
+          return Object.values(out.priorities).every(p => validPriorities.includes(p));

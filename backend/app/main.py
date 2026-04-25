@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import (
     audio,
+    dashboard,
     devices,
     events,
     onboarding,
@@ -17,12 +18,15 @@ from app.api import (
 from app.config import settings
 from app.logging import setup_logging
 from app.mcp.server import mcp
+from app.services.memory.scheduler import start_scheduler, stop_scheduler
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     setup_logging()
+    start_scheduler()
     yield
+    stop_scheduler()
 
 
 app = FastAPI(title="SoundSight", version="0.1.0", lifespan=lifespan)
@@ -45,6 +49,7 @@ app.include_router(devices.router, prefix=API_PREFIX)
 app.include_router(reports.router, prefix=API_PREFIX)
 app.include_router(onboarding.router, prefix=API_PREFIX)
 app.include_router(settings_router.router, prefix=API_PREFIX)
+app.include_router(dashboard.router, prefix=API_PREFIX)
 app.include_router(websocket.router)
 
 

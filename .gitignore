@@ -31,8 +31,9 @@ ml/artifacts/*.onnx
 rag/chroma_data/*
 !rag/chroma_data/.gitkeep
 
-# Promptfoo (keep baselines explicitly)
+# Promptfoo — ignore ad-hoc run results, keep baseline files explicitly
 prompts/promptfoo/results/*.json
+!prompts/promptfoo/results/baseline_*.json
 
 # Env files
 .env

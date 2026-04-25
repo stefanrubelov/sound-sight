@@ -18,3 +18,9 @@ class DeviceRead(DeviceBase):
     last_seen: datetime | None = None
 
     model_config = {"from_attributes": True}
+
+
+class DeviceRegisterResponse(BaseModel):
+    device_id: int
+    name: str
+    room: str

@@ -37,6 +37,18 @@ async def create_profile(
     await db.commit()
     await db.refresh(profile)
 
+    # Re-index home knowledge in RAG whenever the profile changes
+    try:
+        from app.services.rag.home_knowledge import index_profile
+
+        index_profile(
+            profile_id=profile.id,
+            home_description=profile.home_description,
+            notes=profile.notes,
+        )
+    except Exception as exc:
+        log.warning("RAG home knowledge indexing failed for profile %d: %s", profile.id, exc)
+
     return OnboardingResponse(
         enabled_classes=profile_data.enabled_classes,
         priorities=profile_data.priorities,
