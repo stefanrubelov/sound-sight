@@ -1,0 +1,165 @@
+description: "SoundSight Anomaly Narration — rubric-based quality tests"
+
+providers:
+  - id: ollama:chat:llama3.1:8b
+    config:
+      temperature: 0.4
+      num_predict: 200
+
+prompts:
+  - |
+    [
+      {
+        "role": "system",
+        "content": "You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\n\nPersona: Calm, clear, and precise. Never alarmist, never dismissive.\n\nRules:\n- Always reference what is normal/typical for this sound.\n- Describe the anomaly in plain language — no raw sigma values or statistical terms.\n- Do not create false urgency.\n- Suggest one practical action if appropriate.\n- Keep it to 2-3 sentences."
+      },
+      {
+        "role": "user",
+        "content": "A sound event has been flagged as anomalous. Write a brief (2-3 sentence) explanation for the user.\n\nSound: {{class_name}}\nDuration: {{duration}} seconds (typical: {{mean_duration}}s ± {{std_duration}}s)\nDeviation: {{sigma}} standard deviations above normal\nRoom: {{room}}\nTime: {{timestamp}}\n\nExplain what this anomaly might mean without unnecessary alarm.\nSuggest one practical action if appropriate."
+      }
+    ]
+
+tests:
+  - description: "fire alarm unusually long — must reference baseline, no panic"
+    vars:
+      class_name: "Fire Alarm"
+      duration: "45.0"
+      mean_duration: "8.0"
+      std_duration: "2.5"
+      sigma: "14.8"
+      room: "kitchen"
+      timestamp: "2026-04-25T02:15:00"
+    assert:
+      - type: icontains
+        label: references typical or normal duration
+        value: "typical"
+        threshold: 0.5
+      - type: not-icontains
+        label: no raw sigma value exposed to user
+        value: "14.8"
+      - type: not-icontains
+        label: no sigma terminology
+        value: "sigma"
+      - type: not-icontains
+        label: no standard deviation jargon
+        value: "standard deviation"
+      - type: javascript
+        label: 2-3 sentences
+        value: |
+          const sentences = output.trim().split(/[.!?]+/).filter(s => s.trim().length > 0);
+          return sentences.length >= 2 && sentences.length <= 4;
+
+  - description: "water running unusually long — suggest checking tap"
+    vars:
+      class_name: "Water Running"
+      duration: "900.0"
+      mean_duration: "120.0"
+      std_duration: "45.0"
+      sigma: "17.3"
+      room: "bathroom"
+      timestamp: "2026-04-25T10:30:00"
+    assert:
+      - type: icontains
+        label: mentions water or bathroom
+        value: "water"
+      - type: not-icontains
+        label: no sigma value
+        value: "17.3"
+      - type: not-icontains
+        label: no statistical jargon
+        value: "standard deviation"
+      - type: not-icontains
+        label: no panic language
+        value: "emergency"
+
+  - description: "baby crying unusually long — calm, practical suggestion"
+    vars:
+      class_name: "Baby Crying"
+      duration: "600.0"
+      mean_duration: "90.0"
+      std_duration: "30.0"
+      sigma: "17.0"
+      room: "nursery"
+      timestamp: "2026-04-25T23:30:00"
+    assert:
+      - type: icontains
+        label: mentions baby or crying
+        value: "baby"
+      - type: not-icontains
+        label: no raw sigma
+        value: "17.0"
+      - type: not-icontains
+        label: no invented medical diagnosis
+        value: "fever"
+      - type: not-icontains
+        label: no invented medical diagnosis 2
+        value: "illness"
+
+  - description: "glass breaking long event — calm but action-oriented"
+    vars:
+      class_name: "Glass Breaking"
+      duration: "12.0"
+      mean_duration: "2.0"
+      std_duration: "0.8"
+      sigma: "12.5"
+      room: "living room"
+      timestamp: "2026-04-25T03:00:00"
+    assert:
+      - type: icontains
+        label: mentions glass or event
+        value: "glass"
+      - type: not-icontains
+        label: no raw sigma
+        value: "12.5"
+      - type: not-icontains
+        label: no invented scenario
+        value: "intruder"
+      - type: not-icontains
+        label: no ML metrics
+        value: "confidence"
+
+  - description: "dog barking extended — references what is normal"
+    vars:
+      class_name: "Dog Barking"
+      duration: "240.0"
+      mean_duration: "15.0"
+      std_duration: "8.0"
+      sigma: "28.1"
+      room: "garden"
+      timestamp: "2026-04-25T14:00:00"
+    assert:
+      - type: icontains
+        label: mentions dog or barking
+        value: "bark"
+      - type: not-icontains
+        label: no raw sigma
+        value: "28.1"
+      - type: not-icontains
+        label: no technical stats
+        value: "standard deviation"
+
+  - description: "output must never expose raw sigma or deviation numbers"
+    vars:
+      class_name: "Timer Beep"
+      duration: "30.0"
+      mean_duration: "1.0"
+      std_duration: "0.3"
+      sigma: "96.7"
+      room: "kitchen"
+      timestamp: "2026-04-25T12:00:00"
+    assert:
+      - type: not-icontains
+        label: no raw sigma value
+        value: "96.7"
+      - type: not-icontains
+        label: no sigma word
+        value: "sigma"
+      - type: not-icontains
+        label: no std dev jargon
+        value: "standard deviation"
+      - type: not-icontains
+        label: no ML jargon
+        value: "model"
+      - type: not-icontains
+        label: no confidence scores
+        value: "confidence"

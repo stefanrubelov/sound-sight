@@ -1,0 +1,1352 @@
+{
+  "evalId": "eval-MrJ-2026-04-25T11:34:25",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-04-25T11:34:25.100Z",
+    "prompts": [
+      {
+        "id": "e4412b94f0c1435c422142ee657a9a87c5630cda600558247a06f3c6457f8caa",
+        "raw": "[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"\n  }\n]\n",
+        "label": "[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"\n  }\n]\n",
+        "provider": "ollama:chat:llama3.1:8b",
+        "metrics": {
+          "score": 8,
+          "testPassCount": 8,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 28,
+          "assertFailCount": 0,
+          "totalLatencyMs": 59092,
+          "tokenUsage": {
+            "prompt": 1527,
+            "completion": 278,
+            "cached": 0,
+            "total": 1805,
+            "numRequests": 8,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions kitchen",
+                "value": "kitchen"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions fire alarm",
+                "value": "fire alarm"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no confidence scores",
+                "value": "confidence"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no ML terms",
+                "value": "classifier"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "javascript",
+                "label": "1-2 sentences only",
+                "value": "output.trim().split(/[.!?]+/).filter(s => s.trim().length > 0).length <= 3"
+              }
+            }
+          ]
+        },
+        "id": "96ca8e0c-1c4d-4213-af1c-6837c67b0684",
+        "latencyMs": 9129,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: Fire Alarm\\nDuration: 8.2 seconds\\nLocation: Sensor-A in kitchen\\nDetected at: 2026-04-25T02:15:00\\n\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "config": {}
+        },
+        "promptId": "e4412b94f0c1435c422142ee657a9a87c5630cda600558247a06f3c6457f8caa",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "A fire alarm sound was detected for 8.2 seconds in the kitchen, coming from Sensor-A. The alarm sounded at 2:15 AM on April 25th.",
+          "tokenUsage": {
+            "prompt": 186,
+            "completion": 37,
+            "total": 223
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "fire alarm — must mention room and duration",
+          "vars": {
+            "class_name": "Fire Alarm",
+            "duration": "8.2",
+            "device_name": "Sensor-A",
+            "room": "kitchen",
+            "timestamp": "2026-04-25T02:15:00",
+            "user_context": ""
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions kitchen",
+              "value": "kitchen"
+            },
+            {
+              "type": "icontains",
+              "label": "mentions fire alarm",
+              "value": "fire alarm"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no confidence scores",
+              "value": "confidence"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no ML terms",
+              "value": "classifier"
+            },
+            {
+              "type": "javascript",
+              "label": "1-2 sentences only",
+              "value": "output.trim().split(/[.!?]+/).filter(s => s.trim().length > 0).length <= 3"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 0,
+        "vars": {
+          "class_name": "Fire Alarm",
+          "duration": "8.2",
+          "device_name": "Sensor-A",
+          "room": "kitchen",
+          "timestamp": "2026-04-25T02:15:00",
+          "user_context": ""
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions doorbell or door",
+                "value": "door"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions hallway",
+                "value": "hallway"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no technical jargon",
+                "value": "MFCC"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no probability",
+                "value": "probability"
+              }
+            }
+          ]
+        },
+        "id": "4b983d5a-6bad-4de5-876d-e9fe51f8af1f",
+        "latencyMs": 7000,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: Doorbell\\nDuration: 1.5 seconds\\nLocation: Front Sensor in hallway\\nDetected at: 2026-04-25T14:30:00\\n\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "config": {}
+        },
+        "promptId": "e4412b94f0c1435c422142ee657a9a87c5630cda600558247a06f3c6457f8caa",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "The doorbell was heard for 1.5 seconds coming from the front sensor location in the hallway at 2:30 PM today.",
+          "tokenUsage": {
+            "prompt": 186,
+            "completion": 29,
+            "total": 215
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "doorbell — daytime, no special user context",
+          "vars": {
+            "class_name": "Doorbell",
+            "duration": "1.5",
+            "device_name": "Front Sensor",
+            "room": "hallway",
+            "timestamp": "2026-04-25T14:30:00",
+            "user_context": ""
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions doorbell or door",
+              "value": "door"
+            },
+            {
+              "type": "icontains",
+              "label": "mentions hallway",
+              "value": "hallway"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no technical jargon",
+              "value": "MFCC"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no probability",
+              "value": "probability"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 1,
+        "vars": {
+          "class_name": "Doorbell",
+          "duration": "1.5",
+          "device_name": "Front Sensor",
+          "room": "hallway",
+          "timestamp": "2026-04-25T14:30:00",
+          "user_context": ""
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions nursery or room",
+                "value": "nursery"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no invented diagnosis",
+                "value": "fever"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no invented diagnosis 2",
+                "value": "sick"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no confidence",
+                "value": "confidence"
+              }
+            }
+          ]
+        },
+        "id": "b79eaad2-1cf7-48cf-af61-142b5ceca51d",
+        "latencyMs": 2463,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: Baby Crying\\nDuration: 45.0 seconds\\nLocation: Nursery Sensor in nursery\\nDetected at: 2026-04-25T23:10:00\\nUser notes: Quiet hours are 22:00-07:00. Baby usually sleeps by 21:00.\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "config": {}
+        },
+        "promptId": "e4412b94f0c1435c422142ee657a9a87c5630cda600558247a06f3c6457f8caa",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "A baby is crying in the nursery, detected at 11:10 PM. The crying lasted for approximately 45 seconds before stopping.",
+          "tokenUsage": {
+            "prompt": 211,
+            "completion": 28,
+            "total": 239
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "baby crying — user has noted quiet hours context",
+          "vars": {
+            "class_name": "Baby Crying",
+            "duration": "45.0",
+            "device_name": "Nursery Sensor",
+            "room": "nursery",
+            "timestamp": "2026-04-25T23:10:00",
+            "user_context": "User notes: Quiet hours are 22:00-07:00. Baby usually sleeps by 21:00.\n"
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions nursery or room",
+              "value": "nursery"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no invented diagnosis",
+              "value": "fever"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no invented diagnosis 2",
+              "value": "sick"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no confidence",
+              "value": "confidence"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 2,
+        "vars": {
+          "class_name": "Baby Crying",
+          "duration": "45.0",
+          "device_name": "Nursery Sensor",
+          "room": "nursery",
+          "timestamp": "2026-04-25T23:10:00",
+          "user_context": "User notes: Quiet hours are 22:00-07:00. Baby usually sleeps by 21:00.\n"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions glass or breaking",
+                "value": "glass"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions living room",
+                "value": "living room"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "not overly dramatic",
+                "value": "intruder"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no ML terms",
+                "value": "model"
+              }
+            }
+          ]
+        },
+        "id": "40e73891-04d8-4968-8768-a484c85a1cec",
+        "latencyMs": 5295,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: Glass Breaking\\nDuration: 2.1 seconds\\nLocation: Living Room Sensor in living room\\nDetected at: 2026-04-25T03:45:00\\n\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "config": {}
+        },
+        "promptId": "e4412b94f0c1435c422142ee657a9a87c5630cda600558247a06f3c6457f8caa",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "A glass breaking sound was detected in the living room for approximately 2.1 seconds at 3:45 AM on April 25, 2026. The sound came from the Living Room Sensor location.",
+          "tokenUsage": {
+            "prompt": 188,
+            "completion": 43,
+            "total": 231
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "glass breaking — safety event, urgent but calm",
+          "vars": {
+            "class_name": "Glass Breaking",
+            "duration": "2.1",
+            "device_name": "Living Room Sensor",
+            "room": "living room",
+            "timestamp": "2026-04-25T03:45:00",
+            "user_context": ""
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions glass or breaking",
+              "value": "glass"
+            },
+            {
+              "type": "icontains",
+              "label": "mentions living room",
+              "value": "living room"
+            },
+            {
+              "type": "not-icontains",
+              "label": "not overly dramatic",
+              "value": "intruder"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no ML terms",
+              "value": "model"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 3,
+        "vars": {
+          "class_name": "Glass Breaking",
+          "duration": "2.1",
+          "device_name": "Living Room Sensor",
+          "room": "living room",
+          "timestamp": "2026-04-25T03:45:00",
+          "user_context": ""
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions dog or barking",
+                "value": "bark"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions garden or location",
+                "value": "garden"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no technical metrics",
+                "value": "score"
+              }
+            }
+          ]
+        },
+        "id": "c81df69b-bcda-4e02-b26c-e6b8c9a68461",
+        "latencyMs": 9128,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: Dog Barking\\nDuration: 6.3 seconds\\nLocation: Garden Sensor in garden\\nDetected at: 2026-04-25T16:00:00\\nUser notes: Has a golden retriever named Max.\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "config": {}
+        },
+        "promptId": "e4412b94f0c1435c422142ee657a9a87c5630cda600558247a06f3c6457f8caa",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "Max, your dog is barking in the garden for approximately 6 seconds. The sound was detected at 4:00 PM on April 25th by the garden sensor.",
+          "tokenUsage": {
+            "prompt": 198,
+            "completion": 37,
+            "total": 235
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "dog barking — user has a dog, routine event",
+          "vars": {
+            "class_name": "Dog Barking",
+            "duration": "6.3",
+            "device_name": "Garden Sensor",
+            "room": "garden",
+            "timestamp": "2026-04-25T16:00:00",
+            "user_context": "User notes: Has a golden retriever named Max.\n"
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions dog or barking",
+              "value": "bark"
+            },
+            {
+              "type": "icontains",
+              "label": "mentions garden or location",
+              "value": "garden"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no technical metrics",
+              "value": "score"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 4,
+        "vars": {
+          "class_name": "Dog Barking",
+          "duration": "6.3",
+          "device_name": "Garden Sensor",
+          "room": "garden",
+          "timestamp": "2026-04-25T16:00:00",
+          "user_context": "User notes: Has a golden retriever named Max.\n"
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions timer or beep or kitchen",
+                "value": "kitchen"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no exclamation marks for routine event",
+                "value": "!"
+              }
+            }
+          ]
+        },
+        "id": "8da6ea33-65b2-4527-a938-70cc16c1aa68",
+        "latencyMs": 8445,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: Timer Beep\\nDuration: 0.8 seconds\\nLocation: Kitchen Sensor in kitchen\\nDetected at: 2026-04-25T12:00:00\\n\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "config": {}
+        },
+        "promptId": "e4412b94f0c1435c422142ee657a9a87c5630cda600558247a06f3c6457f8caa",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "A timer beep was detected coming from the kitchen for approximately 0.8 seconds. The sound occurred at 12:00 PM on April 25, 2026.",
+          "tokenUsage": {
+            "prompt": 187,
+            "completion": 36,
+            "total": 223
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "timer beep — short, routine, no alarm needed",
+          "vars": {
+            "class_name": "Timer Beep",
+            "duration": "0.8",
+            "device_name": "Kitchen Sensor",
+            "room": "kitchen",
+            "timestamp": "2026-04-25T12:00:00",
+            "user_context": ""
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions timer or beep or kitchen",
+              "value": "kitchen"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no exclamation marks for routine event",
+              "value": "!"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 5,
+        "vars": {
+          "class_name": "Timer Beep",
+          "duration": "0.8",
+          "device_name": "Kitchen Sensor",
+          "room": "kitchen",
+          "timestamp": "2026-04-25T12:00:00",
+          "user_context": ""
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "icontains",
+                "label": "mentions water or bathroom",
+                "value": "water"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no confidence scores",
+                "value": "confidence"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no invented context",
+                "value": "flood"
+              }
+            }
+          ]
+        },
+        "id": "505d342c-dfd1-4e29-84be-61f61ab6961d",
+        "latencyMs": 8893,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: Water Running\\nDuration: 180.0 seconds\\nLocation: Bathroom Sensor in bathroom\\nDetected at: 2026-04-25T07:30:00\\n\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "config": {}
+        },
+        "promptId": "e4412b94f0c1435c422142ee657a9a87c5630cda600558247a06f3c6457f8caa",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "There is running water in the bathroom, detected for approximately 3 minutes starting from 7:30 AM. The sound of running water continues to be present at this location.",
+          "tokenUsage": {
+            "prompt": 186,
+            "completion": 36,
+            "total": 222
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "water running — mentions duration and location",
+          "vars": {
+            "class_name": "Water Running",
+            "duration": "180.0",
+            "device_name": "Bathroom Sensor",
+            "room": "bathroom",
+            "timestamp": "2026-04-25T07:30:00",
+            "user_context": ""
+          },
+          "assert": [
+            {
+              "type": "icontains",
+              "label": "mentions water or bathroom",
+              "value": "water"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no confidence scores",
+              "value": "confidence"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no invented context",
+              "value": "flood"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 6,
+        "vars": {
+          "class_name": "Water Running",
+          "duration": "180.0",
+          "device_name": "Bathroom Sensor",
+          "room": "bathroom",
+          "timestamp": "2026-04-25T07:30:00",
+          "user_context": ""
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no sigma",
+                "value": "sigma"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no standard deviation",
+                "value": "standard deviation"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "not-icontains",
+                "label": "no raw numbers as metrics",
+                "value": "0.9"
+              }
+            }
+          ]
+        },
+        "id": "5966352e-168f-4f52-80e5-53a9f644aec4",
+        "latencyMs": 8739,
+        "namedScores": {},
+        "prompt": {
+          "raw": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: Fire Alarm\\nDuration: 12.0 seconds\\nLocation: Sensor in bedroom\\nDetected at: 2026-04-25T04:00:00\\n\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "label": "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]",
+          "config": {}
+        },
+        "promptId": "e4412b94f0c1435c422142ee657a9a87c5630cda600558247a06f3c6457f8caa",
+        "promptIdx": 0,
+        "provider": {
+          "id": "ollama:chat:llama3.1:8b",
+          "label": ""
+        },
+        "response": {
+          "output": "A fire alarm sound was detected for 12 seconds in your bedroom, starting at 4:00 AM this morning. The alarm has since stopped sounding.",
+          "tokenUsage": {
+            "prompt": 185,
+            "completion": 32,
+            "total": 217
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "output must not expose sigma or technical stats",
+          "vars": {
+            "class_name": "Fire Alarm",
+            "duration": "12.0",
+            "device_name": "Sensor",
+            "room": "bedroom",
+            "timestamp": "2026-04-25T04:00:00",
+            "user_context": ""
+          },
+          "assert": [
+            {
+              "type": "not-icontains",
+              "label": "no sigma",
+              "value": "sigma"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no standard deviation",
+              "value": "standard deviation"
+            },
+            {
+              "type": "not-icontains",
+              "label": "no raw numbers as metrics",
+              "value": "0.9"
+            }
+          ],
+          "options": {},
+          "metadata": {}
+        },
+        "testIdx": 7,
+        "vars": {
+          "class_name": "Fire Alarm",
+          "duration": "12.0",
+          "device_name": "Sensor",
+          "room": "bedroom",
+          "timestamp": "2026-04-25T04:00:00",
+          "user_context": ""
+        },
+        "metadata": {
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 8,
+      "failures": 0,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 1527,
+        "completion": 278,
+        "cached": 0,
+        "total": 1805,
+        "numRequests": 8,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 0,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 17899,
+      "evaluationDurationMs": 17899
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "SoundSight Event Interpretation — rubric-based quality tests",
+    "prompts": [
+      "[{\"role\":\"system\",\"content\":\"You are SoundSight, an intelligent assistant for a home sound-detection system designed to help deaf and hard-of-hearing users stay aware of their environment.\\n\\nPersona: Calm, clear, and precise. Never alarmist, never dismissive. Keep summaries to 1-2 sentences.\\n\\nRules:\\n- Always mention the sound type and location.\\n- Mention the duration naturally.\\n- Do not mention confidence scores, ML terms, or invent facts.\\n- Active voice, plain language.\"},{\"role\":\"user\",\"content\":\"A new sound event has been detected. Write a 1-2 sentence summary for the user.\\n\\nSound: {{class_name}}\\nDuration: {{duration}} seconds\\nLocation: {{device_name}} in {{room}}\\nDetected at: {{timestamp}}\\n{{user_context}}\\nKeep the summary clear and factual. Do not mention confidence scores or technical terms.\"}]"
+    ],
+    "providers": [
+      {
+        "id": "ollama:chat:llama3.1:8b",
+        "config": {
+          "temperature": 0.3,
+          "num_predict": 150
+        }
+      }
+    ],
+    "tests": [
+      {
+        "description": "fire alarm — must mention room and duration",
+        "vars": {
+          "class_name": "Fire Alarm",
+          "duration": "8.2",
+          "device_name": "Sensor-A",
+          "room": "kitchen",
+          "timestamp": "2026-04-25T02:15:00",
+          "user_context": ""
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions kitchen",
+            "value": "kitchen"
+          },
+          {
+            "type": "icontains",
+            "label": "mentions fire alarm",
+            "value": "fire alarm"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no confidence scores",
+            "value": "confidence"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no ML terms",
+            "value": "classifier"
+          },
+          {
+            "type": "javascript",
+            "label": "1-2 sentences only",
+            "value": "output.trim().split(/[.!?]+/).filter(s => s.trim().length > 0).length <= 3"
+          }
+        ]
+      },
+      {
+        "description": "doorbell — daytime, no special user context",
+        "vars": {
+          "class_name": "Doorbell",
+          "duration": "1.5",
+          "device_name": "Front Sensor",
+          "room": "hallway",
+          "timestamp": "2026-04-25T14:30:00",
+          "user_context": ""
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions doorbell or door",
+            "value": "door"
+          },
+          {
+            "type": "icontains",
+            "label": "mentions hallway",
+            "value": "hallway"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no technical jargon",
+            "value": "MFCC"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no probability",
+            "value": "probability"
+          }
+        ]
+      },
+      {
+        "description": "baby crying — user has noted quiet hours context",
+        "vars": {
+          "class_name": "Baby Crying",
+          "duration": "45.0",
+          "device_name": "Nursery Sensor",
+          "room": "nursery",
+          "timestamp": "2026-04-25T23:10:00",
+          "user_context": "User notes: Quiet hours are 22:00-07:00. Baby usually sleeps by 21:00.\n"
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions nursery or room",
+            "value": "nursery"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no invented diagnosis",
+            "value": "fever"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no invented diagnosis 2",
+            "value": "sick"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no confidence",
+            "value": "confidence"
+          }
+        ]
+      },
+      {
+        "description": "glass breaking — safety event, urgent but calm",
+        "vars": {
+          "class_name": "Glass Breaking",
+          "duration": "2.1",
+          "device_name": "Living Room Sensor",
+          "room": "living room",
+          "timestamp": "2026-04-25T03:45:00",
+          "user_context": ""
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions glass or breaking",
+            "value": "glass"
+          },
+          {
+            "type": "icontains",
+            "label": "mentions living room",
+            "value": "living room"
+          },
+          {
+            "type": "not-icontains",
+            "label": "not overly dramatic",
+            "value": "intruder"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no ML terms",
+            "value": "model"
+          }
+        ]
+      },
+      {
+        "description": "dog barking — user has a dog, routine event",
+        "vars": {
+          "class_name": "Dog Barking",
+          "duration": "6.3",
+          "device_name": "Garden Sensor",
+          "room": "garden",
+          "timestamp": "2026-04-25T16:00:00",
+          "user_context": "User notes: Has a golden retriever named Max.\n"
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions dog or barking",
+            "value": "bark"
+          },
+          {
+            "type": "icontains",
+            "label": "mentions garden or location",
+            "value": "garden"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no technical metrics",
+            "value": "score"
+          }
+        ]
+      },
+      {
+        "description": "timer beep — short, routine, no alarm needed",
+        "vars": {
+          "class_name": "Timer Beep",
+          "duration": "0.8",
+          "device_name": "Kitchen Sensor",
+          "room": "kitchen",
+          "timestamp": "2026-04-25T12:00:00",
+          "user_context": ""
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions timer or beep or kitchen",
+            "value": "kitchen"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no exclamation marks for routine event",
+            "value": "!"
+          }
+        ]
+      },
+      {
+        "description": "water running — mentions duration and location",
+        "vars": {
+          "class_name": "Water Running",
+          "duration": "180.0",
+          "device_name": "Bathroom Sensor",
+          "room": "bathroom",
+          "timestamp": "2026-04-25T07:30:00",
+          "user_context": ""
+        },
+        "assert": [
+          {
+            "type": "icontains",
+            "label": "mentions water or bathroom",
+            "value": "water"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no confidence scores",
+            "value": "confidence"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no invented context",
+            "value": "flood"
+          }
+        ]
+      },
+      {
+        "description": "output must not expose sigma or technical stats",
+        "vars": {
+          "class_name": "Fire Alarm",
+          "duration": "12.0",
+          "device_name": "Sensor",
+          "room": "bedroom",
+          "timestamp": "2026-04-25T04:00:00",
+          "user_context": ""
+        },
+        "assert": [
+          {
+            "type": "not-icontains",
+            "label": "no sigma",
+            "value": "sigma"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no standard deviation",
+            "value": "standard deviation"
+          },
+          {
+            "type": "not-icontains",
+            "label": "no raw numbers as metrics",
+            "value": "0.9"
+          }
+        ]
+      }
+    ],
+    "scenarios": [],
+    "env": {},
+    "outputPath": [
+      "results/baseline_event_interpretation.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.121.8",
+    "nodeVersion": "v25.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "exportedAt": "2026-04-25T11:34:43.098Z",
+    "evaluationCreatedAt": "2026-04-25T11:34:25.100Z"
+  }
+}
