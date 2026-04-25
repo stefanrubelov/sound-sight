@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -13,10 +13,24 @@ log = logging.getLogger(__name__)
 router = APIRouter(prefix="/rules", tags=["rules"])
 
 
+def _log_to_session(session_id: str | None, user_text: str, ai_text: str) -> None:
+    """Persist the NL rule exchange to short-term session memory if a session id is given."""
+    if not session_id:
+        return
+    try:
+        from app.services.memory.session import add_ai_message, add_user_message
+
+        add_user_message(session_id, user_text)
+        add_ai_message(session_id, ai_text)
+    except Exception as exc:
+        log.debug("Session memory write skipped: %s", exc)
+
+
 @router.post("", response_model=RuleRead, status_code=201)
 async def create_rule(
     body: RuleCreate,
     db: AsyncSession = Depends(get_db),
+    x_session_id: str | None = Header(default=None),
 ) -> RuleRead:
     if body.source_text and not body.trigger:
         try:
@@ -30,6 +44,20 @@ async def create_rule(
                 time_start=parsed.time_start,
                 time_end=parsed.time_end,
                 source_text=body.source_text,
+            )
+            _log_to_session(
+                x_session_id,
+                user_text=body.source_text,
+                ai_text=(
+                    f"Rule created: {parsed.trigger}, {parsed.priority} priority, "
+                    f"{parsed.alert_type} alert"
+                    + (
+                        f", active {parsed.time_start}–{parsed.time_end}"
+                        if parsed.time_start
+                        else ""
+                    )
+                    + "."
+                ),
             )
         except Exception as exc:
             log.warning("Rule parsing failed: %s", exc)
