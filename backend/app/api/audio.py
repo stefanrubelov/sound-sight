@@ -39,22 +39,50 @@ def _resolve_vibration(severity: str) -> str:
     return settings.severity_vibration.get(severity, "none")
 
 
-async def _write_llm_summary(event_id: int, class_name: str, db: AsyncSession) -> None:
-    """Background task: generate a short LLM summary and store it on the event."""
-    try:
-        from app.services.llm.chains import summarise_event
+async def _write_llm_summary(event_id: int, class_name: str) -> None:
+    """Background task: generate LLM summary + anomaly check in a fresh DB session."""
+    from app.db.session import AsyncSessionLocal
+    from app.services.llm.agents import check_and_narrate_anomaly
+    from app.services.llm.chains import summarise_event
 
+    try:
         summary = await asyncio.wait_for(
             summarise_event(class_name=class_name, event_id=event_id),
             timeout=30.0,
         )
-        event = await db.get(Event, event_id)
-        if event:
-            event.llm_summary = summary
-            await db.commit()
-            log.debug("LLM summary written for event %d", event_id)
     except Exception as exc:
         log.warning("LLM summary failed for event %d: %s", event_id, exc)
+        summary = None
+
+    try:
+        async with AsyncSessionLocal() as db:
+            event = await db.get(Event, event_id)
+            if event is None:
+                return
+
+            room = "unknown room"
+            if event.device_id:
+                device = await db.get(Device, event.device_id)
+                if device:
+                    room = device.room
+
+            anomaly = await asyncio.wait_for(
+                check_and_narrate_anomaly(event, room, db),
+                timeout=30.0,
+            )
+
+            if anomaly:
+                event.llm_summary = (
+                    f"{summary}\n\n[Anomaly] {anomaly}" if summary else f"[Anomaly] {anomaly}"
+                )
+            elif summary:
+                event.llm_summary = summary
+
+            if event.llm_summary:
+                await db.commit()
+                log.debug("LLM summary written for event %d", event_id)
+    except Exception as exc:
+        log.warning("Post-event LLM task failed for event %d: %s", event_id, exc)
 
 
 @router.post("/classify", response_model=ClassifyResponse)
@@ -127,7 +155,7 @@ async def classify_audio(
 
     # --- Async LLM summary (don't block the ESP32) ---
     if class_name != "unknown":
-        background_tasks.add_task(_write_llm_summary, event.id, class_name, db)
+        background_tasks.add_task(_write_llm_summary, event.id, class_name)
 
     log.info(
         "classify: device=%d class=%s confidence=%.3f severity=%s",
