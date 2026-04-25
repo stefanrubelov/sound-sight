@@ -16,6 +16,7 @@ from app.api import (
 )
 from app.config import settings
 from app.logging import setup_logging
+from app.mcp.server import mcp
 
 
 @asynccontextmanager
@@ -25,6 +26,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
 
 app = FastAPI(title="SoundSight", version="0.1.0", lifespan=lifespan)
+app.mount("/mcp", mcp.streamable_http_app())
 
 app.add_middleware(
     CORSMiddleware,
