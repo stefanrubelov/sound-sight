@@ -73,14 +73,20 @@ export function Settings() {
           <div className={styles.field}>
             <label>Enabled sound classes</label>
             <p className={styles.value}>
-              {profile.enabled_classes ?? "All classes enabled"}
+              {profile.enabled_classes && profile.enabled_classes.length > 0
+                ? profile.enabled_classes
+                    .map((c) => c.replace(/_/g, " "))
+                    .join(", ")
+                : "All classes enabled"}
             </p>
           </div>
 
           <div className={styles.field}>
             <label>Quiet hours</label>
             <p className={styles.value}>
-              {profile.quiet_hours ?? "None configured"}
+              {profile.quiet_hours
+                ? `${profile.quiet_hours.start} – ${profile.quiet_hours.end}`
+                : "None configured"}
             </p>
           </div>
 

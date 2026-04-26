@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import { EventsChart } from "../components/EventsChart";
+import { getDashboardSummary } from "../api/client";
+import type { DashboardSummary } from "../api/types";
 import { useEvents } from "../hooks/useEvents";
 import styles from "./Dashboard.module.css";
 
@@ -10,6 +14,15 @@ const SEVERITY_LABEL: Record<string, string> = {
 
 export function Dashboard() {
   const { events, connected, error } = useEvents();
+  const [summary, setSummary] = useState<DashboardSummary | null>(null);
+
+  useEffect(() => {
+    getDashboardSummary()
+      .catch(() => null)
+      .then((s) => {
+        if (s) setSummary(s);
+      });
+  }, []);
 
   return (
     <section aria-labelledby="dashboard-heading">
@@ -26,6 +39,33 @@ export function Dashboard() {
           }
         />
       </div>
+
+      {summary && (
+        <dl className={styles.stats}>
+          <div className={styles.stat}>
+            <dt>Events today</dt>
+            <dd>{summary.events_today}</dd>
+          </div>
+          <div className={styles.stat}>
+            <dt>Events this week</dt>
+            <dd>{summary.events_this_week}</dd>
+          </div>
+          {summary.most_active_class && (
+            <div className={styles.stat}>
+              <dt>Most active</dt>
+              <dd>{summary.most_active_class.replace(/_/g, " ")}</dd>
+            </div>
+          )}
+          <div className={styles.stat}>
+            <dt>Devices</dt>
+            <dd>{summary.active_device_count}</dd>
+          </div>
+          <div className={styles.stat}>
+            <dt>Rules</dt>
+            <dd>{summary.active_rule_count}</dd>
+          </div>
+        </dl>
+      )}
 
       {error && (
         <p className={styles.error} role="alert">
@@ -75,6 +115,8 @@ export function Dashboard() {
           ))}
         </ul>
       )}
+
+      <EventsChart />
     </section>
   );
 }

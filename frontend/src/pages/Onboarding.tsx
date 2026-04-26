@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { submitOnboarding } from "../api/client";
-import type { UserProfile } from "../api/types";
+import type { OnboardingResponse } from "../api/types";
 import styles from "./Onboarding.module.css";
 
 export function Onboarding() {
   const [description, setDescription] = useState("");
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [profile, setProfile] = useState<OnboardingResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -75,18 +75,32 @@ export function Onboarding() {
           <dl className={styles.profileDl}>
             <div>
               <dt>Enabled classes</dt>
-              <dd>{profile.enabled_classes ?? "All"}</dd>
+              <dd>
+                {profile.enabled_classes.length > 0
+                  ? profile.enabled_classes
+                      .map((c) => c.replace(/_/g, " "))
+                      .join(", ")
+                  : "None"}
+              </dd>
             </div>
-            <div>
-              <dt>Quiet hours</dt>
-              <dd>{profile.quiet_hours ?? "None"}</dd>
-            </div>
-            {profile.notes && (
+            {Object.keys(profile.priorities).length > 0 && (
               <div>
-                <dt>Notes</dt>
-                <dd>{profile.notes}</dd>
+                <dt>Priorities</dt>
+                <dd>
+                  {Object.entries(profile.priorities)
+                    .map(([cls, pri]) => `${cls.replace(/_/g, " ")}: ${pri}`)
+                    .join(", ")}
+                </dd>
               </div>
             )}
+            <div>
+              <dt>Quiet hours</dt>
+              <dd>
+                {profile.quiet_hours_default
+                  ? `${profile.quiet_hours_default.start} – ${profile.quiet_hours_default.end}`
+                  : "None"}
+              </dd>
+            </div>
           </dl>
         </div>
       )}

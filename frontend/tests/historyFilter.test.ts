@@ -9,7 +9,6 @@ const base: SoundEvent = {
   confidence: 0.9,
   timestamp: "2026-04-20T10:00:00Z",
   duration: 1.0,
-  raw_features: null,
   llm_summary: null,
 };
 

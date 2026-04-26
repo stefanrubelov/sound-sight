@@ -1,7 +1,8 @@
 import type {
+  DashboardSummary,
   Device,
   EventFilters,
-  PaginatedEvents,
+  OnboardingResponse,
   Rule,
   RuleCreate,
   SoundEvent,
@@ -24,15 +25,15 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 // Events
-export function getEvents(
-  filters: EventFilters = {},
-): Promise<PaginatedEvents> {
+export function getEvents(filters: EventFilters = {}): Promise<SoundEvent[]> {
   const params = new URLSearchParams();
-  for (const [k, v] of Object.entries(filters)) {
+  const { class_name, ...rest } = filters;
+  if (class_name) params.set("class", class_name);
+  for (const [k, v] of Object.entries(rest)) {
     if (v !== undefined && v !== "") params.set(k, String(v));
   }
   const qs = params.size ? `?${params}` : "";
-  return request<PaginatedEvents>(`/events${qs}`);
+  return request<SoundEvent[]>(`/events${qs}`);
 }
 
 export function getEvent(id: number): Promise<SoundEvent> {
@@ -72,11 +73,16 @@ export function updateUserProfile(
 
 export function submitOnboarding(
   homeDescription: string,
-): Promise<UserProfile> {
-  return request<UserProfile>("/onboarding/profile", {
+): Promise<OnboardingResponse> {
+  return request<OnboardingResponse>("/onboarding/profile", {
     method: "POST",
     body: JSON.stringify({ home_description: homeDescription }),
   });
+}
+
+// Dashboard
+export function getDashboardSummary(): Promise<DashboardSummary> {
+  return request<DashboardSummary>("/dashboard/summary");
 }
 
 // Reports

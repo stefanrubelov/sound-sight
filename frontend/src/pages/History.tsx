@@ -16,6 +16,8 @@ const CLASS_OPTIONS = [
   "unknown",
 ];
 
+const LIMIT = 20;
+
 export function History() {
   const [filters, setFilters] = useState<HistoryFilters>({
     class_name: "",
@@ -23,14 +25,13 @@ export function History() {
     to: "",
   });
   const [events, setEvents] = useState<SoundEvent[]>([]);
-  const [total, setTotal] = useState(0);
   const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const limit = 20;
 
   function buildApiFilters(): EventFilters {
-    const f: EventFilters = { limit, offset };
+    const f: EventFilters = { limit: LIMIT, offset };
     if (filters.class_name) f.class_name = filters.class_name;
     if (filters.from) f.from = filters.from;
     if (filters.to) f.to = filters.to;
@@ -40,10 +41,10 @@ export function History() {
   useEffect(() => {
     let active = true;
     getEvents(buildApiFilters())
-      .then((res) => {
+      .then((data) => {
         if (!active) return;
-        setEvents(res.items ?? []);
-        setTotal(res.total ?? 0);
+        setEvents(data);
+        setHasMore(data.length === LIMIT);
         setLoading(false);
         setError(null);
       })
@@ -59,9 +60,12 @@ export function History() {
   }, [filters, offset]);
 
   function handleFilterChange(key: keyof HistoryFilters, value: string) {
+    setLoading(true);
     setFilters((prev) => ({ ...prev, [key]: value }));
     setOffset(0);
   }
+
+  const page = Math.floor(offset / LIMIT) + 1;
 
   return (
     <section aria-labelledby="history-heading">
@@ -114,7 +118,7 @@ export function History() {
       {events.length > 0 && (
         <>
           <p className={styles.count} aria-live="polite">
-            Showing {offset + 1}–{Math.min(offset + limit, total)} of {total}
+            Page {page}
           </p>
           <table className={styles.table} aria-label="Event history">
             <thead>
@@ -145,15 +149,21 @@ export function History() {
             aria-label="Pagination"
           >
             <button
-              onClick={() => setOffset((o) => Math.max(0, o - limit))}
+              onClick={() => {
+                setLoading(true);
+                setOffset((o) => Math.max(0, o - LIMIT));
+              }}
               disabled={offset === 0}
               aria-label="Previous page"
             >
               ← Previous
             </button>
             <button
-              onClick={() => setOffset((o) => o + limit)}
-              disabled={offset + limit >= total}
+              onClick={() => {
+                setLoading(true);
+                setOffset((o) => o + LIMIT);
+              }}
+              disabled={!hasMore}
               aria-label="Next page"
             >
               Next →
