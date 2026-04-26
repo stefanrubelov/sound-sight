@@ -439,14 +439,14 @@ Target: every core component has at least one unit test.
 
 ## Phase 14 — Integration Testing (Week 4)
 
-- [ ] End-to-end smoke: pre-recorded WAV → `POST /api/audio/classify` → WebSocket event visible in frontend
-- [ ] End-to-end with real ESP32: clap next to mic → LED + dashboard card
-- [ ] LLM pipeline: trigger event → `llm_summary` populated within N seconds
-- [ ] Daily report: seed fake events → `GET /api/reports/daily` returns coherent narrative
-- [ ] Rule parsing: type "Vibrate urgently if glass breaks after 22:00" → correct structured Rule
-- [ ] Anomaly narration: inject an event with unusual duration → narration references baseline
-- [ ] Network drop: kill WiFi mid-session, verify ESP32 reconnects and the backend recovers gracefully
-- [ ] Unknown sound: play white noise → classified as `unknown`, no alert triggered
+- [x] End-to-end smoke: pre-recorded WAV → `POST /api/audio/classify` → WebSocket event visible in frontend
+- [ ] End-to-end with real ESP32: clap next to mic → LED + dashboard card (manual — requires hardware)
+- [x] LLM pipeline: trigger event → `llm_summary` populated within N seconds
+- [x] Daily report: seed fake events → `GET /api/reports/daily` returns coherent narrative
+- [x] Rule parsing: type "Vibrate urgently if glass breaks after 22:00" → correct structured Rule
+- [x] Anomaly narration: inject an event with unusual duration → narration references baseline
+- [ ] Network drop: kill WiFi mid-session, verify ESP32 reconnects and the backend recovers gracefully (manual — requires hardware)
+- [x] Unknown sound: play white noise → classified as `unknown`, no alert triggered
 
 ---
 
