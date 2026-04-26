@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api import (
     audio,
     dashboard,
+    dev,
     devices,
     events,
     onboarding,
@@ -50,6 +51,7 @@ app.include_router(reports.router, prefix=API_PREFIX)
 app.include_router(onboarding.router, prefix=API_PREFIX)
 app.include_router(settings_router.router, prefix=API_PREFIX)
 app.include_router(dashboard.router, prefix=API_PREFIX)
+app.include_router(dev.router, prefix=API_PREFIX)
 app.include_router(websocket.router)
 
 
