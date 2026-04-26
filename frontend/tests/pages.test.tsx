@@ -48,6 +48,54 @@ function renderPage(element: React.ReactElement) {
   );
 }
 
+describe("Accessibility", () => {
+  it("Dashboard: connection status has aria-label", () => {
+    renderPage(<Dashboard />);
+    expect(
+      screen.getByRole("status", { name: /websocket/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("History: filter select has accessible label", () => {
+    renderPage(<History />);
+    expect(screen.getByLabelText(/sound class/i)).toBeInTheDocument();
+  });
+
+  it("History: date inputs have accessible labels", () => {
+    renderPage(<History />);
+    expect(screen.getByLabelText("From")).toBeInTheDocument();
+    expect(screen.getByLabelText("To")).toBeInTheDocument();
+  });
+
+  it("Rules: textarea has label and hint", () => {
+    renderPage(<Rules />);
+    expect(screen.getByLabelText(/describe a rule/i)).toBeInTheDocument();
+    expect(screen.getByRole("textbox")).toHaveAccessibleDescription(
+      /the ai will parse/i,
+    );
+  });
+
+  it("Onboarding: textarea has label and hint", () => {
+    renderPage(<Onboarding />);
+    expect(screen.getByLabelText(/describe your home/i)).toBeInTheDocument();
+    expect(screen.getByRole("textbox")).toHaveAccessibleDescription(
+      /the more detail/i,
+    );
+  });
+
+  it("Reports: tab group has aria-label", () => {
+    renderPage(<Reports />);
+    expect(
+      screen.getByRole("group", { name: /report type/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("Settings: notes textarea has label", async () => {
+    renderPage(<Settings />);
+    expect(await screen.findByLabelText(/notes/i)).toBeInTheDocument();
+  });
+});
+
 describe("Page smoke tests", () => {
   it("Dashboard renders heading", () => {
     renderPage(<Dashboard />);
