@@ -455,13 +455,13 @@ Target: every core component has at least one unit test.
 ### Demo kit
 - [ ] Hardware in a presentable enclosure (or at least tidy wiring)
 - [ ] Pre-recorded audio clips on a phone: doorbell, fire alarm, timer beep, glass break, baby crying
-- [ ] Test endpoint `POST /api/dev/inject_event` for simulating events if live detection is flaky
-- [ ] Seeded database with 1–2 weeks of plausible events (for the reports demo)
+- [x] Test endpoint `POST /api/dev/inject_event` for simulating events if live detection is flaky
+- [x] Seeded database with 1–2 weeks of plausible events (`scripts/seed_db.py --clear --days 14`)
 - [ ] Backup laptop / tethered hotspot in case campus WiFi is unreliable
 
 ### Demo script
-- [ ] Write out the 5–7 minute flow (see Plan §16) step by step
-- [ ] Mark fallback points ("if X fails, show Y instead")
+- [x] Write out the 5–7 minute flow (`docs/DEMO_SCRIPT.md`)
+- [x] Mark fallback points ("if X fails, show Y instead")
 - [ ] Rehearse twice with a timer
 
 ### Slides
