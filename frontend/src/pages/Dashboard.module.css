@@ -18,6 +18,36 @@
   background: var(--border);
 }
 
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 28px;
+  padding: 0;
+}
+
+.stat {
+  background: var(--surface, var(--bg));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 20px;
+  min-width: 110px;
+}
+
+.stat dt {
+  font-size: 0.75rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.stat dd {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0;
+  text-transform: capitalize;
+}
+
 .error {
   color: #ef4444;
   margin-bottom: 16px;

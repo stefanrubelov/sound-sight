@@ -1,0 +1,16 @@
+.wrap {
+  margin-top: 32px;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0 0 12px;
+}
+
+.state {
+  color: var(--text);
+  font-style: italic;
+  margin-top: 32px;
+}

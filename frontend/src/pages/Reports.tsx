@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Markdown from "react-markdown";
 import { getDailyReport, getWeeklyReport } from "../api/client";
 import styles from "./Reports.module.css";
 
@@ -71,7 +72,7 @@ export function Reports() {
           aria-label={`${reportType} report`}
           aria-live="polite"
         >
-          <pre className={styles.pre}>{content}</pre>
+          <Markdown>{content}</Markdown>
         </article>
       )}
     </section>

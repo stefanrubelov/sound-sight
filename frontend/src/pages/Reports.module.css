@@ -39,18 +39,52 @@
 }
 
 .report {
-  background: var(--code-bg);
+  background: var(--surface, var(--bg));
+  border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 24px;
+  padding: 28px 32px;
   max-width: 720px;
+  line-height: 1.7;
+  color: var(--text-h);
 }
 
-.pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
-  font-family: var(--mono);
-  font-size: 0.875rem;
-  line-height: 1.6;
+.report h1,
+.report h2,
+.report h3 {
   color: var(--text-h);
+  margin-top: 1.4em;
+  margin-bottom: 0.4em;
+}
+
+.report h1:first-child,
+.report h2:first-child {
+  margin-top: 0;
+}
+
+.report p {
+  margin: 0 0 0.9em;
+}
+
+.report ul,
+.report ol {
+  padding-left: 1.4em;
+  margin: 0 0 0.9em;
+}
+
+.report li {
+  margin-bottom: 0.3em;
+}
+
+.report code {
+  background: var(--code-bg);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.875em;
+}
+
+.report hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.4em 0;
 }

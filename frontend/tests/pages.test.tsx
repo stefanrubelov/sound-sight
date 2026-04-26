@@ -12,8 +12,7 @@ import { Settings } from "../src/pages/Settings";
 
 // Mock the API and WebSocket so pages render without network
 vi.mock("../src/api/client", () => ({
-  getEvents: () =>
-    Promise.resolve({ items: [], total: 0, limit: 20, offset: 0 }),
+  getEvents: () => Promise.resolve([]),
   getRules: () => Promise.resolve([]),
   getDevices: () => Promise.resolve([]),
   getUserProfile: () =>
@@ -23,6 +22,14 @@ vi.mock("../src/api/client", () => ({
       enabled_classes: null,
       quiet_hours: null,
       notes: null,
+    }),
+  getDashboardSummary: () =>
+    Promise.resolve({
+      events_today: 0,
+      events_this_week: 0,
+      most_active_class: null,
+      active_device_count: 0,
+      active_rule_count: 0,
     }),
   wsUrl: () => "ws://localhost:8000/ws/events",
 }));

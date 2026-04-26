@@ -5,7 +5,6 @@ export interface SoundEvent {
   confidence: number;
   timestamp: string;
   duration: number;
-  raw_features: string | null;
   llm_summary: string | null;
 }
 
@@ -51,9 +50,24 @@ export interface Device {
 export interface UserProfile {
   id: number;
   home_description: string | null;
-  enabled_classes: string | null;
-  quiet_hours: string | null;
+  enabled_classes: string[] | null;
+  quiet_hours: { start: string; end: string } | null;
   notes: string | null;
+}
+
+export interface OnboardingResponse {
+  enabled_classes: string[];
+  priorities: Record<string, string>;
+  quiet_hours_default: { start: string; end: string } | null;
+  profile_id: number;
+}
+
+export interface DashboardSummary {
+  events_today: number;
+  events_this_week: number;
+  most_active_class: string | null;
+  active_device_count: number;
+  active_rule_count: number;
 }
 
 export interface EventFilters {
@@ -63,11 +77,4 @@ export interface EventFilters {
   to?: string;
   limit?: number;
   offset?: number;
-}
-
-export interface PaginatedEvents {
-  items: SoundEvent[];
-  total: number;
-  limit: number;
-  offset: number;
 }
