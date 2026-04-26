@@ -398,16 +398,16 @@ Each endpoint:
 
 Hook the React pages up to real API data:
 
-- [ ] Live dashboard reads from `/ws/events`, shows color-coded cards
-- [ ] History page uses `/api/events` with filters
-- [ ] Rules page: structured form + NL text box → `/api/rules`
-- [ ] Devices page lists from `/api/devices`
-- [ ] Settings page reads + writes `/api/settings`
-- [ ] Onboarding page posts to `/api/onboarding/profile` and shows the generated profile
-- [ ] Reports page fetches `/api/reports/daily` and `/weekly`, renders markdown
-- [ ] Trend charts on dashboard home (Recharts or Chart.js)
-- [ ] Loading + error states everywhere
-- [ ] Empty states: friendly message when no events yet
+- [x] Live dashboard reads from `/ws/events`, shows color-coded cards
+- [x] History page uses `/api/events` with filters
+- [x] Rules page: structured form + NL text box → `/api/rules`
+- [x] Devices page lists from `/api/devices`
+- [x] Settings page reads + writes `/api/settings`
+- [x] Onboarding page posts to `/api/onboarding/profile` and shows the generated profile
+- [x] Reports page fetches `/api/reports/daily` and `/weekly`, renders markdown
+- [x] Trend charts on dashboard home (Recharts or Chart.js)
+- [x] Loading + error states everywhere
+- [x] Empty states: friendly message when no events yet
 
 ---
 
@@ -416,24 +416,24 @@ Hook the React pages up to real API data:
 Target: every core component has at least one unit test.
 
 ### Backend (pytest)
-- [ ] Audio preprocessing
-- [ ] Classifier wrapper
-- [ ] All API endpoints (happy + 1 sad path each)
-- [ ] All LangChain chains (mocked LLM)
-- [ ] All MCP tools
-- [ ] RAG retrievers
-- [ ] Baseline computation
-- [ ] Session memory isolation
+- [x] Audio preprocessing
+- [x] Classifier wrapper
+- [x] All API endpoints (happy + 1 sad path each)
+- [x] All LangChain chains (mocked LLM)
+- [x] All MCP tools
+- [x] RAG retrievers
+- [x] Baseline computation
+- [x] Session memory isolation
 
 ### Frontend (Vitest + RTL)
-- [ ] Each page renders
-- [ ] WebSocket hook dispatches to store
-- [ ] Filter logic
-- [ ] Accessibility props present on interactive elements
+- [x] Each page renders
+- [x] WebSocket hook dispatches to store
+- [x] Filter logic
+- [x] Accessibility props present on interactive elements
 
 ### Firmware
-- [ ] Native-env tests for pure-logic helpers
-- [ ] Document manual test steps in `firmware/TESTING.md`
+- [x] Native-env tests for pure-logic helpers
+- [x] Document manual test steps in `firmware/TESTING.md`
 
 ---
 
