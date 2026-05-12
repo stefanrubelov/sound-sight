@@ -79,10 +79,9 @@ void loop() {
 
     if (!result.ok) return;
 
-    // Drive actuators based on the response class
+    // Drive LEDs based on the response class
     AlertProfile profile = get_alert_profile(result.class_name);
-    if (profile.vib != VibrationPattern::NONE ||
-        strcmp(profile.severity, "none") != 0) {
+    if (strcmp(profile.severity, "none") != 0) {
         actuators_alert(profile);
     }
 }
