@@ -1,6 +1,6 @@
 # SoundSight — Hardware Wiring
 
-Wiring for a single SoundSight node built around an **ESP32 WROOM DevKit**. Power comes from USB (5 V via micro-USB or USB-C, depending on the board revision).
+Wiring for a single SoundSight node built around an **DFRobot FireBeetle 2 ESP32-E (V1.0)**. Power comes from USB (5 V via micro-USB or USB-C, depending on the board revision).
 
 ---
 
@@ -10,7 +10,7 @@ Wiring for a single SoundSight node built around an **ESP32 WROOM DevKit**. Powe
 
 | Qty | Item | Notes |
 |---|---|---|
-| 1 | ESP32 WROOM DevKit | 38-pin or 30-pin dev board |
+| 1 | DFRobot FireBeetle 2 ESP32-E V1.0 | DFR0654 |
 | 2 | Half-size breadboards | Solderless, 400 tie-points each |
 | ~15 | Jumper wires (M-M, M-F, F-F) | Dupont ribbon is fine |
 
@@ -36,11 +36,11 @@ These match `firmware/src/config.h` exactly.
 
 | Function | ESP32 GPIO | Direction | Connects to |
 |---|---|---|---|
-| I2S BCLK (clock) | **GPIO 14** | OUT | INMP441 **SCK** |
-| I2S WS (L/R select) | **GPIO 15** | OUT | INMP441 **WS** |
-| I2S SD (audio data) | **GPIO 32** | IN | INMP441 **SD** |
-| WS2812B data | **GPIO 16** | OUT | 330 Ohm resistor -> strip **DIN** |
-| Config reset button | **GPIO 0** | IN | On-board BOOT button (hold 3 s after boot) |
+| I2S BCLK (clock) | **GPIO 14** (D6) | OUT | INMP441 **SCK** |
+| I2S WS (L/R select) | **GPIO 15** (A4) | OUT | INMP441 **WS** |
+| I2S SD (audio data) | **GPIO 34** (A2) | IN | INMP441 **SD** (input-only pin — perfect for I2S data) |
+| WS2812B data | **GPIO 16** (D11) | OUT | 330 Ohm resistor -> strip **DIN** |
+| Config reset button | **GPIO 0** (D5/BOOT) | IN | On-board BOOT button (hold 3 s after boot) |
 
 Power rails:
 
@@ -61,7 +61,7 @@ Power rails:
 | L/R | ESP32 **GND** | black — ties mic to **left** channel |
 | WS | ESP32 **GPIO 15** | yellow |
 | SCK | ESP32 **GPIO 14** | blue |
-| SD | ESP32 **GPIO 32** | green |
+| SD | ESP32 **GPIO 34 (A2)** | green |
 
 Notes:
 
@@ -104,7 +104,7 @@ Two breadboards side by side. ESP32 on the first, mic on the second to keep audi
   +----------------------------+        +-------------------+
   |                            |        |                   |
   |   +-----------------+      |        |   +-----------+   |
-  |   |   ESP32 WROOM   |      |  wires |   |  INMP441  |   |
+  |   |   FireBeetle ESP32-E   |      |  wires |   |  INMP441  |   |
   |   |   (straddles     |      | ------>|   |  (mic)    |   |
   |   |    center gap)   |      |        |   +-----------+   |
   |   +-----------------+      |        |                   |
