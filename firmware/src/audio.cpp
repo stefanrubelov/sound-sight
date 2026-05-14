@@ -54,11 +54,16 @@ size_t audio_capture(int16_t* buf, size_t max_samples) {
     size_t bytes_read = 0;
     i2s_read(I2S_PORT, raw, samples * sizeof(int32_t), &bytes_read, portMAX_DELAY);
 
-    // Diagnostic: print first 4 raw 32-bit values so we can see what I2S actually returns
-    Serial.printf("[audio] bytes_read=%u raw[0..3]=%ld %ld %ld %ld\n",
-                  bytes_read, (long)raw[0], (long)raw[1], (long)raw[2], (long)raw[3]);
-
     size_t frames = bytes_read / sizeof(int32_t);
+
+    // Diagnostic: first 4 raw values + peak to detect any non-zero signal
+    int32_t peak = 0;
+    for (size_t i = 0; i < frames; i++) {
+        int32_t v = raw[i] < 0 ? -raw[i] : raw[i];
+        if (v > peak) peak = v;
+    }
+    Serial.printf("[audio] bytes_read=%u raw[0..3]=%ld %ld %ld %ld peak=%ld\n",
+                  bytes_read, (long)raw[0], (long)raw[1], (long)raw[2], (long)raw[3], (long)peak);
 
     // INMP441 data is left-justified in the 32-bit frame; shift right by 8 to get 24-bit,
     // then again by 8 to scale down to 16-bit.
