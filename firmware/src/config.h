@@ -10,7 +10,7 @@
 #define I2S_DMA_BUF_LEN  512
 
 // ── Actuators ─────────────────────────────────────────────────────────────────
-#define LED_PIN           16    // WS2812B data pin (DIN via 330 Ω resistor)
+#define LED_PIN           13    // WS2812B data pin (DIN via 330 Ω resistor)
 #define LED_COUNT         16    // Number of LEDs to address on the strip
 
 // ── Alert timings ─────────────────────────────────────────────────────────────

@@ -26,7 +26,7 @@ class Settings(BaseSettings):
 
     # ML model
     ml_model_path: str = "../ml/artifacts/soundsight_classifier.joblib"
-    ml_unknown_threshold: float = 0.50
+    ml_unknown_threshold: float = 0.35
 
     # Per-class severity: critical | warn | info | none
     class_severity: dict[str, str] = {

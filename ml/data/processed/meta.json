@@ -1,0 +1,29 @@
+{
+  "classes": [
+    "fire_alarm",
+    "doorbell",
+    "glass_breaking",
+    "baby_crying",
+    "dog_barking",
+    "timer_beep",
+    "water_running",
+    "unknown"
+  ],
+  "class_to_idx": {
+    "fire_alarm": 0,
+    "doorbell": 1,
+    "glass_breaking": 2,
+    "baby_crying": 3,
+    "dog_barking": 4,
+    "timer_beep": 5,
+    "water_running": 6,
+    "unknown": 7
+  },
+  "n_mfcc": 40,
+  "sample_rate": 16000,
+  "clip_duration": 1.0,
+  "hop_duration": 0.5,
+  "train_size": 12744,
+  "val_size": 2731,
+  "test_size": 2732
+}

@@ -22,6 +22,10 @@ ARTIFACTS_DIR = Path(__file__).parent / "artifacts"
 DATA_DIR = Path(__file__).parent / "data" / "processed"
 MODEL_PATH = ARTIFACTS_DIR / "soundsight_classifier.joblib"
 
+# Cap unknown samples at this multiple of the largest non-unknown class.
+# Keeps the dataset balanced without throwing away all unknown data.
+UNKNOWN_OVERSAMPLE_RATIO = 2
+
 
 def load_split(split: str, data_dir: Path = DATA_DIR) -> tuple[np.ndarray, np.ndarray]:
     path = data_dir / f"{split}.npz"
@@ -29,10 +33,35 @@ def load_split(split: str, data_dir: Path = DATA_DIR) -> tuple[np.ndarray, np.nd
     return data["X"], data["y"]
 
 
+def _balance_unknown(
+    X: np.ndarray, y: np.ndarray, rng: np.random.Generator
+) -> tuple[np.ndarray, np.ndarray]:
+    """Downsample the unknown class so it is at most UNKNOWN_OVERSAMPLE_RATIO × the largest non-unknown class."""
+    unique, counts = np.unique(y, return_counts=True)
+    unknown_idx = int(y.max())  # unknown is always the last class index
+    non_unknown_counts = [c for cls, c in zip(unique, counts) if cls != unknown_idx]
+    if not non_unknown_counts:
+        return X, y
+    max_non_unknown = max(non_unknown_counts)
+    cap = max_non_unknown * UNKNOWN_OVERSAMPLE_RATIO
+
+    unknown_mask = y == unknown_idx
+    n_unknown = unknown_mask.sum()
+    if n_unknown <= cap:
+        return X, y
+
+    # Randomly select `cap` unknown samples
+    unknown_positions = np.where(unknown_mask)[0]
+    keep = rng.choice(unknown_positions, size=cap, replace=False)
+    other_positions = np.where(~unknown_mask)[0]
+    selected = np.sort(np.concatenate([other_positions, keep]))
+    return X[selected], y[selected]
+
+
 def train(
     data_dir: Path = DATA_DIR,
     artifacts_dir: Path = ARTIFACTS_DIR,
-    n_estimators: int = 300,
+    n_estimators: int = 500,
     max_depth: int | None = None,
     random_state: int = 42,
 ) -> dict:
@@ -47,7 +76,14 @@ def train(
         meta = json.load(f)
     classes = meta["classes"]
 
-    log.info("Training samples: %d  |  Validation samples: %d", len(y_train), len(y_val))
+    rng = np.random.default_rng(random_state)
+    X_train, y_train = _balance_unknown(X_train, y_train, rng)
+
+    unique, counts = np.unique(y_train, return_counts=True)
+    log.info("Balanced training set — %d samples:", len(y_train))
+    for cls_idx, cnt in zip(unique, counts):
+        log.info("  %s: %d", classes[cls_idx], cnt)
+
     log.info("Feature dimension: %d  |  Classes: %s", X_train.shape[1], classes)
 
     clf = RandomForestClassifier(
@@ -65,10 +101,17 @@ def train(
 
     val_preds = clf.predict(X_val)
     val_acc = accuracy_score(y_val, val_preds)
-    report = classification_report(y_val, val_preds, target_names=classes, output_dict=True)
+    present_labels = sorted(set(y_val) | set(val_preds))
+    present_names = [classes[i] for i in present_labels]
+    report = classification_report(
+        y_val, val_preds, labels=present_labels, target_names=present_names, output_dict=True
+    )
 
     log.info("Validation accuracy: %.4f", val_acc)
-    log.info("\n%s", classification_report(y_val, val_preds, target_names=classes))
+    log.info(
+        "\n%s",
+        classification_report(y_val, val_preds, labels=present_labels, target_names=present_names),
+    )
 
     model_path = artifacts_dir / "soundsight_classifier.joblib"
     joblib.dump(clf, model_path)
@@ -96,7 +139,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train SoundSight classifier")
     parser.add_argument("--data-dir", default=str(DATA_DIR))
     parser.add_argument("--artifacts-dir", default=str(ARTIFACTS_DIR))
-    parser.add_argument("--n-estimators", type=int, default=300)
+    parser.add_argument("--n-estimators", type=int, default=500)
     parser.add_argument("--max-depth", type=int, default=None)
     args = parser.parse_args()
 

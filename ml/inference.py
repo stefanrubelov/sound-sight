@@ -68,6 +68,10 @@ class Classifier:
 
     def _predict_audio(self, audio: np.ndarray, sr: int) -> ClassificationResult:
         clips = window_audio(audio, sr)
+        # Discard windows that are more than 50% zero-padding — they produce
+        # features the model was never trained on and drag everything toward unknown.
+        clip_len = int(1.0 * sr)
+        clips = [c for c in clips if np.count_nonzero(c) > clip_len * 0.5]
         if not clips:
             return ClassificationResult(
                 class_name="unknown",

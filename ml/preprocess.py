@@ -41,15 +41,18 @@ IDX_TO_CLASS: dict[int, str] = {i: cls for i, cls in enumerate(TARGET_CLASSES)}
 
 # ESC-50 category name → our class label
 ESC50_MAP: dict[str, str] = {
-    "fire_crackling": "fire_alarm",
+    "crackling_fire": "fire_alarm",
+    "siren": "fire_alarm",
     "glass_breaking": "glass_breaking",
     "crying_baby": "baby_crying",
     "dog": "dog_barking",
     "water_drops": "water_running",
     "pouring_water": "water_running",
+    "washing_machine": "water_running",
     "clock_alarm": "timer_beep",
     "clock_tick": "timer_beep",
     "door_wood_knock": "doorbell",
+    "church_bells": "doorbell",
 }
 
 # UrbanSound8K class id → our class label (class_id 0-9 per the dataset)
@@ -67,8 +70,19 @@ US8K_MAP: dict[int, str] = {
 }
 
 
+_TARGET_RMS = 0.1  # normalize all clips to this RMS before feature extraction
+
+
+def _normalize_rms(audio: np.ndarray) -> np.ndarray:
+    rms = float(np.sqrt(np.mean(audio**2)))
+    if rms < 1e-8:
+        return audio
+    return audio * (_TARGET_RMS / rms)
+
+
 def extract_mfcc(audio: np.ndarray, sr: int = SAMPLE_RATE) -> np.ndarray:
     """Return a 1-D feature vector: mean + std of each MFCC coefficient (2 * N_MFCC)."""
+    audio = _normalize_rms(audio)
     mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=N_MFCC)
     return np.concatenate([mfcc.mean(axis=1), mfcc.std(axis=1)])
 

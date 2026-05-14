@@ -5,6 +5,8 @@
 import argparse
 import json
 import sys
+import wave
+from pathlib import Path
 
 import requests
 import serial
@@ -20,7 +22,27 @@ DEFAULT_UNKNOWN = {
 }
 
 
-def run_bridge(port: str, baud: int, backend: str, device_id: int) -> None:
+_record_counter = 0
+
+
+def _save_wav(pcm: bytearray, record_dir: Path) -> None:
+    global _record_counter
+    _record_counter += 1
+    path = record_dir / f"clip_{_record_counter:04d}.wav"
+    with wave.open(str(path), "wb") as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)  # int16
+        wf.setframerate(16000)
+        wf.writeframes(bytes(pcm))
+    print(f"[bridge] Saved {path}")
+
+
+def run_bridge(
+    port: str, baud: int, backend: str, device_id: int, record_dir: Path | None = None
+) -> None:
+    if record_dir:
+        record_dir.mkdir(parents=True, exist_ok=True)
+        print(f"[bridge] Recording mode: saving clips to {record_dir}/")
     print(f"[bridge] Opening {port} at {baud} baud")
     with serial.Serial(port, baud, timeout=0.1) as ser:
         print(f"[bridge] Connected. Forwarding to {backend}")
@@ -79,6 +101,8 @@ def run_bridge(port: str, baud: int, backend: str, device_id: int) -> None:
                         )
                         state = "IDLE"
                     else:
+                        if record_dir:
+                            _save_wav(pcm_buf, record_dir)
                         response = _classify(pcm_buf, backend, device_id)
                         _send_response(ser, response)
                     state = "IDLE"
@@ -130,10 +154,17 @@ def main() -> None:
     parser.add_argument("--baud", type=int, default=921600)
     parser.add_argument("--backend", default="http://localhost:8000")
     parser.add_argument("--device-id", type=int, default=1)
+    parser.add_argument(
+        "--record-dir",
+        default=None,
+        help="If set, save every captured PCM frame as a WAV file here",
+    )
     args = parser.parse_args()
 
+    record_dir = Path(args.record_dir) if args.record_dir else None
+
     try:
-        run_bridge(args.port, args.baud, args.backend, args.device_id)
+        run_bridge(args.port, args.baud, args.backend, args.device_id, record_dir)
     except KeyboardInterrupt:
         print("\n[bridge] Interrupted. Closing port.")
         sys.exit(0)
