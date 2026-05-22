@@ -31,6 +31,13 @@ def get_classifier():
         return None
 
     try:
+        import sys
+        from pathlib import Path as _Path
+
+        _repo_root = str(_Path(__file__).parent.parent.parent.parent.parent)
+        if _repo_root not in sys.path:
+            sys.path.insert(0, _repo_root)
+
         from ml.inference import Classifier
 
         _classifier = Classifier(

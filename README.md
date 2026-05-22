@@ -39,14 +39,28 @@ uvicorn app.main:app --reload # http://localhost:8000
 # 3. Frontend
 cd frontend && npm install && npm run dev   # http://localhost:5173
 
-# 4. Firmware
-cd firmware && pio run -t upload && pio device monitor
+# 4. Train the ML model (one-time, re-run after adding training data)
+#    Requires training data in ml/data/ — see ml/download_data.py
+backend/.venv/bin/python ml/train.py
+#    Writes ml/artifacts/soundsight_classifier.joblib (~1 s on existing data)
 
-# 5. Ollama (must be running before the backend starts)
+# 5. Flash firmware and find the serial port
+cd firmware && pio run -t upload
+ls /dev/cu.*   # macOS — note the wchusbserial* entry, e.g. /dev/cu.wchusbserial10
+# ls /dev/ttyUSB* || ls /dev/ttyACM*  # Linux equivalent
+
+# 6. Run the serial bridge (replaces `pio device monitor` during normal operation)
+#    The PIO device monitor and the bridge cannot share the serial port simultaneously.
+backend/.venv/bin/python scripts/serial_bridge.py \
+  --port /dev/cu.wchusbserial10 \
+  --device-id 1
+#    Use --record-dir ./recordings to save captured audio clips for debugging.
+
+# 7. Ollama (must be running before the backend starts)
 ollama serve
 ollama pull llama3.1:8b
 
-# 6. Promptfoo prompt tests (optional, requires Ollama running)
+# 8. Promptfoo prompt tests (optional, requires Ollama running)
 scripts/run_promptfoo.sh
 ```
 

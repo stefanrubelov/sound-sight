@@ -48,6 +48,82 @@
   text-transform: capitalize;
 }
 
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--surface, var(--bg));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.filterToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filterPill {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.pill_critical {
+  background: #fee2e2;
+  color: #ef4444;
+  border-color: #ef4444;
+}
+.pill_warn {
+  background: #fef3c7;
+  color: #f59e0b;
+  border-color: #f59e0b;
+}
+.pill_info {
+  background: #dbeafe;
+  color: #3b82f6;
+  border-color: #3b82f6;
+}
+.pill_none {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.pillOff {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+  opacity: 0.5;
+}
+
+.filterSlider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.filterSlider input[type="range"] {
+  width: 100px;
+}
+
 .error {
   color: #ef4444;
   margin-bottom: 16px;

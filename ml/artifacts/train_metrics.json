@@ -1,0 +1,79 @@
+{
+  "val_accuracy": 0.9086924762600438,
+  "train_time_s": 1.14,
+  "n_estimators": 500,
+  "max_depth": null,
+  "classes": [
+    "fire_alarm",
+    "doorbell",
+    "glass_breaking",
+    "baby_crying",
+    "dog_barking",
+    "timer_beep",
+    "water_running",
+    "unknown"
+  ],
+  "classification_report": {
+    "fire_alarm": {
+      "precision": 0.8,
+      "recall": 0.7863247863247863,
+      "f1-score": 0.7931034482758621,
+      "support": 117.0
+    },
+    "doorbell": {
+      "precision": 1.0,
+      "recall": 0.8823529411764706,
+      "f1-score": 0.9375,
+      "support": 17.0
+    },
+    "glass_breaking": {
+      "precision": 0.6470588235294118,
+      "recall": 0.36666666666666664,
+      "f1-score": 0.46808510638297873,
+      "support": 30.0
+    },
+    "baby_crying": {
+      "precision": 0.5753424657534246,
+      "recall": 0.711864406779661,
+      "f1-score": 0.6363636363636364,
+      "support": 59.0
+    },
+    "dog_barking": {
+      "precision": 0.7906976744186046,
+      "recall": 0.6666666666666666,
+      "f1-score": 0.723404255319149,
+      "support": 51.0
+    },
+    "timer_beep": {
+      "precision": 1.0,
+      "recall": 0.8879310344827587,
+      "f1-score": 0.9406392694063926,
+      "support": 116.0
+    },
+    "water_running": {
+      "precision": 0.7169811320754716,
+      "recall": 0.6993865030674846,
+      "f1-score": 0.7080745341614907,
+      "support": 163.0
+    },
+    "unknown": {
+      "precision": 0.938544961590601,
+      "recall": 0.9505720823798627,
+      "f1-score": 0.9445202364711233,
+      "support": 2185.0
+    },
+    "accuracy": 0.9086924762600438,
+    "macro avg": {
+      "precision": 0.8085781321709392,
+      "recall": 0.7439706359430447,
+      "f1-score": 0.768961310797579,
+      "support": 2738.0
+    },
+    "weighted avg": {
+      "precision": 0.9086454409000906,
+      "recall": 0.9086924762600438,
+      "f1-score": 0.9077864314153999,
+      "support": 2738.0
+    }
+  }
+}

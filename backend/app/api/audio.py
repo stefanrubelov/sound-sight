@@ -3,6 +3,7 @@ import json
 import logging
 from datetime import datetime, timezone
 
+import httpx
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -37,6 +38,41 @@ def _resolve_led_color(class_name: str) -> str:
 
 def _resolve_vibration(severity: str) -> str:
     return settings.severity_vibration.get(severity, "none")
+
+
+_NTFY_PRIORITY = {"critical": "urgent", "warn": "high", "info": "default"}
+_NTFY_EMOJI = {
+    "fire_alarm": "fire",
+    "glass_breaking": "broken_glass",
+    "baby_crying": "baby",
+    "doorbell": "bell",
+    "dog_barking": "dog",
+    "timer_beep": "timer_clock",
+    "water_running": "droplet",
+}
+
+
+async def _send_ntfy(class_name: str, confidence: float, severity: str) -> None:
+    if not settings.ntfy_enabled:
+        return
+    title = class_name.replace("_", " ").title()
+    emoji = _NTFY_EMOJI.get(class_name, "speaker")
+    priority = _NTFY_PRIORITY.get(severity, "default")
+    message = f"{confidence:.0%} confidence"
+    try:
+        async with httpx.AsyncClient(timeout=5) as client:
+            await client.post(
+                settings.ntfy_url,
+                content=message,
+                headers={
+                    "Title": title,
+                    "Priority": priority,
+                    "Tags": emoji,
+                },
+            )
+        log.debug("ntfy sent: %s", class_name)
+    except Exception as exc:
+        log.warning("ntfy failed: %s", exc)
 
 
 async def _write_llm_summary(event_id: int, class_name: str) -> None:
@@ -132,6 +168,15 @@ async def classify_audio(
         confidence = result.confidence
         all_scores = result.all_scores
 
+    # Per-class sensitivity overrides — allows specific classes to trigger
+    # at a lower confidence than the global unknown threshold.
+    if class_name == "unknown" and all_scores:
+        for cls, threshold in settings.ml_class_thresholds.items():
+            if all_scores.get(cls, 0.0) >= threshold:
+                class_name = cls
+                confidence = all_scores[cls]
+                break
+
     severity = _resolve_severity(class_name)
     led_color = _resolve_led_color(class_name)
     vibration_pattern = _resolve_vibration(severity)
@@ -170,9 +215,10 @@ async def classify_audio(
     }
     await ws_manager.broadcast(payload)
 
-    # --- Async LLM summary (don't block the ESP32) ---
+    # --- Async LLM summary + ntfy notification (don't block the ESP32) ---
     if class_name != "unknown":
         background_tasks.add_task(_write_llm_summary, event.id, class_name)
+        background_tasks.add_task(_send_ntfy, class_name, confidence, severity)
 
     log.info(
         "classify: device=%d class=%s confidence=%.3f severity=%s",
