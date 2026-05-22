@@ -1,6 +1,6 @@
 {
   "val_accuracy": 0.9086924762600438,
-  "train_time_s": 1.19,
+  "train_time_s": 1.14,
   "n_estimators": 500,
   "max_depth": null,
   "classes": [

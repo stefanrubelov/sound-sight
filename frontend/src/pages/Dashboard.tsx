@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { EventsChart } from "../components/EventsChart";
 import { getDashboardSummary } from "../api/client";
 import type { DashboardSummary } from "../api/types";
@@ -12,9 +12,36 @@ const SEVERITY_LABEL: Record<string, string> = {
   none: "—",
 };
 
+const ALL_SEVERITIES = ["critical", "warn", "info", "none"] as const;
+
 export function Dashboard() {
   const { events, connected, error } = useEvents();
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
+  const [hideUnknown, setHideUnknown] = useState(true);
+  const [severities, setSeverities] = useState<Set<string>>(
+    new Set(ALL_SEVERITIES),
+  );
+  const [minConfidence, setMinConfidence] = useState(0);
+
+  function toggleSeverity(s: string) {
+    setSeverities((prev) => {
+      const next = new Set(prev);
+      if (next.has(s)) next.delete(s);
+      else next.add(s);
+      return next;
+    });
+  }
+
+  const visibleEvents = useMemo(
+    () =>
+      events.filter((ev) => {
+        if (hideUnknown && ev.class_name === "unknown") return false;
+        if (!severities.has(ev.severity)) return false;
+        if (ev.confidence * 100 < minConfidence) return false;
+        return true;
+      }),
+    [events, hideUnknown, severities, minConfidence],
+  );
 
   useEffect(() => {
     getDashboardSummary()
@@ -67,17 +94,60 @@ export function Dashboard() {
         </dl>
       )}
 
+      <div className={styles.filterBar} role="group" aria-label="Event filters">
+        <label className={styles.filterToggle}>
+          <input
+            type="checkbox"
+            checked={hideUnknown}
+            onChange={(e) => setHideUnknown(e.target.checked)}
+          />
+          Hide unknown
+        </label>
+
+        <div className={styles.filterGroup} role="group" aria-label="Severity">
+          {ALL_SEVERITIES.map((s) => (
+            <button
+              key={s}
+              type="button"
+              className={[
+                styles.filterPill,
+                severities.has(s) ? styles[`pill_${s}`] : styles.pillOff,
+              ].join(" ")}
+              onClick={() => toggleSeverity(s)}
+              aria-pressed={severities.has(s)}
+            >
+              {SEVERITY_LABEL[s]}
+            </button>
+          ))}
+        </div>
+
+        <label className={styles.filterSlider}>
+          Min confidence: {minConfidence}%
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={minConfidence}
+            onChange={(e) => setMinConfidence(Number(e.target.value))}
+          />
+        </label>
+      </div>
+
       {error && (
         <p className={styles.error} role="alert">
           {error}
         </p>
       )}
 
-      {events.length === 0 ? (
-        <p className={styles.empty}>No events yet — waiting for audio…</p>
+      {visibleEvents.length === 0 ? (
+        <p className={styles.empty}>
+          {events.length === 0
+            ? "No events yet — waiting for audio…"
+            : "No events match the current filters."}
+        </p>
       ) : (
         <ul className={styles.grid} role="list" aria-label="Recent events">
-          {events.map((ev) => (
+          {visibleEvents.map((ev) => (
             <li
               key={`${ev.event_id}-${ev.timestamp}`}
               className={[styles.card, styles[ev.severity] ?? ""].join(" ")}
