@@ -51,8 +51,8 @@ ESC50_MAP: dict[str, str] = {
     "washing_machine": "water_running",
     "clock_alarm": "timer_beep",
     "clock_tick": "timer_beep",
-    "door_wood_knock": "doorbell",
-    "church_bells": "doorbell",
+    "door_wood_knock": "unknown",
+    "church_bells": "unknown",
 }
 
 # UrbanSound8K class id → our class label (class_id 0-9 per the dataset)

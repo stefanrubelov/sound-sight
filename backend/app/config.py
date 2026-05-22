@@ -26,7 +26,15 @@ class Settings(BaseSettings):
 
     # ML model
     ml_model_path: str = "../ml/artifacts/soundsight_classifier.joblib"
-    ml_unknown_threshold: float = 0.35
+    ml_unknown_threshold: float = 0.30
+    # Per-class overrides — lower than ml_unknown_threshold to be more sensitive
+    ml_class_thresholds: dict[str, float] = {
+        "doorbell": 0.15,
+    }
+
+    # ntfy.sh push notifications
+    ntfy_url: str = "https://ntfy.sh/soundsight"
+    ntfy_enabled: bool = True
 
     # Per-class severity: critical | warn | info | none
     class_severity: dict[str, str] = {

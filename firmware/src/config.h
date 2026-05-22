@@ -11,10 +11,11 @@
 
 // ── Actuators ─────────────────────────────────────────────────────────────────
 #define LED_PIN           13    // WS2812B data pin (DIN via 330 Ω resistor)
-#define LED_COUNT         16    // Number of LEDs to address on the strip
+#define LED_COUNT         60    // Number of LEDs to address on the strip
 
 // ── Alert timings ─────────────────────────────────────────────────────────────
 #define LED_HOLD_MS       3000  // How long to hold alert colour
+#define MIN_CONFIDENCE    0.10f // Minimum confidence to trigger an alert (backend handles per-class filtering)
 
 // ── Serial protocol ──────────────────────────────────────────────────────────
 #define SERIAL_BAUD              921600

@@ -1,6 +1,6 @@
 {
-  "val_accuracy": 0.8780666422555841,
-  "train_time_s": 1.22,
+  "val_accuracy": 0.9086924762600438,
+  "train_time_s": 1.19,
   "n_estimators": 500,
   "max_depth": null,
   "classes": [
@@ -15,65 +15,65 @@
   ],
   "classification_report": {
     "fire_alarm": {
-      "precision": 0.8454545454545455,
-      "recall": 0.7948717948717948,
-      "f1-score": 0.8193832599118943,
+      "precision": 0.8,
+      "recall": 0.7863247863247863,
+      "f1-score": 0.7931034482758621,
       "support": 117.0
     },
     "doorbell": {
-      "precision": 0.7888888888888889,
-      "recall": 0.6513761467889908,
-      "f1-score": 0.7135678391959799,
-      "support": 109.0
+      "precision": 1.0,
+      "recall": 0.8823529411764706,
+      "f1-score": 0.9375,
+      "support": 17.0
     },
     "glass_breaking": {
-      "precision": 0.5,
-      "recall": 0.3,
-      "f1-score": 0.375,
+      "precision": 0.6470588235294118,
+      "recall": 0.36666666666666664,
+      "f1-score": 0.46808510638297873,
       "support": 30.0
     },
     "baby_crying": {
-      "precision": 0.45918367346938777,
-      "recall": 0.7627118644067796,
-      "f1-score": 0.5732484076433121,
+      "precision": 0.5753424657534246,
+      "recall": 0.711864406779661,
+      "f1-score": 0.6363636363636364,
       "support": 59.0
     },
     "dog_barking": {
-      "precision": 0.7551020408163265,
-      "recall": 0.7254901960784313,
-      "f1-score": 0.74,
+      "precision": 0.7906976744186046,
+      "recall": 0.6666666666666666,
+      "f1-score": 0.723404255319149,
       "support": 51.0
     },
     "timer_beep": {
-      "precision": 0.94,
-      "recall": 0.8103448275862069,
-      "f1-score": 0.8703703703703703,
+      "precision": 1.0,
+      "recall": 0.8879310344827587,
+      "f1-score": 0.9406392694063926,
       "support": 116.0
     },
     "water_running": {
-      "precision": 0.7310344827586207,
-      "recall": 0.6503067484662577,
-      "f1-score": 0.6883116883116883,
+      "precision": 0.7169811320754716,
+      "recall": 0.6993865030674846,
+      "f1-score": 0.7080745341614907,
       "support": 163.0
     },
     "unknown": {
-      "precision": 0.916077322017916,
-      "recall": 0.9314477468839885,
-      "f1-score": 0.9236985975754695,
-      "support": 2086.0
+      "precision": 0.938544961590601,
+      "recall": 0.9505720823798627,
+      "f1-score": 0.9445202364711233,
+      "support": 2185.0
     },
-    "accuracy": 0.8780666422555841,
+    "accuracy": 0.9086924762600438,
     "macro avg": {
-      "precision": 0.7419676191757107,
-      "recall": 0.7033186656353063,
-      "f1-score": 0.7129475203760893,
-      "support": 2731.0
+      "precision": 0.8085781321709392,
+      "recall": 0.7439706359430447,
+      "f1-score": 0.768961310797579,
+      "support": 2738.0
     },
     "weighted avg": {
-      "precision": 0.8804998264161205,
-      "recall": 0.8780666422555841,
-      "f1-score": 0.8774996098986475,
-      "support": 2731.0
+      "precision": 0.9086454409000906,
+      "recall": 0.9086924762600438,
+      "f1-score": 0.9077864314153999,
+      "support": 2738.0
     }
   }
 }

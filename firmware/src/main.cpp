@@ -27,7 +27,7 @@ void loop() {
     float rms = audio_rms(g_pcm, bytes / sizeof(int16_t));
     Serial.printf("[main] RMS=%.1f\n", rms);
 
-    if (rms < 200.0f) return;
+    if (rms < 500.0f) return;
 
     ClassifyResult result = serial_classify(g_pcm, bytes);
 
@@ -35,6 +35,7 @@ void loop() {
                   result.class_name, result.confidence, result.ok);
 
     if (!result.ok) return;
+    if (result.confidence < MIN_CONFIDENCE) return;
 
     AlertProfile profile = get_alert_profile(result.class_name);
     if (strcmp(profile.severity, "none") != 0) {

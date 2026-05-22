@@ -23,7 +23,7 @@
   "sample_rate": 16000,
   "clip_duration": 1.0,
   "hop_duration": 0.5,
-  "train_size": 12744,
-  "val_size": 2731,
-  "test_size": 2732
+  "train_size": 12776,
+  "val_size": 2738,
+  "test_size": 2738
 }
