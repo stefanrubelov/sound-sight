@@ -17,6 +17,19 @@
 #define LED_HOLD_MS       3000  // How long to hold alert colour
 #define MIN_CONFIDENCE    0.10f // Minimum confidence to trigger an alert (backend handles per-class filtering)
 
+// ── Transport selection ───────────────────────────────────────────────────────
+// Uncomment ONE of the following lines before flashing.
+// TRANSPORT_WIFI  → ESP32 connects to WiFi and POSTs directly to the backend.
+// TRANSPORT_SERIAL → ESP32 uses USB serial + scripts/serial_bridge.py (default).
+#define TRANSPORT_WIFI
+// #define TRANSPORT_SERIAL
+
+// ── WiFi / backend (used only when TRANSPORT_WIFI is defined) ─────────────────
+#define WIFI_SSID       "Samuels iPhone"
+#define WIFI_PASSWORD   "11022005"
+#define BACKEND_URL     "http://172.20.10.11:8000"  // backend IP on the same network
+#define WIFI_DEVICE_ID  1
+
 // ── Serial protocol ──────────────────────────────────────────────────────────
 #define SERIAL_BAUD              921600
 #define FRAME_MAGIC_TX_0         0xAA   // ESP32 → Bridge: PCM frame

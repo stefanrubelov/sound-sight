@@ -3,13 +3,25 @@
 #include "audio.h"
 #include "actuators.h"
 #include "event_map.h"
-#include "serial_comm.h"
+
+#ifdef TRANSPORT_WIFI
+  #include "wifi_comm.h"
+  #define do_classify(pcm, bytes) wifi_classify(pcm, bytes)
+#else
+  #include "serial_comm.h"
+  #define do_classify(pcm, bytes) serial_classify(pcm, bytes)
+#endif
 
 static int16_t g_pcm[SAMPLE_RATE];
 
 void setup() {
     Serial.begin(SERIAL_BAUD);
+#ifdef TRANSPORT_WIFI
+    Serial.println("[main] SoundSight booting (wifi mode)...");
+    wifi_init();
+#else
     Serial.println("[main] SoundSight booting (serial mode)...");
+#endif
     actuators_init();
     audio_init();
     Serial.println("[main] Ready.");
@@ -29,7 +41,7 @@ void loop() {
 
     if (rms < 500.0f) return;
 
-    ClassifyResult result = serial_classify(g_pcm, bytes);
+    ClassifyResult result = do_classify(g_pcm, bytes);
 
     Serial.printf("[main] class=%s confidence=%.2f ok=%d\n",
                   result.class_name, result.confidence, result.ok);
