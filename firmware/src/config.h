@@ -25,9 +25,9 @@
 // #define TRANSPORT_SERIAL
 
 // ── WiFi / backend (used only when TRANSPORT_WIFI is defined) ─────────────────
-#define WIFI_SSID       "YourSSID"
-#define WIFI_PASSWORD   "YourPassword"
-#define BACKEND_URL     "http://192.168.1.100:8000"  // backend IP on the same network
+#define WIFI_SSID       "Samuels iPhone"
+#define WIFI_PASSWORD   "11022005"
+#define BACKEND_URL     "http://172.20.10.11:8000"  // backend IP on the same network
 #define WIFI_DEVICE_ID  1
 
 // ── Serial protocol ──────────────────────────────────────────────────────────
